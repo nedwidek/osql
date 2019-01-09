@@ -12,14 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_config_parsers_main)
+function(osqueryConfigParsersMain)
+  if (BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
   generateOsqueryConfigParsers()
 endfunction()
 
 function(generateOsqueryConfigParsers)
-  add_library(osquery_config_parsers EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_config_parsers EXCLUDE_FROM_ALL
     auto_constructed_tables.cpp
     decorators.cpp
     events_parser.cpp
@@ -58,6 +62,41 @@ function(generateOsqueryConfigParsers)
   )
 
   generateIncludeNamespace(osquery_config_parsers "osquery/config/parsers" "FILE_ONLY" ${public_header_files})
+
+  add_test(
+    NAME osquery_config_parsers_tests_decoratorstests_test
+    COMMAND "${CMAKE_COMMAND}" -E env
+            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_conffiles,INTERFACE_BINARY_DIR>"
+            "$<TARGET_FILE:osquery_config_parsers_tests_decoratorstests>"
+  )
+
+  add_test(
+    NAME osquery_carver_tests_eventsparsertests_test
+    COMMAND "${CMAKE_COMMAND}" -E env
+            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_conffiles,INTERFACE_BINARY_DIR>"
+            "$<TARGET_FILE:osquery_config_parsers_tests_eventsparsertests>"
+  )
+
+  add_test(
+    NAME osquery_carver_tests_filepathstests_test
+    COMMAND "${CMAKE_COMMAND}" -E env
+            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_conffiles,INTERFACE_BINARY_DIR>"
+            "$<TARGET_FILE:osquery_config_parsers_tests_filepathstests>"
+  )
+
+  add_test(
+    NAME osquery_carver_tests_optionstests_test
+    COMMAND "${CMAKE_COMMAND}" -E env
+            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_conffiles,INTERFACE_BINARY_DIR>"
+            "$<TARGET_FILE:osquery_config_parsers_tests_optionstests>"
+  )
+
+  add_test(
+    NAME osquery_carver_tests_viewstests_test
+    COMMAND "${CMAKE_COMMAND}" -E env
+            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_conffiles,INTERFACE_BINARY_DIR>"
+            "$<TARGET_FILE:osquery_config_parsers_tests_viewstests>"
+  )
 endfunction()
 
-osquery_config_parsers_main()
+osqueryConfigParsersMain()

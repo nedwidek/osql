@@ -12,8 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 project(osquery)
+
+if (BUILD_TESTING)
+  enable_testing()
+endif()
 
 include(cmake/globals.cmake)
 include(cmake/utilities.cmake)
@@ -23,17 +27,25 @@ function(main)
   message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
   message(STATUS "Shared libraries: ${BUILD_SHARED_LIBS}")
 
-  if(NOT "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang" OR
-     NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    message(STATUS "Warning: the selected C or C++ compiler is not clang/clang++. Compilation may fail")
+  if (NOT DEFINED PLATFORM_WINDOWS)
+    if(NOT "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang" OR
+       NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+      message(STATUS "Warning: the selected C or C++ compiler is not clang/clang++. Compilation may fail")
+    endif()
   endif()
 
   generateGlobalSettingsTargets()
+
+  findPythonExecutablePath()
 
   add_subdirectory("third-party")
   add_subdirectory("osquery")
   add_subdirectory("tools")
   add_subdirectory("specs")
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
 
   processLinkWholeArchiveSettings()
 endfunction()

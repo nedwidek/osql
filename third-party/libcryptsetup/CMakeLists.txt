@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(libcryptsetupMain)
 	if(NOT DEFINED PLATFORM_LINUX)
@@ -24,12 +24,10 @@ function(libcryptsetupMain)
   set(hash "ebb53650592212d67ea8c0e49b48891eec64ef370743678881985490c09adeac")
   set(anchor_file "lib/libcryptsetup.a")
 
-  importThirdPartyBinaryLibrary("${name}" "${version}" "${hash}" "imported" "${anchor_file}")
+  importThirdPartyBinaryLibrary("${name}" "${version}" "${hash}" "${anchor_file}")
 
-  set_target_properties(thirdparty_libcryptsetup PROPERTIES
-    IMPORTED_LOCATION "${importThirdPartyBinaryLibrary_baseFolderPath}/${anchor_file}"
-    INTERFACE_LINK_LIBRARIES "thirdparty_libgcrypt"
-  )
+  target_link_libraries("thirdparty_${name}" INTERFACE thirdparty_libgcrypt)
+
 endfunction()
 
 libcryptsetupMain()

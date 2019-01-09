@@ -12,15 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_numericmonitoring_main)
+function(osqueryNumericmonitoringMain)
   add_subdirectory("plugins")
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
   generateOsqueryNumericmonitoring()
 endfunction()
 
 function(generateOsqueryNumericmonitoring)
-  add_library(osquery_numericmonitoring EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_numericmonitoring EXCLUDE_FROM_ALL
     numeric_monitoring.cpp
     plugin_interface.cpp
     pre_aggregation_cache.cpp
@@ -39,6 +44,9 @@ function(generateOsqueryNumericmonitoring)
   )
 
   generateIncludeNamespace(osquery_numericmonitoring "osquery/numeric_monitoring" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_numericmonitoring_tests_test COMMAND osquery_numericmonitoring_tests)
+  add_test(NAME osquery_numericmonitoring_tests_preaggregationcache_test COMMAND osquery_numericmonitoring_tests_preaggregationcache)
 endfunction()
 
-osquery_numericmonitoring_main()
+osqueryNumericmonitoringMain()

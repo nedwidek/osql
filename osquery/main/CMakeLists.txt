@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_main_main)
   generateOsqueryMain()
@@ -34,7 +34,7 @@ function(generateOsqueryMain)
     )
   endif()
 
-  add_library(osquery_main EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_main EXCLUDE_FROM_ALL
     ${source_files}
   )
 

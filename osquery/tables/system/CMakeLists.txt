@@ -12,9 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_tables_system_main)
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
   generateOsqueryTablesSystem()
 endfunction()
 
@@ -207,7 +212,7 @@ function(generateOsqueryTablesSystem)
     )
   endif()
 
-  add_library(osquery_tables_system EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_tables_system EXCLUDE_FROM_ALL
     ${source_files}
   )
 
@@ -220,7 +225,6 @@ function(generateOsqueryTablesSystem)
     osquery_hashing
     osquery_logger
     osquery_process
-    osquery_sql
     osquery_utils
     osquery_utils_conversions
     osquery_utils_expected
@@ -232,6 +236,7 @@ function(generateOsqueryTablesSystem)
     thirdparty_boost
     thirdparty_libmagic
     thirdparty_libxml2
+    osquery_rows_processes_header
   )
 
   if(DEFINED PLATFORM_LINUX)
@@ -264,6 +269,7 @@ function(generateOsqueryTablesSystem)
     set(platform_public_header_files
       posix/known_hosts.h
       posix/shell_history.h
+      posix/sudoers.h
       posix/sysctl_utils.h
     )
   endif()
@@ -296,6 +302,63 @@ function(generateOsqueryTablesSystem)
   endif()
 
   generateIncludeNamespace(osquery_tables_system "osquery/tables/system" "FULL_PATH" ${platform_public_header_files})
+
+  if(DEFINED PLATFORM_POSIX)
+    add_test(NAME osquery_tables_system_tests_knownhosts_test COMMAND osquery_tables_system_tests_knownhosts)
+    add_test(NAME osquery_tables_system_tests_shellhistory_test COMMAND osquery_tables_system_tests_shellhistory)
+    add_test(NAME osquery_tables_system_tests_sudoers_test COMMAND osquery_tables_system_tests_sudoers)
+    add_test(NAME osquery_tables_system_tests_yumsources_test COMMAND osquery_tables_system_tests_yumsources)
+  endif()
+
+  if(DEFINED PLATFORM_LINUX)
+    add_test(NAME osquery_tables_system_tests_md_test COMMAND osquery_tables_system_tests_md)
+    add_test(NAME osquery_tables_system_tests_pcidevices_test COMMAND osquery_tables_system_tests_pcidevices)
+    add_test(NAME osquery_tables_system_tests_portage_test COMMAND osquery_tables_system_tests_portage)
+  elseif(DEFINED PLATFORM_MACOS)
+    add_test(
+      NAME osquery_tables_system_tests_apps_test
+      COMMAND "${CMAKE_COMMAND}" -E env
+              "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_plistfiles,INTERFACE_BINARY_DIR>"
+              "$<TARGET_FILE:osquery_tables_system_tests_apps>"
+    )
+    add_test(NAME osquery_tables_system_tests_asl_test COMMAND osquery_tables_system_tests_asl)
+    add_test(
+      NAME osquery_tables_system_tests_certificates_test
+      COMMAND "${CMAKE_COMMAND}" -E env
+              "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_testfiles,INTERFACE_BINARY_DIR>"
+              "$<TARGET_FILE:osquery_tables_system_tests_certificates>"
+    )
+    add_test(
+      NAME osquery_tables_system_tests_extendedattributes_test
+      COMMAND "${CMAKE_COMMAND}" -E env
+              "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_testfiles,INTERFACE_BINARY_DIR>"
+              "$<TARGET_FILE:osquery_tables_system_tests_extendedattributes>"
+    )
+    add_test(
+      NAME osquery_tables_system_tests_firewall_test
+      COMMAND "${CMAKE_COMMAND}" -E env
+              "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_plistfiles,INTERFACE_BINARY_DIR>"
+              "$<TARGET_FILE:osquery_tables_system_tests_firewall>"
+    )
+    add_test(
+      NAME osquery_tables_system_tests_launchd_test
+      COMMAND "${CMAKE_COMMAND}" -E env
+              "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_plistfiles,INTERFACE_BINARY_DIR>"
+              "$<TARGET_FILE:osquery_tables_system_tests_launchd>"
+    )
+    add_test(NAME osquery_tables_system_tests_mdfind_test COMMAND osquery_tables_system_tests_mdfind)
+    add_test(NAME osquery_tables_system_tests_processes_test COMMAND osquery_tables_system_tests_processes)
+    add_test(NAME osquery_tables_system_tests_smc_test COMMAND osquery_tables_system_tests_smc)
+    add_test(
+      NAME osquery_tables_system_tests_startupitems_test
+      COMMAND "${CMAKE_COMMAND}" -E env
+              "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_plistfiles,INTERFACE_BINARY_DIR>"
+              "$<TARGET_FILE:osquery_tables_system_tests_startupitems>"
+    )
+    add_test(NAME osquery_tables_system_tests_signature_test COMMAND osquery_tables_system_tests_signature)
+  endif()
+
+  add_test(NAME osquery_tables_system_tests_test COMMAND osquery_tables_system_tests)
 endfunction()
 
 osquery_tables_system_main()

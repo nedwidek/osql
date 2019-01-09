@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(berkeleydbMain)
   if(NOT DEFINED PLATFORM_LINUX)
@@ -30,16 +30,8 @@ function(berkeleydbMain)
     lib/libdb_cxx.a
   )
 
-  importThirdPartyBinaryLibrary("${name}" "${version}" "${hash}" "imported" "${anchor_file}" ${additional_libraries})
+  importThirdPartyBinaryLibrary("${name}" "${version}" "${hash}" "${anchor_file}" ${additional_libraries})
 
-  foreach(additional_lib ${additional_libraries})
-    list(APPEND additional_link_libs "${importThirdPartyBinaryLibrary_baseFolderPath}/${additional_lib}")
-  endforeach()
-
-  set_target_properties(thirdparty_berkeley-db PROPERTIES
-    IMPORTED_LOCATION "${importThirdPartyBinaryLibrary_baseFolderPath}/${anchor_file}"
-    INTERFACE_LINK_LIBRARIES "${additional_link_libs}"
-  )
 endfunction()
 
 berkeleydbMain()

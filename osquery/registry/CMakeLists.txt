@@ -12,14 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_registry_main)
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
   generateOsqueryRegistry()
 endfunction()
 
 function(generateOsqueryRegistry)
-  add_library(osquery_registry EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_registry EXCLUDE_FROM_ALL
     registry_factory.cpp
     registry_interface.cpp
   )
@@ -33,6 +38,8 @@ function(generateOsqueryRegistry)
     osquery_utils_system_env
     thirdparty_boost
   )
+
+  add_test(NAME osquery_registry_tests_test COMMAND osquery_registry_tests)
 endfunction()
 
 osquery_registry_main()

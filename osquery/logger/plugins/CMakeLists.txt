@@ -12,10 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_logger_plugins_main)
-  add_library(osquery_logger_plugins_commondeps INTERFACE)
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
+  add_osquery_library(osquery_logger_plugins_commondeps INTERFACE)
   target_link_libraries(osquery_logger_plugins_commondeps INTERFACE
     thirdparty_glog
     thirdparty_gflags
@@ -39,12 +44,11 @@ function(osquery_logger_plugins_main)
 endfunction()
 
 function(generateOsqueryLoggerPluginsAwsfirehose)
-  add_library(osquery_logger_plugins_awsfirehose EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_logger_plugins_awsfirehose EXCLUDE_FROM_ALL
     aws_firehose.cpp
   )
 
-  # TODO(alessandro): Enabling this breaks linking
-  # enableLinkWholeArchive(osquery_logger_plugins_awsfirehose)
+  enableLinkWholeArchive(osquery_logger_plugins_awsfirehose)
 
   target_link_libraries(osquery_logger_plugins_awsfirehose PUBLIC
     global_cxx_settings
@@ -62,12 +66,11 @@ function(generateOsqueryLoggerPluginsAwsfirehose)
 endfunction()
 
 function(generateOsqueryLoggerPluginsAwskinesis)
-  add_library(osquery_logger_plugins_awskinesis EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_logger_plugins_awskinesis EXCLUDE_FROM_ALL
     aws_kinesis.cpp
   )
 
-  # TODO(alessandro): Enabling this breaks linking
-  # enableLinkWholeArchive(osquery_logger_plugins_awskinesis)
+  enableLinkWholeArchive(osquery_logger_plugins_awskinesis)
 
   target_link_libraries(osquery_logger_plugins_awskinesis PUBLIC
     global_cxx_settings
@@ -85,10 +88,11 @@ function(generateOsqueryLoggerPluginsAwskinesis)
   )
 
   generateIncludeNamespace(osquery_logger_plugins_awskinesis "osquery/logger/plugins" "FILE_ONLY" ${public_header_files})
+  add_test(NAME osquery_logger_plugins_tests_awskinesistests_test COMMAND osquery_logger_plugins_tests_awskinesistests)
 endfunction()
 
 function(generateOsqueryLoggerPluginsAwslogforwarder)
-  add_library(osquery_logger_plugins_awslogforwarder INTERFACE)
+  add_osquery_library(osquery_logger_plugins_awslogforwarder INTERFACE)
 
   target_link_libraries(osquery_logger_plugins_awslogforwarder INTERFACE
     global_cxx_settings
@@ -106,7 +110,7 @@ function(generateOsqueryLoggerPluginsAwslogforwarder)
 endfunction()
 
 function(generateOsqueryLoggerPluginsBuffered)
-  add_library(osquery_logger_plugins_buffered EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_logger_plugins_buffered EXCLUDE_FROM_ALL
     buffered.cpp
   )
 
@@ -128,10 +132,11 @@ function(generateOsqueryLoggerPluginsBuffered)
   )
 
   generateIncludeNamespace(osquery_logger_plugins_buffered "osquery/logger/plugins" "FILE_ONLY" ${public_header_files})
+  add_test(NAME osquery_logger_plugins_tests_bufferedtests_test COMMAND osquery_logger_plugins_tests_bufferedtests)
 endfunction()
 
 function(generateOsqueryLoggerPluginsFilesystem)
-  add_library(osquery_logger_plugins_filesystem EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_logger_plugins_filesystem EXCLUDE_FROM_ALL
     filesystem_logger.cpp
   )
 
@@ -151,34 +156,39 @@ function(generateOsqueryLoggerPluginsFilesystem)
   )
 
   generateIncludeNamespace(osquery_logger_plugins_filesystem "osquery/logger/plugins" "FILE_ONLY" ${public_header_files})
+  add_test(NAME osquery_logger_plugins_tests_filesystemtests_test COMMAND osquery_logger_plugins_tests_filesystemtests)
 endfunction()
 
 function(generateOsqueryLoggerPluginsKafkaproducer)
-  # Exclude this from the ALL target, so that it's only built
-  # when osquery_main includes it (this is how the Buck project works)
-  add_library(osquery_logger_plugins_kafkaproducer EXCLUDE_FROM_ALL
-    kafka_producer.cpp
-  )
 
-  enableLinkWholeArchive(osquery_logger_plugins_kafkaproducer)
+  if (DEFINED PLATFORM_LINUX OR DEFINED PLATFORM_MACOS)
+    add_osquery_library(osquery_logger_plugins_kafkaproducer EXCLUDE_FROM_ALL
+      kafka_producer.cpp
+    )
 
-  target_link_libraries(osquery_logger_plugins_kafkaproducer PUBLIC
-    global_cxx_settings
-    osquery_logger_plugins_commondeps
-    osquery_dispatcher
-    osquery_utils_config
-    thirdparty_librdkafka
-  )
+    enableLinkWholeArchive(osquery_logger_plugins_kafkaproducer)
 
-  set(public_header_files
-    kafka_producer.h
-  )
+    target_link_libraries(osquery_logger_plugins_kafkaproducer PUBLIC
+      global_cxx_settings
+      osquery_logger_plugins_commondeps
+      osquery_dispatcher
+      osquery_utils_config
+      thirdparty_librdkafka
+    )
 
-  generateIncludeNamespace(osquery_logger_plugins_kafkaproducer "osquery/logger/plugins" "FILE_ONLY" ${public_header_files})
+    set(public_header_files
+      kafka_producer.h
+    )
+
+    generateIncludeNamespace(osquery_logger_plugins_kafkaproducer "osquery/logger/plugins" "FILE_ONLY" ${public_header_files})
+    add_test(NAME osquery_logger_plugins_tests_kafkaproducertests_test COMMAND osquery_logger_plugins_tests_kafkaproducertests)
+  else()
+    add_osquery_library(osquery_logger_plugins_kafkaproducer INTERFACE)
+  endif()
 endfunction()
 
 function(generateOsqueryLoggerPluginsStdout)
-  add_library(osquery_logger_plugins_stdout EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_logger_plugins_stdout EXCLUDE_FROM_ALL
     stdout.cpp
   )
 
@@ -199,28 +209,38 @@ function(generateOsqueryLoggerPluginsStdout)
 endfunction()
 
 function(generateOsqueryLoggerPluginsSyslog)
-  add_library(osquery_logger_plugins_syslog EXCLUDE_FROM_ALL
-    syslog_logger.cpp
-  )
 
-  enableLinkWholeArchive(osquery_logger_plugins_syslog)
+  if (DEFINED PLATFORM_POSIX)
+    add_osquery_library(osquery_logger_plugins_syslog EXCLUDE_FROM_ALL
+      syslog_logger.cpp
+    )
 
-  target_link_libraries(osquery_logger_plugins_syslog PUBLIC
-    global_cxx_settings
-    osquery_logger_plugins_commondeps
-    thirdparty_gflags
-    thirdparty_glog
-  )
+    enableLinkWholeArchive(osquery_logger_plugins_syslog)
 
-  set(public_header_files
-    syslog_logger.h
-  )
+    target_link_libraries(osquery_logger_plugins_syslog PUBLIC
+      global_cxx_settings
+      osquery_logger_plugins_commondeps
+      thirdparty_gflags
+      thirdparty_glog
+    )
 
-  generateIncludeNamespace(osquery_logger_plugins_syslog "osquery/logger/plugins" "FILE_ONLY" ${public_header_files})
+    set(public_header_files syslog_logger.h)
+
+    generateIncludeNamespace(osquery_logger_plugins_syslog "osquery/logger/plugins" "FILE_ONLY" ${public_header_files})
+
+    add_test(
+      NAME osquery_logger_plugins_tests_syslogtests_test
+      COMMAND "${CMAKE_COMMAND}" -E env
+              "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_testfiles,INTERFACE_BINARY_DIR>"
+              "$<TARGET_FILE:osquery_logger_plugins_tests_syslogtests>"
+    )
+  else()
+     add_osquery_library(osquery_logger_plugins_syslog INTERFACE)
+  endif()
 endfunction()
 
 function(generateOsqueryLoggerPluginsTlslogger)
-  add_library(osquery_logger_plugins_tlslogger EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_logger_plugins_tlslogger EXCLUDE_FROM_ALL
     tls_logger.cpp
   )
 
@@ -243,10 +263,16 @@ function(generateOsqueryLoggerPluginsTlslogger)
   )
 
   generateIncludeNamespace(osquery_logger_plugins_tlslogger "osquery/logger/plugins" "FILE_ONLY" ${public_header_files})
+  add_test(
+    NAME osquery_logger_plugins_tests_tlstests_test
+    COMMAND "${CMAKE_COMMAND}" -E env
+            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_testfiles,INTERFACE_BINARY_DIR>"
+            "$<TARGET_FILE:osquery_logger_plugins_tests_tlstests>"
+  )
 endfunction()
 
 function(generateOsqueryLoggerPluginsWindowseventlog)
-  add_library(osquery_logger_plugins_windowseventlog EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_logger_plugins_windowseventlog EXCLUDE_FROM_ALL
     windows_event_log.cpp
   )
 

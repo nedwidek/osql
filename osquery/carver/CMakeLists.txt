@@ -12,14 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_carver_main)
   generateOsqueryCarver()
+
+  if (BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
 endfunction()
 
 function(generateOsqueryCarver)
-  add_library(osquery_carver EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_carver EXCLUDE_FROM_ALL
     carver.cpp
   )
 
@@ -43,6 +47,8 @@ function(generateOsqueryCarver)
   )
 
   generateIncludeNamespace(osquery_carver "osquery/carver" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_carver_tests_test COMMAND osquery_carver_tests)
 endfunction()
 
 osquery_carver_main()

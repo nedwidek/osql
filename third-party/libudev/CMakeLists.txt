@@ -12,23 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(libudevMain)
-	if(DEFINED PLATFORM_LINUX)
-		return()
-	endif()
-
   set(name "libudev")
   set(version "173")
   set(hash "fc1483fa27cb92876661e453bceef0c5752e4dbe83074a1653928ce44078aa34")
   set(anchor_file "lib/libudev.a")
 
-  importThirdPartyBinaryLibrary("${name}" "${version}" "${hash}" "imported" "${anchor_file}")
+  importThirdPartyBinaryLibrary("${name}" "${version}" "${hash}" "${anchor_file}")
 
-  set_target_properties(thirdparty_libudev PROPERTIES
-    IMPORTED_LOCATION "${importThirdPartyBinaryLibrary_baseFolderPath}/${anchor_file}"
-  )
 endfunction()
 
 libudevMain()

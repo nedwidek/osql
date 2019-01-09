@@ -12,14 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_devtools_main)
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
   generateOsqueryDevtools()
 endfunction()
 
 function(generateOsqueryDevtools)
-  add_library(osquery_devtools EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_devtools EXCLUDE_FROM_ALL
     printer.cpp
     shell.cpp
   )
@@ -34,7 +39,7 @@ function(generateOsqueryDevtools)
     osquery_utils
     osquery_utils_conversions
     osquery_utils_system_env
-    thirdparty_googletest
+    thirdparty_googletest_headers
     thirdparty_linenoise-ng
   )
 
@@ -43,6 +48,8 @@ function(generateOsqueryDevtools)
   )
 
   generateIncludeNamespace(osquery_devtools "osquery/devtools" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_devtools_tests_printertests_test COMMAND osquery_devtools_tests_printertests)
 endfunction()
 
 osquery_devtools_main()

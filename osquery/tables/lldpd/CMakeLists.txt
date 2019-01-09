@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_tables_lldpd_main)
   generateOsqueryTablesLldpd()
 endfunction()
 
 function(generateOsqueryTablesLldpd)
-  add_library(osquery_tables_lldpd EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_tables_lldpd EXCLUDE_FROM_ALL
     lldp_neighbors.cpp
   )
 

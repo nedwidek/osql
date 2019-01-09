@@ -12,11 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_core_main)
   add_subdirectory("plugins")
   add_subdirectory("sql")
+
+  if (BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
 
   generateOsqueryCore()
 endfunction()
@@ -44,7 +48,7 @@ function(generateOsqueryCore)
     )
   endif()
 
-  add_library(osquery_core EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_core EXCLUDE_FROM_ALL
     ${source_files}
   )
 
@@ -62,7 +66,12 @@ function(generateOsqueryCore)
     osquery_utils_system
     osquery_utils_system_time
     osquery_logger
-    thirdparty_googletest
+    osquery_extensions
+    thirdparty_gflags
+    thirdparty_glog
+    thirdparty_openssl
+    thirdparty_sqlite
+    thirdparty_pthread
   )
 
   if(DEFINED PLATFORM_LINUX)
@@ -73,10 +82,6 @@ function(generateOsqueryCore)
     global_cxx_settings
 
     ${dependencies}
-
-    thirdparty_gflags
-    thirdparty_glog
-    thirdparty_openssl
   )
 
   set(public_header_files
@@ -84,14 +89,22 @@ function(generateOsqueryCore)
   )
 
   if(DEFINED PLATFORM_WINDOWS)
-    list(APPEND public_header_files
+    list(APPEND windows_public_header_files
       windows/handle.h
       windows/ntapi.h
       windows/wmi.h
     )
+
+    generateIncludeNamespace(osquery_core "osquery/core" "FULL_PATH" ${windows_public_header_files})
   endif()
 
   generateIncludeNamespace(osquery_core "osquery/core" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_core_tests_flagstests_test COMMAND osquery_core_tests_flagstests)
+  add_test(NAME osquery_core_tests_systemtests_test COMMAND osquery_core_tests_systemtests)
+  add_test(NAME osquery_core_tests_tablestests_test COMMAND osquery_core_tests_tablestests)
+  add_test(NAME osquery_core_tests_watcherpermissionstests_test COMMAND osquery_core_tests_watcherpermissionstests)
+
 endfunction()
 
 osquery_core_main()

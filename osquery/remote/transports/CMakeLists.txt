@@ -12,14 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_remote_transports_main)
+function(osqueryRemoteTransportsMain)
   generateOsqueryRemoteTransportsTls()
+
+  if(BUILD_TESTING AND DEFINED PLATFORM_POSIX)
+    generateOsqueryRemoteTransportsTlsTests()
+  endif()
 endfunction()
 
 function(generateOsqueryRemoteTransportsTls)
-  add_library(osquery_remote_transports_tls EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_remote_transports_tls EXCLUDE_FROM_ALL
     tls.cpp
   )
 
@@ -38,6 +42,39 @@ function(generateOsqueryRemoteTransportsTls)
   )
 
   generateIncludeNamespace(osquery_remote_transports_tls "osquery/remote/transports" "FILE_ONLY" ${public_header_files})
+
+  if(DEFINED PLATFORM_POSIX)
+    add_test(
+      NAME osquery_remote_transports_tlstests_test
+      COMMAND "${CMAKE_COMMAND}" -E env
+              "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_testfiles,INTERFACE_BINARY_DIR>"
+              "$<TARGET_FILE:osquery_remote_transports_tlstests>"
+    )
+  endif()
 endfunction()
 
-osquery_remote_transports_main()
+
+function(generateOsqueryRemoteTransportsTlsTests)
+
+  add_osquery_executable(osquery_remote_transports_tlstests tests/tls_transports_tests.cpp)
+
+  target_link_libraries(osquery_remote_transports_tlstests PRIVATE
+    global_cxx_settings
+    osquery_config_tests_testutils
+    osquery_config_plugins_tlsconfig
+    osquery_database
+    osquery_database_plugins_ephemeral
+    osquery_events
+    osquery_extensions
+    osquery_remote_enroll_tlsenroll
+    osquery_utils_conversions
+    osquery_utils_info
+    osquery_killswitch_plugins_filesystem
+    tests_helper
+    osquery_remote_tests_utils
+    thirdparty_googletest
+    osquery_tools_tests_testfiles
+  )
+endfunction()
+
+osqueryRemoteTransportsMain()

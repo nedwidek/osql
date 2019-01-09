@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_utils_conversions_main)
+  generateOsqueryUtilsConversionsTo()
   generateOsqueryUtilsConversions()
 endfunction()
 
@@ -39,12 +40,13 @@ function(generateOsqueryUtilsConversions)
     )
   endif()
 
-  add_library(osquery_utils_conversions EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_utils_conversions EXCLUDE_FROM_ALL
     ${source_files}
   )
 
   target_link_libraries(osquery_utils_conversions PUBLIC
     global_cxx_settings
+    osquery_utils_conversions_to
     osquery_utils_expected
     thirdparty_boost
     thirdparty_glog
@@ -77,6 +79,18 @@ function(generateOsqueryUtilsConversions)
   if(${platform_public_header_files_size} GREATER 0)
     generateIncludeNamespace(osquery_utils_conversions "osquery/utils/conversions" "FULL_PATH" ${platform_public_header_files})
   endif()
+endfunction()
+
+function(generateOsqueryUtilsConversionsTo)
+  add_osquery_library(osquery_utils_conversions_to INTERFACE)
+
+  set(public_header_files
+    to.h
+  )
+
+  target_link_libraries(osquery_utils_conversions_to INTERFACE thirdparty_boost)
+
+  generateIncludeNamespace(osquery_utils_conversions_to "osquery/utils/conversions" "FILE_ONLY" ${public_header_files})
 endfunction()
 
 osquery_utils_conversions_main()

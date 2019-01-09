@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(libresolvMain)
   if(DEFINED PLATFORM_LINUX)
@@ -23,7 +23,7 @@ function(libresolvMain)
   	return()
   endif()
 
-  add_library(thirdparty_libresolv INTERFACE)
+  add_osquery_library(thirdparty_libresolv INTERFACE)
   target_link_libraries(thirdparty_libresolv INTERFACE "${library_name}")
 endfunction()
 

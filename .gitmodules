@@ -1,0 +1,3 @@
+[submodule "osquery-src"]
+	path = osquery-src
+	url = git@github.com:facebook/osquery.git

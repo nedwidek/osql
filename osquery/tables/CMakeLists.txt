@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_tables_main)
   add_subdirectory("applications")
@@ -31,7 +31,7 @@ function(osquery_tables_main)
 endfunction()
 
 function(generateOsqueryTables)
-  add_library(osquery_tables INTERFACE)
+  add_osquery_library(osquery_tables INTERFACE)
 
   if(DEFINED PLATFORM_POSIX)
     target_link_libraries(osquery_tables INTERFACE

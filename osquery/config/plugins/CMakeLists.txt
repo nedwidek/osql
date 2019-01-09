@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_config_plugins_main)
   generateOsqueryConfigPluginsFilesystemconfig()
@@ -20,7 +20,7 @@ function(osquery_config_plugins_main)
 endfunction()
 
 function(generateOsqueryConfigPluginsFilesystemconfig)
-  add_library(osquery_config_plugins_filesystemconfig EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_config_plugins_filesystemconfig EXCLUDE_FROM_ALL
     filesystem_config.cpp
   )
 
@@ -34,7 +34,7 @@ function(generateOsqueryConfigPluginsFilesystemconfig)
 endfunction()
 
 function(generateOsqueryConfigPluginsTlsconfig)
-  add_library(osquery_config_plugins_tlsconfig EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_config_plugins_tlsconfig EXCLUDE_FROM_ALL
     tls_config.cpp
   )
 

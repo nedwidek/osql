@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(sleuthkitMain)
   set(name "sleuthkit")
@@ -28,11 +28,7 @@ function(sleuthkitMain)
 
   set(anchor_file "lib/libtsk.a")
 
-  importThirdPartyBinaryLibrary("${name}" "${version}" "${hash}" "imported" "${anchor_file}")
-
-  set_target_properties(thirdparty_sleuthkit PROPERTIES
-    IMPORTED_LOCATION "${importThirdPartyBinaryLibrary_baseFolderPath}/${anchor_file}"
-  )
+  importThirdPartyBinaryLibrary("${name}" "${version}" "${hash}" "${anchor_file}")
 endfunction()
 
 sleuthkitMain()

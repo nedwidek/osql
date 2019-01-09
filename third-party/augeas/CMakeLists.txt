@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(augeasMain)
   set(name "augeas")
@@ -23,6 +23,7 @@ function(augeasMain)
   elseif(DEFINED PLATFORM_MACOS)
     set(hash "7330e0fcfbcea6f58d199916238c47078f3ea2ba85ac4ed2fa74fcb63e034b1c")
   else()
+    add_osquery_library(thirdparty_augeas INTERFACE)
     return()
   endif()
 
@@ -32,12 +33,7 @@ function(augeasMain)
     "lib/libfa.a"
   )
 
-  importThirdPartyBinaryLibrary("${name}" "${version}" "${hash}" "imported" "${anchor_file}" ${additional_library})
-
-  set_target_properties(thirdparty_augeas PROPERTIES
-    IMPORTED_LOCATION "${importThirdPartyBinaryLibrary_baseFolderPath}/${anchor_file}"
-    INTERFACE_LINK_LIBRARIES "${importThirdPartyBinaryLibrary_baseFolderPath}/${additional_library}"
-  )
+  importThirdPartyBinaryLibrary("${name}" "${version}" "${hash}" "${anchor_file}" ${additional_library})
 endfunction()
 
 augeasMain()

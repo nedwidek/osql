@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_utils_main)
   add_subdirectory("aws")
@@ -43,9 +43,11 @@ function(generateOsqueryUtils)
     )
   endif()
 
-  add_library(osquery_utils EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_utils EXCLUDE_FROM_ALL
     ${source_files}
   )
+
+  add_osquery_library(osquery_utils_attribute INTERFACE)
 
   target_link_libraries(osquery_utils PUBLIC
     global_cxx_settings
@@ -56,11 +58,14 @@ function(generateOsqueryUtils)
     osquery_utils_expected
     osquery_utils_info
     osquery_utils_status
+    thirdparty_boost
   )
 
   set(public_header_files
+    attribute.h
     base64.h
     chars.h
+    enum_class_hash.h
     map_take.h
     mutex.h
     only_movable.h
@@ -76,6 +81,13 @@ function(generateOsqueryUtils)
 
     generateIncludeNamespace(osquery_utils "osquery/utils" "FULL_PATH" ${platform_public_header_files})
   endif()
+
+  set(attribute_public_header_files
+    attribute.h
+  )
+
+  generateIncludeNamespace(osquery_utils_attribute "osquery/utils" "FILE_ONLY" ${attribute_public_header_files})
+
 endfunction()
 
 osquery_utils_main()

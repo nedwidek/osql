@@ -12,11 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_filesystem_main)
+function(osqueryFilesystemMain)
   generateOsqueryFilesystem()
   generateOsqueryFilesystemMockfilestructure()
+
+  if(BUILD_TESTING)
+    generateOsqueryFilesystemTests()
+  endif()
 endfunction()
 
 function(generateOsqueryFilesystem)
@@ -43,7 +47,7 @@ function(generateOsqueryFilesystem)
     )
   endif()
 
-  add_library(osquery_filesystem EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_filesystem EXCLUDE_FROM_ALL
     ${source_files}
   )
 
@@ -71,10 +75,17 @@ function(generateOsqueryFilesystem)
   endif()
 
   generateIncludeNamespace(osquery_filesystem "osquery/filesystem" "FULL_PATH" ${public_header_files})
+
+  add_test(
+    NAME osquery_filesystem_tests_test
+    COMMAND "${CMAKE_COMMAND}" -E env
+            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_plistfiles,INTERFACE_BINARY_DIR>"
+            "$<TARGET_FILE:osquery_filesystem_tests>"
+  )
 endfunction()
 
 function(generateOsqueryFilesystemMockfilestructure)
-  add_library(osquery_filesystem_mockfilestructure EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_filesystem_mockfilestructure EXCLUDE_FROM_ALL
     mock_file_structure.cpp
   )
 
@@ -91,4 +102,38 @@ function(generateOsqueryFilesystemMockfilestructure)
   generateIncludeNamespace(osquery_filesystem_mockfilestructure "osquery/filesystem" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_filesystem_main()
+function(generateOsqueryFilesystemTests)
+
+  set(source_files
+    tests/fileops.cpp
+    tests/filesystem.cpp
+  )
+
+  if(DEFINED PLATFORM_MACOS)
+    list(APPEND source_files tests/darwin/plist_tests.cpp)
+  endif()
+
+  add_osquery_executable(osquery_filesystem_tests ${source_files})
+
+  target_link_libraries(osquery_filesystem_tests PRIVATE
+    global_cxx_settings
+    osquery_config_tests_testutils
+    osquery_config_plugins_tlsconfig
+    osquery_core
+    osquery_core_sql
+    osquery_dispatcher
+    osquery_distributed
+    osquery_events
+    osquery_extensions
+    osquery_process
+    osquery_registry
+    osquery_remote_enroll_tlsenroll
+    specs_tables
+    osquery_filesystem_mockfilestructure
+    osquery_filesystem
+    osquery_tools_tests_plistfiles
+    thirdparty_googletest
+  )
+endfunction()
+
+osqueryFilesystemMain()

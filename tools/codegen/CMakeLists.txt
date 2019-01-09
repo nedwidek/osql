@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(toolsCodegenMain)
   # Prepare the gentable.py script
@@ -30,17 +30,19 @@ function(generateGentable)
   set(utils_file_path "${gentable_working_directory}/${module_path}/utils.py")
   add_custom_command(
     OUTPUT "${utils_file_path}"
-    COMMAND "${CMAKE_COMMAND}" -E create_symlink "${CMAKE_SOURCE_DIR}/tools/tests/utils.py" "${utils_file_path}"
+    COMMAND "${CMAKE_COMMAND}" -E create_symlink "${OSQUERY_SOURCE_DIR}/tools/tests/utils.py" "${utils_file_path}"
     DEPENDS "${generatePythonModulePath_rootTarget}"
   )
 
   add_custom_target("codegen_gentable_utils_dependency" DEPENDS "${utils_file_path}")
 
   set(gentable_file_path "${gentable_working_directory}/gentable.py")
+  set(source_base_path "${CMAKE_CURRENT_SOURCE_DIR}")
+  string(REPLACE "${CMAKE_SOURCE_DIR}" "${OSQUERY_SOURCE_DIR}" source_base_path "${source_base_path}")
   add_custom_command(
     OUTPUT "${gentable_file_path}"
-    COMMAND "${CMAKE_COMMAND}" -E create_symlink "${CMAKE_CURRENT_SOURCE_DIR}/gentable.py" "${gentable_file_path}"
-    DEPENDS "codegen_gentable_utils_dependency"
+    COMMAND "${CMAKE_COMMAND}" -E create_symlink "${source_base_path}/gentable.py" "${gentable_file_path}"
+    DEPENDS "codegen_gentable_utils_dependency" "thirdparty_python_modules"
   )
 
   add_custom_target("codegen_gentable" DEPENDS "${gentable_file_path}")
@@ -116,7 +118,7 @@ function(generateTables category)
 
   # Convert all relative paths to absolute paths
   foreach(relative_table_spec ${ARGN})
-    list(APPEND table_spec_list "${CMAKE_SOURCE_DIR}/specs/${relative_table_spec}")
+    list(APPEND table_spec_list "${OSQUERY_SOURCE_DIR}/specs/${relative_table_spec}")
   endforeach()
 
   # Iterate through each table spec file
@@ -125,29 +127,55 @@ function(generateTables category)
   foreach(table_spec ${table_spec_list})
     # Use the file name as table name
     get_filename_component(table_name "${table_spec}" NAME_WE)
-    set(generated_code "${output_folder}/${table_name}.cpp")
+    set(generated_source_code "${output_folder}/${table_name}.cpp")
+    
+    set(generated_headers_folder "${output_folder}/osquery/rows")
+    set(generated_header_code "${generated_headers_folder}/${table_name}.h")
 
     # Set up the generator
-    get_filename_component(intermediate_directories "${generated_code}" DIRECTORY)
+    get_filename_component(source_code_intermediate_directories "${generated_source_code}" DIRECTORY)
 
     if("${category}" STREQUAL "foreign")
       set(optional_foreign_parameter "--foreign")
     endif()
 
+    set(env_path_separator ":")
+    if (DEFINED PLATFORM_WINDOWS)
+      set(env_path_separator ";")
+    endif()
+
     add_custom_command(
-      OUTPUT "${generated_code}"
-      COMMAND "${CMAKE_COMMAND}" -E make_directory "${intermediate_directories}"
-      COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${gentable_working_directory}" "${gentable_file_path}" ${optional_foreign_parameter} "${table_spec}" "${generated_code}"
+      OUTPUT "${generated_source_code}"
+      COMMAND "${CMAKE_COMMAND}" -E make_directory "${source_code_intermediate_directories}"
+      COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${gentable_working_directory}${env_path_separator}${PYTHON_PATH}" "${EX_TOOL_PYTHON3_EXECUTABLE_PATH}" "${gentable_file_path}" --templates "${OSQUERY_SOURCE_DIR}/tools/codegen/templates" ${optional_foreign_parameter} "${table_spec}" "${generated_source_code}"
       WORKING_DIRECTORY "${gentable_working_directory}"
       DEPENDS codegen_gentable "${table_spec}"
       COMMENT "Generating code for table ${category}/${table_name}..."
       VERBATIM
     )
 
-    set(target_name "codegen_gentable_${category}_${table_name}")
-    add_custom_target("${target_name}" DEPENDS "${generated_code}")
+    add_custom_command(
+      OUTPUT "${generated_header_code}"
+      COMMAND "${CMAKE_COMMAND}" -E make_directory "${generated_headers_folder}"
+      COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${gentable_working_directory}${env_path_separator}${PYTHON_PATH}" "${EX_TOOL_PYTHON3_EXECUTABLE_PATH}" "${gentable_file_path}" --header --templates "${OSQUERY_SOURCE_DIR}/tools/codegen/templates" ${optional_foreign_parameter} "${table_spec}" "${generated_header_code}"
+      WORKING_DIRECTORY "${gentable_working_directory}"
+      DEPENDS codegen_gentable "${table_spec}"
+      COMMENT "Generating header for table ${category}/${table_name}..."
+      VERBATIM
+    )
 
-    list(APPEND generated_target_list "${target_name}")
+    set(table_target_name "codegen_gentable_${category}_${table_name}")
+    add_custom_target("${table_target_name}" DEPENDS "${generated_source_code}")
+
+    set(header_generator_target_name "codegen_gentable_${category}_${table_name}_header")
+    add_custom_target("${header_generator_target_name}" DEPENDS "${generated_header_code}")
+
+    set(header_library_name "osquery_rows_${table_name}_header")
+    add_osquery_library("${header_library_name}" INTERFACE)
+    add_dependencies("${header_library_name}" "${header_generator_target_name}")
+    target_include_directories("${header_library_name}" INTERFACE "${output_folder}")
+
+    list(APPEND generated_target_list "${table_target_name}")
   endforeach()
 
   # Return the base folder
@@ -167,6 +195,8 @@ function(generateTableCategoryAmalgamation category_name)
   # Generate the source files
   generateTables("${category_name}" ${category_spec_files})
 
+  list(TRANSFORM category_spec_files PREPEND "${OSQUERY_SOURCE_DIR}/specs/")
+
   # Amalgamate all the source files into a single one
   set(amalgamation_file "${CMAKE_CURRENT_BINARY_DIR}/amalgamated_${category_name}_tables.cpp")
 
@@ -178,15 +208,15 @@ function(generateTableCategoryAmalgamation category_name)
 
   add_custom_command(
     OUTPUT "${amalgamation_file}"
-    COMMAND "${CMAKE_SOURCE_DIR}/tools/codegen/amalgamate.py" --templates "${CMAKE_SOURCE_DIR}/tools/codegen/templates" ${amalgamation_type} --sources "${generateTables_output}" --output "${amalgamation_file}"
+    COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHON_PATH}" "${EX_TOOL_PYTHON3_EXECUTABLE_PATH}" "${OSQUERY_SOURCE_DIR}/tools/codegen/amalgamate.py" --templates "${OSQUERY_SOURCE_DIR}/tools/codegen/templates" ${amalgamation_type} --sources "${generateTables_output}" --output "${amalgamation_file}"
     COMMENT "Generating amalgamation file for the ${category_name} tables..."
-    DEPENDS ${category_spec_files} ${generateTables_targetList}
+    DEPENDS "${category_spec_files}" ${generateTables_targetList} "thirdparty_python_modules"
   )
 
   # Build the library
   set(target_name "codegen_${category_name}_tables")
 
-  add_library("${target_name}" EXCLUDE_FROM_ALL "${amalgamation_file}")
+  add_osquery_library("${target_name}" EXCLUDE_FROM_ALL "${amalgamation_file}")
   target_link_libraries("${target_name}" PUBLIC osquery_events)
 
   # Return the target name to the caller

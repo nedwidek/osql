@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_extensions_thrift_main)
   generateOsqueryExtensionsThriftOsquerycpp2()
 endfunction()
 
 function(generateOsqueryExtensionsThriftOsquerycpp2)
-  add_library(osquery_extensions_thrift_osquery-cpp2
+  add_osquery_library(osquery_extensions_thrift_osquery-cpp2
     gen/Extension.cpp
     gen/ExtensionManager.cpp
     gen/osquery_constants.cpp

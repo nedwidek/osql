@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_distributed_plugins_main)
   generateOsqueryDistributedPluginsTls()
 endfunction()
 
 function(generateOsqueryDistributedPluginsTls)
-  add_library(osquery_distributed_plugins_tls EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_distributed_plugins_tls EXCLUDE_FROM_ALL
     tls_distributed.cpp
   )
 
