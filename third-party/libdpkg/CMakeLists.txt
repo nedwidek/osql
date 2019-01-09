@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(libdpkgMain)
 	if(NOT DEFINED PLATFORM_LINUX)
@@ -24,11 +24,9 @@ function(libdpkgMain)
   set(hash "9bd06978cf7caaa68bd607ac817c2fd0f436659a9620f6e8bf0281c4f3106799")
   set(anchor_file "lib/libdpkg.a")
 
-  importThirdPartyBinaryLibrary("${name}" "${version}" "${hash}" "imported" "${anchor_file}")
+  importThirdPartyBinaryLibrary("${name}" "${version}" "${hash}" "${anchor_file}")
 
-  set_target_properties(thirdparty_libdpkg PROPERTIES
-    IMPORTED_LOCATION "${importThirdPartyBinaryLibrary_baseFolderPath}/${anchor_file}"
-  )
+  target_link_libraries("thirdparty_${name}" INTERFACE thirdparty_zlib)
 endfunction()
 
 libdpkgMain()

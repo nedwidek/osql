@@ -12,14 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_remote_enroll_tlsenroll_main)
+function(osqueryRemoteEnrollTlsenrollMain)
   generateOsqueryRemoteEnrollTlsenroll()
+
+  if(BUILD_TESTING)
+    generateOsqueryRemoteEnrollTests()
+  endif()
 endfunction()
 
 function(generateOsqueryRemoteEnrollTlsenroll)
-  add_library(osquery_remote_enroll_tlsenroll EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_remote_enroll_tlsenroll EXCLUDE_FROM_ALL
     enroll.cpp
     tls_enroll.cpp
   )
@@ -44,6 +48,45 @@ function(generateOsqueryRemoteEnrollTlsenroll)
   )
 
   generateIncludeNamespace(osquery_remote_enroll_tlsenroll "osquery/remote/enroll" "FILE_ONLY" ${public_header_files})
+
+  add_test(
+    NAME osquery_remote_enroll_tests_test
+    COMMAND "${CMAKE_COMMAND}" -E env
+            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_testfiles,INTERFACE_BINARY_DIR>"
+            "$<TARGET_FILE:osquery_remote_enroll_tests>"
+  )
 endfunction()
 
-osquery_remote_enroll_tlsenroll_main()
+function(generateOsqueryRemoteEnrollTests)
+
+  set(source_files
+    tests/enroll_tests.cpp
+  )
+
+  if(DEFINED PLATFORM_MACOS)
+    list(APPEND source_files tests/plugins/tls_enroll_tests.cpp)
+  endif()
+
+  add_osquery_executable(osquery_remote_enroll_tests ${source_files})
+
+  target_link_libraries(osquery_remote_enroll_tests PRIVATE
+    global_cxx_settings
+    osquery_config_tests_testutils
+    osquery_config_plugins_tlsconfig
+    osquery_database
+    osquery_database_plugins_ephemeral
+    osquery_events
+    osquery_extensions
+    osquery_remote_enroll_tlsenroll
+    osquery_utils_conversions
+    osquery_utils_info
+    osquery_killswitch_plugins_filesystem
+    tests_helper
+    osquery_remote_tests_utils
+    osquery_process
+    thirdparty_googletest
+    osquery_tools_tests_testfiles
+  )
+endfunction()
+
+osqueryRemoteEnrollTlsenrollMain()

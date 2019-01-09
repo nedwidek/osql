@@ -12,15 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_distributed_main)
+function(osqueryDistributedMain)
   add_subdirectory("plugins")
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
   generateOsqueryDistributed()
 endfunction()
 
 function(generateOsqueryDistributed)
-  add_library(osquery_distributed EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_distributed EXCLUDE_FROM_ALL
     distributed.cpp
   )
 
@@ -33,6 +38,8 @@ function(generateOsqueryDistributed)
     osquery_utils_json
     osquery_utils_system_time
   )
+
+  add_test(NAME osquery_distributed_tests_test COMMAND osquery_distributed_tests)
 endfunction()
 
-osquery_distributed_main()
+osqueryDistributedMain()

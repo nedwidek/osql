@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(lzmaMain)
-  add_library(thirdparty_lzma INTERFACE)
+  add_osquery_library(thirdparty_lzma INTERFACE)
 
   if(DEFINED PLATFORM_LINUX)
   	set(library_name "liblzma.a")

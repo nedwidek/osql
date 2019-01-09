@@ -12,13 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_tables_yara_main)
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
   generateOsqueryTablesYara()
 endfunction()
 
 function(generateOsqueryTablesYara)
+
+  if(PLATFORM_WINDOWS OR PLATFORM_FREEBSD)
+    add_osquery_library(osquery_tables_yara INTERFACE)
+    return()
+  endif()
+
   set(source_files
     yara.cpp
     yara_utils.cpp
@@ -30,7 +41,7 @@ function(generateOsqueryTablesYara)
     )
   endif()
 
-  add_library(osquery_tables_yara EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_tables_yara EXCLUDE_FROM_ALL
     ${source_files}
   )
 
@@ -54,6 +65,9 @@ function(generateOsqueryTablesYara)
   )
 
   generateIncludeNamespace(osquery_tables_yara "osquery/tables/yara" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_tables_yara_tests_test COMMAND osquery_tables_yara_tests)
+  
 endfunction()
 
 osquery_tables_yara_main()

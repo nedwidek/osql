@@ -12,9 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_tables_networking_main)
+function(osqueryTablesNetworkingMain)
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
   generateOsqueryTablesNetworking()
 endfunction()
 
@@ -72,7 +77,7 @@ function(generateOsqueryTablesNetworking)
     )
   endif()
 
-  add_library(osquery_tables_networking EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_tables_networking EXCLUDE_FROM_ALL
     ${source_files}
   )
 
@@ -128,6 +133,19 @@ function(generateOsqueryTablesNetworking)
   endif()
 
   generateIncludeNamespace(osquery_tables_networking "osquery/tables/networking" "FULL_PATH" ${public_header_files})
+
+  add_test(
+    NAME osquery_tables_networking_tests_test
+    COMMAND "${CMAKE_COMMAND}" -E env
+            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_testfiles,INTERFACE_BINARY_DIR>"
+            "$<TARGET_FILE:osquery_tables_networking_tests>"
+  )
+
+  if (DEFINED PLATFORM_MACOS)
+    add_test(NAME osquery_tables_networking_tests_wifi_test COMMAND osquery_tables_networking_tests_wifi)
+  elseif (DEFINED PLATFORM_LINUX)
+    add_test(NAME osquery_tables_networking_tests_iptables_test COMMAND osquery_tables_networking_tests_iptables)
+  endif()
 endfunction()
 
-osquery_tables_networking_main()
+osqueryTablesNetworkingMain()

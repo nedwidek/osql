@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 # Always generate the compile_commands.json file
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)

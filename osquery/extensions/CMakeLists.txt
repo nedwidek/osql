@@ -12,15 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_extensions_main)
   add_subdirectory("thrift")
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
   generateOsqueryExtensions()
 endfunction()
 
 function(generateOsqueryExtensions)
-  add_library(osquery_extensions EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_extensions EXCLUDE_FROM_ALL
     extensions.cpp
     impl_thrift.cpp
     interface.cpp
@@ -44,6 +49,8 @@ function(generateOsqueryExtensions)
   )
 
   generateIncludeNamespace(osquery_extensions "osquery/extensions" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_extensions_tests_test COMMAND osquery_extensions_tests)
 endfunction()
 
 osquery_extensions_main()

@@ -12,25 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_utils_error_main)
   generateOsqueryUtilsError()
 endfunction()
 
 function(generateOsqueryUtilsError)
-  add_library(osquery_utils_error INTERFACE)
+  add_osquery_library(osquery_utils_error INTERFACE)
 
   target_link_libraries(osquery_utils_error INTERFACE
     global_cxx_settings
-    thirdparty_boost
+    osquery_utils_conversions_to
+    osquery_utils_attribute
   )
 
   set(public_header_files
     error.h
   )
 
-  generateIncludeNamespace(osquery_utils_error "osquery" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_utils_error "osquery/utils/error" "FILE_ONLY" ${public_header_files})
 endfunction()
 
 osquery_utils_error_main()

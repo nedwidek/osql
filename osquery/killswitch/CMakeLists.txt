@@ -12,15 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_kilswitch_main)
+function(osqueryKillswitchMain)
   add_subdirectory("plugins")
   generateOsqueryKillswitch()
+
+  if(BUILD_TESTING)
+    generateOsqueryKillswitchTests()
+  endif()
 endfunction()
 
 function(generateOsqueryKillswitch)
-  add_library(osquery_killswitch EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_killswitch EXCLUDE_FROM_ALL
     killswitch.cpp
     killswitch_plugin.cpp
     killswitch_refreshable_plugin.cpp
@@ -31,7 +35,7 @@ function(generateOsqueryKillswitch)
   target_link_libraries(osquery_killswitch PUBLIC
     global_cxx_settings
     osquery_core
-    thirdparty_googletest
+    thirdparty_googletest_headers
   )
 
   set(public_header_files
@@ -40,6 +44,34 @@ function(generateOsqueryKillswitch)
   )
 
   generateIncludeNamespace(osquery_killswitch "osquery/killswitch" "FILE_ONLY" ${public_header_files})
+
+  add_test(
+    NAME osquery_killswitch_tests_test
+    COMMAND "${CMAKE_COMMAND}" -E env
+            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_conffiles,INTERFACE_BINARY_DIR>"
+            "$<TARGET_FILE:osquery_killswitch_tests>"
+  )
 endfunction()
 
-osquery_kilswitch_main()
+function(generateOsqueryKillswitchTests)
+  add_osquery_executable(osquery_killswitch_tests tests/killswitch_tests.cpp)
+
+  target_link_libraries(osquery_killswitch_tests PRIVATE
+    global_cxx_settings
+    osquery_config_tests_testutils
+    osquery_config_plugins_tlsconfig
+    osquery_database
+    osquery_database_plugins_ephemeral
+    osquery_events
+    osquery_extensions
+    osquery_remote_enroll_tlsenroll
+    osquery_utils_conversions
+    osquery_utils_info
+    osquery_killswitch_plugins_filesystem
+    tests_helper
+    osquery_tools_tests_conffiles
+    thirdparty_googletest
+  )
+endfunction()
+
+osqueryKillswitchMain()

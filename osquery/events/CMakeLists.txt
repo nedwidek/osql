@@ -12,9 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_events_main)
+function(osqueryEventsMain)
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
   generateOsqueryEvents()
 endfunction()
 
@@ -48,7 +53,7 @@ function(generateOsqueryEvents)
     )
   endif()
 
-  add_library(osquery_events EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_events EXCLUDE_FROM_ALL
     ${source_files}
   )
 
@@ -60,6 +65,7 @@ function(generateOsqueryEvents)
     osquery_core
     osquery_config
     osquery_hashing
+    osquery_sql
     osquery_utils_conversions
     osquery_utils_expected
     osquery_utils_system_time
@@ -110,6 +116,20 @@ function(generateOsqueryEvents)
   endif()
 
   generateIncludeNamespace(osquery_events "osquery/events" "FULL_PATH" ${platform_public_header_files})
+
+  add_test(NAME osquery_events_tests_test COMMAND osquery_events_tests)
+  add_test(NAME osquery_events_tests_databasetests_test COMMAND osquery_events_tests_databasetests)
+
+  if(DEFINED PLATFORM_LINUX)
+    add_test(NAME osquery_events_tests_syslogtests_test COMMAND osquery_events_tests_syslogtests)
+    add_test(NAME osquery_events_tests_audittests_test COMMAND osquery_events_tests_audittests)
+    add_test(NAME osquery_events_tests_processfileeventstests_test COMMAND osquery_events_tests_processfileeventstests)
+    add_test(NAME osquery_events_tests_inotifytests_test COMMAND osquery_events_tests_inotifytests)
+  endif()
+
+  if(DEFINED PLATFORM_MACOS)
+    add_test(NAME osquery_events_tests_fseventstests_test COMMAND osquery_events_tests_fseventstests)
+  endif()
 endfunction()
 
-osquery_events_main()
+osqueryEventsMain()

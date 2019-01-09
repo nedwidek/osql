@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_utils_expected_main)
   generateOsqueryUtilsExpected()
 endfunction()
 
 function(generateOsqueryUtilsExpected)
-  add_library(osquery_utils_expected INTERFACE)
+  add_osquery_library(osquery_utils_expected INTERFACE)
 
   target_link_libraries(osquery_utils_expected INTERFACE
     global_cxx_settings
@@ -32,7 +32,7 @@ function(generateOsqueryUtilsExpected)
     expected.h
   )
 
-  generateIncludeNamespace(osquery_utils_expected "osquery" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_utils_expected "osquery/utils/expected" "FILE_ONLY" ${public_header_files})
 endfunction()
 
 osquery_utils_expected_main()

@@ -12,26 +12,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_core_sql_main)
   generateOsqueryCoreSql()
 endfunction()
 
 function(generateOsqueryCoreSql)
-  add_library(osquery_core_sql EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_core_sql EXCLUDE_FROM_ALL
     column.cpp
     diff_results.cpp
     query_data.cpp
     query_performance.cpp
     row.cpp
     scheduled_query.cpp
+    table_rows.cpp
   )
 
   target_link_libraries(osquery_core_sql PUBLIC
     global_cxx_settings
     osquery_utils_json
     osquery_utils_status
+    thirdparty_sqlite
   )
 
   set(public_header_files
@@ -41,6 +43,8 @@ function(generateOsqueryCoreSql)
     query_performance.h
     row.h
     scheduled_query.h
+    table_row.h
+    table_rows.h
   )
 
   generateIncludeNamespace(osquery_core_sql "osquery/core/sql" "FILE_ONLY" ${public_header_files})

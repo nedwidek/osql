@@ -12,9 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_tables_events_main)
+function(osqueryTablesEventsMain)
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
   generateOsqueryTablesEvents()
 endfunction()
 
@@ -51,7 +56,7 @@ function(generateOsqueryTablesEvents)
     )
   endif()
 
-  add_library(osquery_tables_events EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_tables_events EXCLUDE_FROM_ALL
     ${source_files}
   )
 
@@ -88,7 +93,16 @@ function(generateOsqueryTablesEvents)
     )
 
     generateIncludeNamespace(osquery_tables_events "osquery/tables/events" "FULL_PATH" ${platform_public_header_files})
+
+    add_test(NAME osquery_tables_events_tests_selinuxevents_test COMMAND osquery_tables_events_tests_selinuxevents)
   endif()
+
+  add_test(
+    NAME osquery_tables_events_tests_fileevents_test
+    COMMAND "${CMAKE_COMMAND}" -E env
+            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_testfiles,INTERFACE_BINARY_DIR>"
+            "$<TARGET_FILE:osquery_tables_events_tests_fileevents>"
+  )
 endfunction()
 
-osquery_tables_events_main()
+osqueryTablesEventsMain()

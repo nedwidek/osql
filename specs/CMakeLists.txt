@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(specsMain)
-  add_library(specs_tables INTERFACE)
+  add_osquery_library(specs_tables INTERFACE)
 
-  generateBaseTables()
-  list(APPEND table_target_list "${generateBaseTables_output}")
+  generateNativeTables()
+  list(APPEND table_target_list "${generateNativeTables_output}")
 
-  generateForeignTables()
+  generateForeignTables(${foreign_spec_file_list_output})
   list(APPEND table_target_list "${generateForeignTables_output}")
 
   foreach(table_target ${table_target_list})
@@ -31,8 +31,13 @@ function(specsMain)
   target_link_libraries(specs_tables INTERFACE ${table_target_list})
 endfunction()
 
-function(generateForeignTables)
-  set(spec_file_list
+function(generateForeignTables spec_file_list)
+  generateTableCategoryAmalgamation("foreign" ${spec_file_list})
+  set(generateForeignTables_output "${generateTableCategoryAmalgamation_output}" PARENT_SCOPE)
+endfunction()
+
+function(generateNativeTables)
+  set(platform_independent_spec_files
     carbon_black_info.table
     carves.table
     chrome_extensions.table
@@ -69,13 +74,9 @@ function(generateForeignTables)
     utility/time.table
   )
 
-  generateTableCategoryAmalgamation("foreign" ${spec_file_list})
-  set(generateForeignTables_output "${generateTableCategoryAmalgamation_output}" PARENT_SCOPE)
-endfunction()
-
-function(generateBaseTables)
-  set(spec_descriptor_list
+  set(platform_dependent_spec_files
     "arp_cache.table:linux,macos,windows"
+    "atom_packages.table:linux,macos"
     "darwin/account_policy_data.table:macos"
     "darwin/ad_config.table:macos"
     "darwin/alf.table:macos"
@@ -270,7 +271,7 @@ function(generateBaseTables)
     "yara/yara.table:linux,macos,freebsd"  
   )
 
-  foreach(spec_descriptor ${spec_descriptor_list})
+  foreach(spec_descriptor ${platform_dependent_spec_files})
     string(REPLACE ":" ";" spec_descriptor "${spec_descriptor}")
     list(GET spec_descriptor 0 spec_file)
 
@@ -298,11 +299,18 @@ function(generateBaseTables)
       list(APPEND spec_file_list
         "${spec_file}"
       )
+    else()
+      list(APPEND foreign_spec_file_list
+        "${spec_file}"
+      )
     endif()
   endforeach()
 
-  generateTableCategoryAmalgamation("base" ${spec_file_list})
-  set(generateBaseTables_output "${generateTableCategoryAmalgamation_output}" PARENT_SCOPE)
+  list(APPEND spec_file_list ${platform_independent_spec_files})
+
+  generateTableCategoryAmalgamation("native" ${spec_file_list})
+  set(generateNativeTables_output "${generateTableCategoryAmalgamation_output}" PARENT_SCOPE)
+  set(foreign_spec_file_list_output "${foreign_spec_file_list}" PARENT_SCOPE)
 endfunction()
 
 specsMain()

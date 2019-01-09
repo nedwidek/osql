@@ -12,14 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_dispatcher_main)
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
   generateOsqueryDispatcher()
 endfunction()
 
 function(generateOsqueryDispatcher)
-  add_library(osquery_dispatcher EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_dispatcher EXCLUDE_FROM_ALL
     dispatcher.cpp
     distributed_runner.cpp
     scheduler.cpp
@@ -35,7 +40,7 @@ function(generateOsqueryDispatcher)
     osquery_logger_datalogger
     osquery_utils
     osquery_utils_conversions
-    thirdparty_googletest
+    thirdparty_googletest_headers
   )
 
   set(public_header_files
@@ -44,6 +49,9 @@ function(generateOsqueryDispatcher)
   )
 
   generateIncludeNamespace(osquery_dispatcher "osquery/dispatcher" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_dispatcher_tests_test COMMAND osquery_dispatcher_tests)
+  add_test(NAME osquery_dispatcher_tests_scheduler_test COMMAND osquery_dispatcher_tests_scheduler)
 endfunction()
 
 osquery_dispatcher_main()

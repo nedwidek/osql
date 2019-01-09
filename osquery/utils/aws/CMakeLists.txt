@@ -12,14 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_utils_aws_main)
+function(osqueryUtilsAwsMain)
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
   generateOsqueryUtilsAws()
 endfunction()
 
 function(generateOsqueryUtilsAws)
-  add_library(osquery_utils_aws EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_utils_aws EXCLUDE_FROM_ALL
     aws_util.cpp
   )
 
@@ -37,6 +42,13 @@ function(generateOsqueryUtilsAws)
   )
 
   generateIncludeNamespace(osquery_utils_aws "osquery/utils/aws" "FILE_ONLY" ${public_header_files})
+
+  add_test(
+    NAME osquery_aws_tests_awsutil_test
+    COMMAND "${CMAKE_COMMAND}" -E env
+            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_awsfiles,INTERFACE_BINARY_DIR>"
+            "$<TARGET_FILE:osquery_aws_tests_awsutil>"
+  )
 endfunction()
 
-osquery_utils_aws_main()
+osqueryUtilsAwsMain()

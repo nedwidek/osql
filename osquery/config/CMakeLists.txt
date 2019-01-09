@@ -12,17 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_config_main)
   add_subdirectory("parsers")
   add_subdirectory("plugins")
+  if (BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
 
   generateOsqueryConfig()
 endfunction()
 
 function(generateOsqueryConfig)
-  add_library(osquery_config EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_config EXCLUDE_FROM_ALL
     config.cpp
     packs.cpp
     update.cpp
@@ -37,7 +40,6 @@ function(generateOsqueryConfig)
     osquery_hashing
     osquery_utils
     osquery_utils_system_time
-    thirdparty_googletest
   )
 
   set(public_header_files
@@ -45,6 +47,21 @@ function(generateOsqueryConfig)
   )
 
   generateIncludeNamespace(osquery_config "osquery/config" "FILE_ONLY" ${public_header_files})
+
+  add_test(
+    NAME osquery_config_tests_test
+    COMMAND "${CMAKE_COMMAND}" -E env
+            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_conffiles,INTERFACE_BINARY_DIR>"
+            "$<TARGET_FILE:osquery_config_tests>"
+  )
+
+  add_test(
+    NAME osquery_config_tests_packs_test
+    COMMAND "${CMAKE_COMMAND}" -E env
+            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_conffiles,INTERFACE_BINARY_DIR>"
+            "$<TARGET_FILE:osquery_config_tests_packs>"
+  )
+
 endfunction()
 
 osquery_config_main()

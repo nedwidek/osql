@@ -12,17 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_logger_main)
   add_subdirectory("plugins")
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
 
   generateOsqueryLogger()
   generateOsqueryLoggerDataLogger()
 endfunction()
 
 function(generateOsqueryLogger)
-  add_library(osquery_logger INTERFACE)
+  add_osquery_library(osquery_logger INTERFACE)
 
   target_link_libraries(osquery_logger INTERFACE
     thirdparty_glog
@@ -36,7 +40,7 @@ function(generateOsqueryLogger)
 endfunction()
 
 function(generateOsqueryLoggerDataLogger)
-  add_library(osquery_logger_datalogger EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_logger_datalogger EXCLUDE_FROM_ALL
     logger.cpp
   )
 
@@ -54,6 +58,8 @@ function(generateOsqueryLoggerDataLogger)
     osquery_utils_system_time
     osquery_logger
   )
+
+  add_test(NAME osquery_logger_tests_test COMMAND osquery_logger_tests)
 endfunction()
 
 osquery_logger_main()

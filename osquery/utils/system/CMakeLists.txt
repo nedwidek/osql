@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_utils_system_main)
   generateOsqueryUtilsSystemEnv()
@@ -37,7 +37,7 @@ function(generateOsqueryUtilsSystemEnv)
     return()
   endif()
 
-  add_library(osquery_utils_system_env EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_utils_system_env EXCLUDE_FROM_ALL
     ${source_files}
   )
 
@@ -54,27 +54,25 @@ function(generateOsqueryUtilsSystemEnv)
 endfunction()
 
 function(generateOsqueryUtilsSystemFilepath)
-  if(DEFINED PLATFORM_POSIX)
-    set(source_files
+
+  if (DEFINED PLATFORM_WINDOWS)
+    add_osquery_library(osquery_utils_system_filepath INTERFACE)
+  else()
+    add_osquery_library(osquery_utils_system_filepath EXCLUDE_FROM_ALL
       posix/filepath.cpp
     )
-  else()
-    return()
+
+    set(public_header_files
+        filepath.h
+    )
+
+    generateIncludeNamespace(osquery_utils_system_filepath "osquery/utils/system" "FILE_ONLY" ${public_header_files})
+
+    target_link_libraries(osquery_utils_system_filepath PUBLIC
+      global_cxx_settings
+    )
   endif()
 
-  add_library(osquery_utils_system_filepath EXCLUDE_FROM_ALL
-    ${source_files}
-  ) 
-
-  target_link_libraries(osquery_utils_system_filepath PUBLIC
-    global_cxx_settings
-  )
-
-  set(public_header_files
-    filepath.h
-  )
-
-  generateIncludeNamespace(osquery_utils_system_filepath "osquery/utils/system" "FILE_ONLY" ${public_header_files})
 endfunction()
 
 function(generateOsqueryUtilsSystemErrno)
@@ -90,7 +88,7 @@ function(generateOsqueryUtilsSystemErrno)
     return()
   endif()
 
-  add_library(osquery_utils_system_errno EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_utils_system_errno EXCLUDE_FROM_ALL
     ${source_files}
   ) 
 
@@ -102,7 +100,13 @@ function(generateOsqueryUtilsSystemErrno)
     errno.h
   )
 
-  generateIncludeNamespace(osquery_utils_system_errno "osquery/utils/system" "FILE_ONLY" ${public_header_files})
+  if(DEFINED PLATFORM_POSIX)
+      list(APPEND public_header_files
+        posix/errno.h
+      )
+  endif()
+
+  generateIncludeNamespace(osquery_utils_system_errno "osquery/utils/system" "FULL_PATH" ${public_header_files})
 endfunction()
 
 function(generateOsqueryUtilsSystemCpu)
@@ -110,7 +114,7 @@ function(generateOsqueryUtilsSystemCpu)
     return()
   endif()
 
-  add_library(osquery_utils_system_cpu EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_utils_system_cpu EXCLUDE_FROM_ALL
     linux/cpu.cpp
   ) 
 
@@ -147,7 +151,7 @@ function(generateOsqueryUtilsSystemTime)
     return()
   endif()
 
-  add_library(osquery_utils_system_time EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_utils_system_time EXCLUDE_FROM_ALL
     ${source_files}
   )
 
@@ -178,7 +182,7 @@ function(generateOsqueryUtilsSystem)
     return()
   endif()
 
-  add_library(osquery_utils_system EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_utils_system EXCLUDE_FROM_ALL
     ${source_files}
   ) 
 
@@ -186,7 +190,7 @@ function(generateOsqueryUtilsSystem)
     global_cxx_settings
     osquery_utils_info
     thirdparty_boost
-    thirdparty_googletest
+    thirdparty_googletest_headers
   )
 
   if(DEFINED PLATFORM_POSIX)
@@ -204,7 +208,7 @@ function(generateOsqueryUtilsSystem)
 endfunction()
 
 function(generateOsqueryUtilsSystemUptime)
-  add_library(osquery_utils_system_uptime EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_utils_system_uptime EXCLUDE_FROM_ALL
     uptime.cpp
   ) 
 

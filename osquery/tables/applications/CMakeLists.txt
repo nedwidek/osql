@@ -12,9 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_tables_applications_main)
+
+  if(BUILD_TESTING)
+    add_subdirectory("posix/tests")
+  endif()
+
   generateOsqueryTablesApplications()
 endfunction()
 
@@ -36,16 +41,20 @@ function(generateOsqueryTablesApplications)
 
   if(DEFINED PLATFORM_MACOS)
     list(APPEND source_files
+      atom_packages.cpp
       darwin/browser_plugins.cpp
     )
-
   elseif(DEFINED PLATFORM_WINDOWS)
     list(APPEND source_files
       windows/carbon_black.cpp
     )
+  elseif(DEFINED PLATFORM_LINUX)
+    list(APPEND source_files
+      atom_packages.cpp
+    )
   endif()
 
-  add_library(osquery_tables_applications EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_tables_applications EXCLUDE_FROM_ALL
     ${source_files}
   )
 
@@ -57,6 +66,7 @@ function(generateOsqueryTablesApplications)
     osquery_tables_system
     osquery_utils_conversions
     osquery_utils_info
+    osquery_utils_json
     thirdparty_boost
   )
 
@@ -71,6 +81,10 @@ function(generateOsqueryTablesApplications)
   endif()
 
   generateIncludeNamespace(osquery_tables_applications "osquery/tables/applications" "FULL_PATH" ${public_header_files})
+
+  if(DEFINED PLATFORM_POSIX)
+    add_test(NAME osquery_tables_applications_posix_tests_prometheusmetrics_test COMMAND osquery_tables_applications_posix_tests_prometheusmetrics)
+  endif()
 endfunction()
 
 osquery_tables_applications_main()

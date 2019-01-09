@@ -12,15 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_database_main)
   add_subdirectory("plugins")
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
   generateOsqueryDatabase()
 endfunction()
 
 function(generateOsqueryDatabase)
-  add_library(osquery_database EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_database EXCLUDE_FROM_ALL
     database.cpp
   )
 
@@ -31,6 +36,9 @@ function(generateOsqueryDatabase)
     osquery_utils_conversions
     thirdparty_boost
   )
+
+  add_test(NAME osquery_database_tests_test COMMAND osquery_database_tests)
+  add_test(NAME osquery_database_tests_results_test COMMAND osquery_database_tests_results)
 endfunction()
 
 osquery_database_main()

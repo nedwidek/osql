@@ -12,30 +12,38 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_tables_smart_main)
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
   generateOsqueryTablesSmart()
 endfunction()
 
 function(generateOsqueryTablesSmart)
-  if(DEFINED PLATFORM_LINUX OR DEFINED PLATFORM_MACOS)
-    set(source_files
-      smart_drives.cpp
+
+  set(source_files
+    smart_drives.cpp
+  )
+
+  if (DEFINED PLATFORM_WINDOWS)
+    add_osquery_library(osquery_tables_smart INTERFACE)
+  else()
+    add_osquery_library(osquery_tables_smart EXCLUDE_FROM_ALL
+      "${source_files}"
+    )
+
+    target_link_libraries(osquery_tables_smart PUBLIC
+      global_cxx_settings
+      osquery_headers
+      osquery_logger
+      osquery_sql
+      thirdparty_smartmontools
     )
   endif()
-
-  add_library(osquery_tables_smart EXCLUDE_FROM_ALL
-    ${source_files}
-  )
-
-  target_link_libraries(osquery_tables_smart PUBLIC
-    global_cxx_settings
-    osquery_headers
-    osquery_logger
-    osquery_sql
-    thirdparty_smartmontools
-  )
 
   if(DEFINED PLATFORM_LINUX OR DEFINED PLATFORM_MACOS)
     set(public_header_files
@@ -43,6 +51,10 @@ function(generateOsqueryTablesSmart)
     )
 
     generateIncludeNamespace(osquery_tables_smart "osquery/tables/smart" "FILE_ONLY" ${public_header_files})
+  endif()
+
+  if(DEFINED PLATFORM_POSIX)
+    add_test(NAME osquery_tables_smart_tests_smartdrives_test COMMAND osquery_tables_smart_tests_smartdrives)
   endif()
 endfunction()
 

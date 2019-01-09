@@ -12,15 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_killswitch_plugins_main)
+function(osqueryKillswitchPluginsMain)
   generateOsqueryKillswitchPluginsFilesystem()
   generateOsqueryKillswitchPluginsTls()
+
+  if(BUILD_TESTING)
+    generateOsqueryKillswitchPluginsFilesystemTests()
+  endif()
 endfunction()
 
 function(generateOsqueryKillswitchPluginsFilesystem)
-  add_library(osquery_killswitch_plugins_filesystem EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_killswitch_plugins_filesystem EXCLUDE_FROM_ALL
     killswitch_filesystem.cpp
   )
 
@@ -37,10 +41,17 @@ function(generateOsqueryKillswitchPluginsFilesystem)
   )
 
   generateIncludeNamespace(osquery_killswitch_plugins_filesystem "osquery/killswitch/plugins" "FILE_ONLY" ${public_header_files})
+
+  add_test(
+    NAME osquery_killswitch_plugins_filesystemtests_test
+    COMMAND "${CMAKE_COMMAND}" -E env
+            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_conffiles,INTERFACE_BINARY_DIR>"
+            "$<TARGET_FILE:osquery_killswitch_plugins_filesystemtests>"
+  )
 endfunction()
 
 function(generateOsqueryKillswitchPluginsTls)
-  add_library(osquery_killswitch_plugins_tls EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_killswitch_plugins_tls EXCLUDE_FROM_ALL
     killswitch_tls.cpp
   )
 
@@ -60,4 +71,25 @@ function(generateOsqueryKillswitchPluginsTls)
   generateIncludeNamespace(osquery_killswitch_plugins_tls "osquery/killswitch/plugins" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_killswitch_plugins_main()
+function(generateOsqueryKillswitchPluginsFilesystemTests)
+  add_osquery_executable(osquery_killswitch_plugins_filesystemtests tests/killswitch_filesystem_tests.cpp)
+
+  target_link_libraries(osquery_killswitch_plugins_filesystemtests PRIVATE
+    global_cxx_settings
+    osquery_config_tests_testutils
+    osquery_config_plugins_tlsconfig
+    osquery_database
+    osquery_database_plugins_ephemeral
+    osquery_events
+    osquery_extensions
+    osquery_remote_enroll_tlsenroll
+    osquery_utils_conversions
+    osquery_utils_info
+    osquery_killswitch_plugins_filesystem
+    tests_helper
+    osquery_tools_tests_conffiles
+    thirdparty_googletest
+  )
+endfunction()
+
+osqueryKillswitchPluginsMain()

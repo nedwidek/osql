@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_profiler_main)
   generateOsqueryProfiler()
@@ -21,16 +21,16 @@ endfunction()
 function(generateOsqueryProfiler)
   if(DEFINED PLATFORM_POSIX)
     set(source_files
-      posix/profiler.cpp
+      posix/code_profiler.cpp
     )
 
   elseif(DEFINED PLATFORM_WINDOWS)
     set(source_files
-      windows/profiler.cpp
+      windows/code_profiler.cpp
     )
   endif()
 
-  add_library(osquery_profiler EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_profiler EXCLUDE_FROM_ALL
     ${source_files}
   )
 
@@ -40,7 +40,7 @@ function(generateOsqueryProfiler)
   )
 
   set(public_header_files
-    profiler.h
+    code_profiler.h
   )
 
   generateIncludeNamespace(osquery_profiler "osquery/profiler" "FILE_ONLY" ${public_header_files})

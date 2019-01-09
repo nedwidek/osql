@@ -12,17 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(pthreadMain)
-	if(NOT DEFINED PLATFORM_LINUX)
-		return()
-	endif()
+  add_osquery_library(thirdparty_pthread INTERFACE)
 
-  find_package(Threads REQUIRED)
+  if(DEFINED PLATFORM_LINUX)
+    find_package(Threads REQUIRED)
 
-  add_library(thirdparty_pthread INTERFACE)
-  target_link_libraries(thirdparty_pthread INTERFACE ${CMAKE_THREAD_LIBS_INIT})
+    target_link_libraries(thirdparty_pthread INTERFACE ${CMAKE_THREAD_LIBS_INIT})
+  endif()
 endfunction()
 
 pthreadMain()

@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_utils_json_main)
   generateOsqueryUtilsJson()
 endfunction()
 
 function(generateOsqueryUtilsJson)
-  add_library(osquery_utils_json EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_utils_json EXCLUDE_FROM_ALL
     json.cpp
   )
 
@@ -33,7 +33,6 @@ function(generateOsqueryUtilsJson)
   )
 
   target_compile_definitions(osquery_utils_json PUBLIC
-    RAPIDJSON_NO_SIZETYPEDEFINE
     RAPIDJSON_HAS_STDSTRING=1
   )
 
@@ -41,7 +40,7 @@ function(generateOsqueryUtilsJson)
     json.h
   )
 
-  generateIncludeNamespace(osquery_utils_json "osquery/utils" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_utils_json "osquery/utils/json" "FILE_ONLY" ${public_header_files})
 endfunction()
 
 osquery_utils_json_main()

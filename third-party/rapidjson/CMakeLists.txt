@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(rapidjsonMain)
   set(name "rapidjson")
@@ -30,7 +30,7 @@ function(rapidjsonMain)
 
   set(anchor_file "include/rapidjson/rapidjson.h")
 
-  importThirdPartyBinaryLibrary("${name}" "${version}" "${hash}" "interface" "${anchor_file}")
+  importThirdPartyHeaderOnlyLibrary("PREBUILT" "${name}" "${version}" "${hash}" "${anchor_file}" "include")
 endfunction()
 
 rapidjsonMain()

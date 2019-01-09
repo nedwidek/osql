@@ -12,16 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_database_plugins_main)
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
   generateOsqueryDatabasePluginsEphemeral()
   generateOsqueryDatabasePluginsRocksdb()
   generateOsqueryDatabasePluginsSqlite()
 endfunction()
 
 function(generateOsqueryDatabasePluginsEphemeral)
-  add_library(osquery_database_plugins_ephemeral EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_database_plugins_ephemeral EXCLUDE_FROM_ALL
     ephemeral.cpp
   )
 
@@ -43,7 +48,7 @@ function(generateOsqueryDatabasePluginsEphemeral)
 endfunction()
 
 function(generateOsqueryDatabasePluginsRocksdb)
-  add_library(osquery_database_plugins_rocksdb EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_database_plugins_rocksdb EXCLUDE_FROM_ALL
     rocksdb.cpp
   )
 
@@ -55,7 +60,7 @@ function(generateOsqueryDatabasePluginsRocksdb)
     osquery_database
     osquery_registry
     osquery_utils
-    thirdparty_googletest
+    thirdparty_googletest_headers
     thirdparty_rocksdb
   )
 
@@ -64,10 +69,12 @@ function(generateOsqueryDatabasePluginsRocksdb)
   )
 
   generateIncludeNamespace(osquery_database_plugins_rocksdb "osquery/database/plugins" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_database_plugins_tests_rocksdbtests_test COMMAND osquery_database_plugins_tests_rocksdbtests)
 endfunction()
 
 function(generateOsqueryDatabasePluginsSqlite)
-  add_library(osquery_database_plugins_sqlite EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_database_plugins_sqlite EXCLUDE_FROM_ALL
     sqlite.cpp
   )
 
@@ -88,6 +95,8 @@ function(generateOsqueryDatabasePluginsSqlite)
   )
 
   generateIncludeNamespace(osquery_database_plugins_sqlite "osquery/database/plugins" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_database_plugins_tests_sqliteplugintests_test COMMAND osquery_database_plugins_tests_sqliteplugintests)
 endfunction()
 
 osquery_database_plugins_main()

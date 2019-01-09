@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_utils_debug_main)
   generateOsqueryUtilsDebug()
 endfunction()
 
 function(generateOsqueryUtilsDebug)
-  add_library(osquery_utils_debug INTERFACE)
+  add_osquery_library(osquery_utils_debug INTERFACE)
 
   target_link_libraries(osquery_utils_debug INTERFACE
     global_cxx_settings
@@ -30,7 +30,7 @@ function(generateOsqueryUtilsDebug)
     debug_only.h
   )
 
-  generateIncludeNamespace(osquery_utils_debug "osquery/debug" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_utils_debug "osquery/utils/debug" "FILE_ONLY" ${public_header_files})
 endfunction()
 
 osquery_utils_debug_main()

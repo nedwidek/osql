@@ -12,12 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_remote_main)
   add_subdirectory("serializers")
   add_subdirectory("transports")
   add_subdirectory("enroll")
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
 
   generateOsqueryRemoteRequests()
   generateOsqueryRemoteHttpclient()
@@ -25,7 +29,7 @@ function(osquery_remote_main)
 endfunction()
 
 function(generateOsqueryRemoteRequests)
-  add_library(osquery_remote_requests EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_remote_requests EXCLUDE_FROM_ALL
     requests.cpp
   )
 
@@ -46,7 +50,7 @@ function(generateOsqueryRemoteRequests)
 endfunction()
 
 function(generateOsqueryRemoteHttpclient)
-  add_library(osquery_remote_httpclient EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_remote_httpclient EXCLUDE_FROM_ALL
     http_client.cpp
     uri.cpp
   )
@@ -68,7 +72,7 @@ function(generateOsqueryRemoteHttpclient)
 endfunction()
 
 function(generateOsqueryRemoteUtility)
-  add_library(osquery_remote_utility INTERFACE)
+  add_osquery_library(osquery_remote_utility INTERFACE)
 
   target_link_libraries(osquery_remote_utility INTERFACE
     global_cxx_settings
@@ -83,6 +87,8 @@ function(generateOsqueryRemoteUtility)
   )
 
   generateIncludeNamespace(osquery_remote_utility "osquery/remote" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_remote_tests_requeststests_test COMMAND osquery_remote_tests_requeststests)
 endfunction()
 
 osquery_remote_main()

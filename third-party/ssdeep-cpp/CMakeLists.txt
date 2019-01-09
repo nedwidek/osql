@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.3)
 
 function(ssdeepCppMain)
   set(name "ssdeep-cpp")
@@ -23,16 +23,13 @@ function(ssdeepCppMain)
   elseif(DEFINED PLATFORM_MACOS)
     set(hash "93f11f81eab1cc06bf11fd28bc42d7b9d02972e3705f864a9f8ef0f5ca90abcc")
   else()
+    add_osquery_library(thirdparty_ssdeep-cpp INTERFACE)
     return()
   endif()
 
   set(anchor_file "lib/libfuzzy.a")
 
-  importThirdPartyBinaryLibrary("${name}" "${version}" "${hash}" "imported" "${anchor_file}")
-
-  set_target_properties(thirdparty_ssdeep-cpp PROPERTIES
-    IMPORTED_LOCATION "${importThirdPartyBinaryLibrary_baseFolderPath}/${anchor_file}"
-  )
+  importThirdPartyBinaryLibrary("${name}" "${version}" "${hash}" "${anchor_file}")
 endfunction()
 
 ssdeepCppMain()
