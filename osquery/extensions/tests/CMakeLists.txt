@@ -23,10 +23,9 @@ function(generateOsqueryExtensionsTests)
 
   target_link_libraries(osquery_extensions_tests PRIVATE
     global_cxx_settings
-    osquery_config_plugins_tlsconfig
     osquery_config
-    osquery_database_plugins_ephemeral
     osquery_database
+    osquery_database_plugins_ephemeral
     osquery_dispatcher
     osquery_events
     osquery_extensions
@@ -34,6 +33,7 @@ function(generateOsqueryExtensionsTests)
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_remote_utility
+    plugins_config_tlsconfig
     specs_tables
     thirdparty_googletest
   )

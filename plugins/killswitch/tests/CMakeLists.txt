@@ -14,25 +14,29 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osqueryNumericmonitoringPluginsTestsMain)
-  osqueryNumericmonitoringPluginsTestsFilesystem()
+function(pluginsKillswitchTestsMain)
+  generatePluginsKillswitchFilesystemTests()
 endfunction()
 
-function(osqueryNumericmonitoringPluginsTestsFilesystem)
-  add_osquery_executable(osquery_numericmonitoring_plugins_tests_filesystem filesystem.cpp)
+function(generatePluginsKillswitchFilesystemTests)
+  add_osquery_executable(plugins_killswitch_filesystemtests killswitch_filesystem_tests.cpp)
 
-  target_link_libraries(osquery_numericmonitoring_plugins_tests_filesystem PRIVATE
+  target_link_libraries(plugins_killswitch_filesystemtests PRIVATE
     global_cxx_settings
+    osquery_config_tests_testutils
     osquery_database
     osquery_database_plugins_ephemeral
+    osquery_events
     osquery_extensions
-    osquery_numericmonitoring
-    osquery_numericmonitoring_plugins_filesystem
     osquery_remote_enroll_tlsenroll
+    osquery_utils_conversions
+    osquery_utils_info
     plugins_config_tlsconfig
-    specs_tables
+    plugins_killswitch_filesystem
+    tests_helper
+    osquery_tools_tests_conffiles
     thirdparty_googletest
   )
 endfunction()
 
-osqueryNumericmonitoringPluginsTestsMain()
+pluginsKillswitchTestsMain()

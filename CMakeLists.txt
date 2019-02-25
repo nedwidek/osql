@@ -40,6 +40,10 @@ function(main)
 
   add_subdirectory("third-party")
   add_subdirectory("osquery")
+  add_subdirectory("plugins/config")
+  add_subdirectory("plugins/distributed")
+  add_subdirectory("plugins/killswitch")
+  add_subdirectory("plugins/logger")
   add_subdirectory("tools")
   add_subdirectory("specs")
 

@@ -27,20 +27,19 @@ function(generateOsqueryTablesEventsTestsFileEvents)
 
   target_link_libraries(osquery_tables_events_tests_fileevents PRIVATE
     global_cxx_settings
-    osquery_core
-    osquery_tables_events
-    osquery_config_parsers
-    osquery_config
-    osquery_logger
-    osquery_registry
     osquery_headers
-    specs_tables
+    osquery_config
     osquery_config_tests_testutils
-    osquery_config_plugins_tlsconfig
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_extensions
+    osquery_logger
+    osquery_registry
     osquery_remote_enroll_tlsenroll
+    osquery_tables_events
+    plugins_config_tlsconfig
+    plugins_config_parsers
+    specs_tables
     thirdparty_googletest
   )
 endfunction()
@@ -50,20 +49,20 @@ function(generateOsqueryTablesEventsTestsSelinuxEvents)
 
   target_link_libraries(osquery_tables_events_tests_selinuxevents PRIVATE
     global_cxx_settings
-    osquery_core
-    osquery_tables_events
-    osquery_config_parsers
-    osquery_config
-    osquery_logger
-    osquery_registry
     osquery_headers
-    specs_tables
+    osquery_core
+    osquery_config
     osquery_config_tests_testutils
-    osquery_config_plugins_tlsconfig
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_extensions
+    osquery_logger
+    osquery_registry
     osquery_remote_enroll_tlsenroll
+    osquery_tables_events
+    plugins_config_tlsconfig
+    plugins_config_parsers
+    specs_tables
     thirdparty_googletest
   )
 endfunction()

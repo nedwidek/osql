@@ -25,7 +25,6 @@ function(generateOsqueryDatabasePluginsTestsSqlitePluginTests)
 
   target_link_libraries(osquery_database_plugins_tests_sqliteplugintests PRIVATE
     global_cxx_settings
-    osquery_config_plugins_tlsconfig
     osquery_core
     osquery_database_plugins_ephemeral
     osquery_database_plugins_sqlite
@@ -36,6 +35,7 @@ function(generateOsqueryDatabasePluginsTestsSqlitePluginTests)
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_utils_json
+    plugins_config_tlsconfig
     specs_tables
     osquery_database_plugins_tests_databasetestutils
     thirdparty_googletest
@@ -47,7 +47,7 @@ function(generateOsqueryDatabasePluginsTestsRocksDBTests)
 
   target_link_libraries(osquery_database_plugins_tests_rocksdbtests PRIVATE
     global_cxx_settings
-    osquery_config_plugins_tlsconfig
+
     osquery_core
     osquery_database_plugins_ephemeral
     osquery_database_plugins_rocksdb
@@ -58,6 +58,7 @@ function(generateOsqueryDatabasePluginsTestsRocksDBTests)
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_utils_json
+    plugins_config_tlsconfig
     specs_tables
     osquery_database_plugins_tests_databasetestutils
     thirdparty_googletest

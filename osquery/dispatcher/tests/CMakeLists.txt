@@ -24,7 +24,6 @@ function(generateOsqueryDispatcherTests)
 
   target_link_libraries(osquery_dispatcher_tests PRIVATE
     global_cxx_settings
-    osquery_config_plugins_tlsconfig
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_distributed
@@ -32,6 +31,7 @@ function(generateOsqueryDispatcherTests)
     osquery_extensions
     osquery_registry
     osquery_remote_enroll_tlsenroll
+    plugins_config_tlsconfig
     specs_tables
     thirdparty_googletest
   )
@@ -42,7 +42,6 @@ function(generateOsqueryDispatcherTestsScheduler)
 
     target_link_libraries(osquery_dispatcher_tests_scheduler PRIVATE
     global_cxx_settings
-    osquery_config_plugins_tlsconfig
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_distributed
@@ -50,6 +49,7 @@ function(generateOsqueryDispatcherTestsScheduler)
     osquery_extensions
     osquery_registry
     osquery_remote_enroll_tlsenroll
+    plugins_config_tlsconfig
     specs_tables
     osquery_utils_system_time
     thirdparty_googletest

@@ -72,18 +72,18 @@ function(generateOsqueryRemoteEnrollTests)
   target_link_libraries(osquery_remote_enroll_tests PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
-    osquery_config_plugins_tlsconfig
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_events
     osquery_extensions
+    osquery_process
     osquery_remote_enroll_tlsenroll
+    osquery_remote_tests_utils
     osquery_utils_conversions
     osquery_utils_info
-    osquery_killswitch_plugins_filesystem
+    plugins_config_tlsconfig
+    plugins_killswitch_filesystem
     tests_helper
-    osquery_remote_tests_utils
-    osquery_process
     thirdparty_googletest
     osquery_tools_tests_testfiles
   )

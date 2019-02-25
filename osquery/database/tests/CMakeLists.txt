@@ -24,7 +24,6 @@ function(generateOsqueryDatabaseTests)
 
   target_link_libraries(osquery_database_tests PRIVATE
     global_cxx_settings
-    osquery_config_plugins_tlsconfig
     osquery_database_plugins_ephemeral
     osquery_core
     osquery_database
@@ -34,6 +33,7 @@ function(generateOsqueryDatabaseTests)
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_utils_json
+    plugins_config_tlsconfig
     specs_tables
     thirdparty_googletest
   )
@@ -44,7 +44,6 @@ function(generateOsqueryDatabaseTestsResults)
 
   target_link_libraries(osquery_database_tests_results PRIVATE
     global_cxx_settings
-    osquery_config_plugins_tlsconfig
     osquery_database_plugins_ephemeral
     osquery_core_sql
     osquery_core
@@ -56,6 +55,7 @@ function(generateOsqueryDatabaseTestsResults)
     osquery_remote_enroll_tlsenroll
     osquery_utils_json
     osquery_sql_tests_testutils
+    plugins_config_tlsconfig
     specs_tables
     thirdparty_googletest
   )

@@ -25,16 +25,17 @@ function(generateOsqueryTablesApplicationsPosixTestsPrometheusMetrics)
 
   target_link_libraries(osquery_tables_applications_posix_tests_prometheusmetrics PRIVATE
     global_cxx_settings
-    osquery_config_plugins_tlsconfig
     osquery_database
     osquery_distributed
     osquery_events
     osquery_extensions
     osquery_registry
     osquery_remote_enroll_tlsenroll
-    specs_tables
     osquery_sql
     osquery_sql_tests_testutils
+    osquery_tables_applications
+    plugins_config_tlsconfig
+    specs_tables
     thirdparty_googletest
   )
 endfunction()
