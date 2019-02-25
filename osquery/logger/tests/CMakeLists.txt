@@ -23,7 +23,6 @@ function(generateOsqueryLoggerTests)
 
   target_link_libraries(osquery_logger_tests PRIVATE
     global_cxx_settings
-    osquery_config_plugins_tlsconfig
     osquery_core_plugins
     osquery_core
     osquery_database_plugins_ephemeral
@@ -34,6 +33,7 @@ function(generateOsqueryLoggerTests)
     osquery_remote_enroll_tlsenroll
     osquery_utils_info
     osquery_utils_system_time
+    plugins_config_tlsconfig
     specs_tables
     thirdparty_googletest
   )

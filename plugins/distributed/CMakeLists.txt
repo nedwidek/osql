@@ -14,18 +14,18 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_distributed_plugins_main)
-  generateOsqueryDistributedPluginsTls()
+function(pluginsDistributedMain)
+  generatePluginsDistributedTls()
 endfunction()
 
-function(generateOsqueryDistributedPluginsTls)
-  add_osquery_library(osquery_distributed_plugins_tls EXCLUDE_FROM_ALL
+function(generatePluginsDistributedTls)
+  add_osquery_library(plugins_distributed_tls EXCLUDE_FROM_ALL
     tls_distributed.cpp
   )
 
-  enableLinkWholeArchive(osquery_distributed_plugins_tls)
+  enableLinkWholeArchive(plugins_distributed_tls)
 
-  target_link_libraries(osquery_distributed_plugins_tls PUBLIC
+  target_link_libraries(plugins_distributed_tls PUBLIC
     global_cxx_settings
     osquery_core
     osquery_core_plugins
@@ -37,4 +37,4 @@ function(generateOsqueryDistributedPluginsTls)
   )
 endfunction()
 
-osquery_distributed_plugins_main()
+pluginsDistributedMain()

@@ -61,12 +61,12 @@ function(generateOsqueryTablesApplications)
   target_link_libraries(osquery_tables_applications PUBLIC
     global_cxx_settings
     osquery_config
-    osquery_config_parsers
     osquery_filesystem
     osquery_tables_system
     osquery_utils_conversions
     osquery_utils_info
     osquery_utils_json
+    plugins_config_parsers
     thirdparty_boost
   )
 

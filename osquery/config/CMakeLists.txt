@@ -15,8 +15,6 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_config_main)
-  add_subdirectory("parsers")
-  add_subdirectory("plugins")
   if (BUILD_TESTING)
     add_subdirectory("tests")
   endif()

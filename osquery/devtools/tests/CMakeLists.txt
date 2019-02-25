@@ -23,7 +23,6 @@ function(generateOsqueryDevtoolsTestsPrinterTests)
 
   target_link_libraries(osquery_devtools_tests_printertests PRIVATE
     global_cxx_settings
-    osquery_config_plugins_tlsconfig
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_distributed
@@ -32,6 +31,7 @@ function(generateOsqueryDevtoolsTestsPrinterTests)
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_devtools
+    plugins_config_tlsconfig
     specs_tables
     thirdparty_googletest
   )

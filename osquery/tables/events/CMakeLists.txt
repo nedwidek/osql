@@ -63,14 +63,14 @@ function(generateOsqueryTablesEvents)
   enableLinkWholeArchive(osquery_tables_events)
 
   target_link_libraries(osquery_tables_events PUBLIC
-    osquery_config_parsers
+    osquery_headers
     osquery_config
     osquery_core
     osquery_events
     osquery_logger
     osquery_registry
     osquery_utils_system_uptime
-    osquery_headers
+    plugins_config_parsers
     thirdparty_boost
   )
 

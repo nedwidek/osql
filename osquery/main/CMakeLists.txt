@@ -41,9 +41,6 @@ function(generateOsqueryMain)
   target_link_libraries(osquery_main PUBLIC
     global_cxx_settings
     osquery_headers
-    osquery_config_parsers
-    osquery_config_plugins_filesystemconfig
-    osquery_config_plugins_tlsconfig
     osquery_core
     osquery_core_plugins
     osquery_core_sql
@@ -53,49 +50,52 @@ function(generateOsqueryMain)
     osquery_database_plugins_sqlite
     osquery_devtools
     osquery_dispatcher
-    osquery_distributed_plugins_tls
     osquery_extensions
     osquery_killswitch
-    osquery_killswitch_plugins_filesystem
-    osquery_killswitch_plugins_tls
     osquery_logger_datalogger
-    osquery_logger_plugins_buffered
-    osquery_logger_plugins_filesystem
-    osquery_logger_plugins_stdout
-    osquery_logger_plugins_syslog
-    osquery_logger_plugins_tlslogger
     osquery_process
     osquery_numericmonitoring
     osquery_numericmonitoring_plugins_filesystem
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_sql
+    plugins_config_filesystemconfig
+    plugins_config_tlsconfig
+    plugins_config_parsers
+    plugins_distributed_tls
+    plugins_logger_buffered
+    plugins_logger_filesystem
+    plugins_logger_stdout
+    plugins_logger_syslog
+    plugins_logger_tlslogger
+    plugins_killswitch_filesystem
+    plugins_killswitch_tls
     specs_tables
     thirdparty_boost
   )
 
   if(DEFINED PLATFORM_LINUX)
     target_link_libraries(osquery_main PUBLIC
-      osquery_logger_plugins_awsfirehose
-      osquery_logger_plugins_awskinesis
-      osquery_logger_plugins_awslogforwarder
-      osquery_logger_plugins_kafkaproducer
+      plugins_logger_awsfirehose
+      plugins_logger_awskinesis
+      plugins_logger_awslogforwarder
+      plugins_logger_kafkaproducer
     )
 
   elseif(DEFINED PLATFORM_MACOS)
     target_link_libraries(osquery_main PUBLIC
-      osquery_logger_plugins_awsfirehose
-      osquery_logger_plugins_awskinesis
-      osquery_logger_plugins_awslogforwarder
-      osquery_logger_plugins_kafkaproducer
+      plugins_logger_awsfirehose
+      plugins_logger_awskinesis
+      plugins_logger_awslogforwarder
+      plugins_logger_kafkaproducer
     )
 
   elseif(DEFINED PLATFORM_WINDOWS)
     target_link_libraries(osquery_main PUBLIC
-      osquery_logger_plugins_awsfirehose
-      osquery_logger_plugins_awskinesis
-      osquery_logger_plugins_awslogforwarder
-      osquery_logger_plugins_windowseventlog
+      plugins_logger_awsfirehose
+      plugins_logger_awskinesis
+      plugins_logger_awslogforwarder
+      plugins_logger_windowseventlog
     )
   endif()
 

@@ -21,24 +21,8 @@ endfunction()
 function(generateOsqueryDistributesTests)
   add_osquery_executable(osquery_distributed_tests distributed_tests.cpp)
 
-        #   osquery_target("osquery/config/plugins:tls_config"),
-        # osquery_target("osquery/core/plugins:plugins"),
-        # osquery_target("osquery/core:core"),
-        # osquery_target("osquery/utils/conversions:conversions"),
-        # osquery_target("osquery/database/plugins:ephemeral"),
-        # osquery_target("osquery/distributed:distributed"),
-        # osquery_target("osquery/extensions:extensions"),
-        # osquery_target("osquery/logger:logger"),
-        # osquery_target("osquery/registry:registry"),
-        # osquery_target("osquery/remote/enroll:tls_enroll"),
-        # osquery_target("osquery/utils/info:info"),
-        # osquery_target("osquery/utils/system:time"),
-        # osquery_target("osquery/remote/tests:remote_test_utils"),
-        # osquery_target("specs:tables"),
-
   target_link_libraries(osquery_distributed_tests PRIVATE
     global_cxx_settings
-    osquery_config_plugins_tlsconfig
     osquery_core_plugins
     osquery_utils_conversions
     osquery_database_plugins_ephemeral
@@ -50,6 +34,7 @@ function(generateOsqueryDistributesTests)
     osquery_utils_info
     osquery_utils_system_time
     osquery_remote_tests_utils
+    plugins_config_tlsconfig
     specs_tables
     thirdparty_googletest
   )

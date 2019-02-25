@@ -28,10 +28,8 @@ function(generateOsqueryCoreTestsFlagsTests)
   target_link_libraries(osquery_core_tests_flagstests PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
-    osquery_config_plugins_tlsconfig
     osquery_core
     osquery_core_sql
-    osquery_utils_info
     osquery_dispatcher
     osquery_distributed
     osquery_events
@@ -39,6 +37,8 @@ function(generateOsqueryCoreTestsFlagsTests)
     osquery_registry
     osquery_remote_enroll_tlsenroll
     tests_helper
+    osquery_utils_info
+    plugins_config_tlsconfig
     specs_tables
     thirdparty_googletest
   )
@@ -50,10 +50,8 @@ function(generateOsqueryCoreTestsSystemTests)
   target_link_libraries(osquery_core_tests_systemtests PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
-    osquery_config_plugins_tlsconfig
     osquery_core
     osquery_core_sql
-    osquery_utils_info
     osquery_dispatcher
     osquery_distributed
     osquery_events
@@ -61,6 +59,8 @@ function(generateOsqueryCoreTestsSystemTests)
     osquery_registry
     osquery_remote_enroll_tlsenroll
     tests_helper
+    osquery_utils_info
+    plugins_config_tlsconfig
     specs_tables
     thirdparty_googletest
   )
@@ -72,10 +72,8 @@ function(generateOsqueryCoreTestsTablesTests)
   target_link_libraries(osquery_core_tests_tablestests PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
-    osquery_config_plugins_tlsconfig
     osquery_core
     osquery_core_sql
-    osquery_utils_info
     osquery_dispatcher
     osquery_distributed
     osquery_events
@@ -83,6 +81,8 @@ function(generateOsqueryCoreTestsTablesTests)
     osquery_registry
     osquery_remote_enroll_tlsenroll
     tests_helper
+    osquery_utils_info
+    plugins_config_tlsconfig
     specs_tables
     thirdparty_googletest
   )
@@ -103,10 +103,8 @@ function(generateOsqueryCoreTestsWatcherPermissionsTests)
   target_link_libraries(osquery_core_tests_watcherpermissionstests PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
-    osquery_config_plugins_tlsconfig
     osquery_core
     osquery_core_sql
-    osquery_utils_info
     osquery_dispatcher
     osquery_distributed
     osquery_events
@@ -115,6 +113,8 @@ function(generateOsqueryCoreTestsWatcherPermissionsTests)
     osquery_registry
     osquery_remote_enroll_tlsenroll
     tests_helper
+    osquery_utils_info
+    plugins_config_tlsconfig
     specs_tables
     thirdparty_googletest
   )
@@ -126,10 +126,8 @@ function(generateOsqueryCoreTestsQueryTests)
   target_link_libraries(osquery_core_tests_querytests PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
-    osquery_config_plugins_tlsconfig
     osquery_core
     osquery_core_sql
-    osquery_utils_info
     osquery_dispatcher
     osquery_distributed
     osquery_events
@@ -138,6 +136,8 @@ function(generateOsqueryCoreTestsQueryTests)
     osquery_remote_enroll_tlsenroll
     osquery_sql_tests_testutils
     tests_helper
+    osquery_utils_info
+    plugins_config_tlsconfig
     specs_tables
     thirdparty_googletest
   )

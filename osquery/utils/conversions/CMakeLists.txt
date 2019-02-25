@@ -53,6 +53,7 @@ function(generateOsqueryUtilsConversions)
   )
 
   set(public_header_files
+    castvariant.h
     join.h
     split.h
     tryto.h

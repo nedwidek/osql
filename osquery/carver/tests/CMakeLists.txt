@@ -24,16 +24,16 @@ function(generateOsqueryCarverTests)
   target_link_libraries(osquery_carver_tests PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
-    osquery_config_plugins_tlsconfig
     osquery_carver
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_events
     osquery_extensions
+    osquery_hashing
     osquery_remote_enroll_tlsenroll
     osquery_utils_conversions
-    osquery_hashing
     osquery_utils_info
+    plugins_config_tlsconfig
     specs_tables
     thirdparty_googletest
   )

@@ -32,14 +32,14 @@ function(generateOsqueryDispatcher)
 
   target_link_libraries(osquery_dispatcher PUBLIC
     global_cxx_settings
-    osquery_config_parsers
     osquery_core
+    osquery_logger_datalogger
     osquery_process
     osquery_profiler
     osquery_sql
-    osquery_logger_datalogger
     osquery_utils
     osquery_utils_conversions
+    plugins_config_parsers
     thirdparty_googletest_headers
   )
 

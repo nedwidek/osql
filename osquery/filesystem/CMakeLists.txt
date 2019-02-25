@@ -118,7 +118,6 @@ function(generateOsqueryFilesystemTests)
   target_link_libraries(osquery_filesystem_tests PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
-    osquery_config_plugins_tlsconfig
     osquery_core
     osquery_core_sql
     osquery_dispatcher
@@ -128,6 +127,7 @@ function(generateOsqueryFilesystemTests)
     osquery_process
     osquery_registry
     osquery_remote_enroll_tlsenroll
+    plugins_config_tlsconfig
     specs_tables
     osquery_filesystem_mockfilestructure
     osquery_filesystem

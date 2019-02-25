@@ -14,33 +14,35 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_config_plugins_main)
-  generateOsqueryConfigPluginsFilesystemconfig()
-  generateOsqueryConfigPluginsTlsconfig()
+function(pluginsConfigMain)
+  add_subdirectory("parsers")
+
+  generatePluginsConfigFilesystemconfig()
+  generatePluginsConfigTlsconfig()
 endfunction()
 
-function(generateOsqueryConfigPluginsFilesystemconfig)
-  add_osquery_library(osquery_config_plugins_filesystemconfig EXCLUDE_FROM_ALL
+function(generatePluginsConfigFilesystemconfig)
+  add_osquery_library(plugins_config_filesystemconfig EXCLUDE_FROM_ALL
     filesystem_config.cpp
   )
 
-  enableLinkWholeArchive(osquery_config_plugins_filesystemconfig)
+  enableLinkWholeArchive(plugins_config_filesystemconfig)
 
-  target_link_libraries(osquery_config_plugins_filesystemconfig PUBLIC
+  target_link_libraries(plugins_config_filesystemconfig PUBLIC
     global_cxx_settings
     osquery_config
     osquery_utils_config
   )
 endfunction()
 
-function(generateOsqueryConfigPluginsTlsconfig)
-  add_osquery_library(osquery_config_plugins_tlsconfig EXCLUDE_FROM_ALL
+function(generatePluginsConfigTlsconfig)
+  add_osquery_library(plugins_config_tlsconfig EXCLUDE_FROM_ALL
     tls_config.cpp
   )
 
-  enableLinkWholeArchive(osquery_config_plugins_tlsconfig)
+  enableLinkWholeArchive(plugins_config_tlsconfig)
 
-  target_link_libraries(osquery_config_plugins_tlsconfig PUBLIC
+  target_link_libraries(plugins_config_tlsconfig PUBLIC
     global_cxx_settings
     osquery_config
     osquery_remote_requests
@@ -52,7 +54,7 @@ function(generateOsqueryConfigPluginsTlsconfig)
     tls_config.h
   )
 
-  generateIncludeNamespace(osquery_config_plugins_tlsconfig "osquery/config/plugins" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(plugins_config_tlsconfig "plugins/config" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_config_plugins_main()
+pluginsConfigMain()
