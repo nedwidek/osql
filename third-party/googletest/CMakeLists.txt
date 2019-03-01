@@ -40,6 +40,9 @@ function(googletestMain)
 
   extractLocalArchive(thirdparty_googletest "${anchor_file}" "${downloadRemoteFile_destination}" "${CMAKE_CURRENT_BINARY_DIR}" ${additional_anchors})
 
+  # So that's possible to download and extract dependencies before building, to have the IDE working correctly
+  add_dependencies("prepare_for_ide" "thirdparty_googletest_extractor")
+
   add_osquery_library(thirdparty_googletest EXCLUDE_FROM_ALL
     "${gtest_source_code}"
     "${gmock_source_code}"

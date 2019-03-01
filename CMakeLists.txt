@@ -38,6 +38,9 @@ function(main)
 
   findPythonExecutablePath()
 
+  # Used to generate all the files necessary to have a complete view of the project in the IDE
+  add_custom_target(prepare_for_ide)
+
   add_subdirectory("third-party")
   add_subdirectory("osquery")
   add_subdirectory("plugins/config")

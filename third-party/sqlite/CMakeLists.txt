@@ -29,6 +29,9 @@ function(sqliteMain)
   add_osquery_library("${identifier}" EXCLUDE_FROM_ALL "${CMAKE_CURRENT_BINARY_DIR}/${source_code}")
   add_dependencies("${identifier}" "${identifier}_extractor")
 
+  # So that's possible to download and extract dependencies before building, to have the IDE working correctly
+  add_dependencies("prepare_for_ide" "${identifier}_extractor")
+
   # This is a trick we use to have the locally specified flags to appear after the global ones,
   # using the order in which the interface target are linked
   add_osquery_library("${identifier}_local_flags" INTERFACE)

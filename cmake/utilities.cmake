@@ -81,6 +81,9 @@ function(generateIncludeNamespace target_name namespace_path mode)
     set(mode "PUBLIC")
   endif()
 
+  # So that the IDE finds all the necessary headers
+  add_dependencies("prepare_for_ide" "${root_target_name}")
+
   target_include_directories("${target_name}" ${mode} "${target_namespace_root_directory}")
 endfunction()
 

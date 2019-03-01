@@ -169,6 +169,9 @@ function(importThirdPartyBinaryLibrary name version hash anchor_file_name)
 
   add_dependencies("${identifier}" "${identifier}_extractor")
 
+  # So that's possible to download and extract dependencies before building, to have the IDE working correctly
+  add_dependencies("prepare_for_ide" "${identifier}_extractor")
+
   execute_process(COMMAND "${CMAKE_COMMAND}" -E make_directory "${base_folder}/include")
   target_include_directories("${identifier}" INTERFACE "${base_folder}/include")
 
@@ -207,6 +210,9 @@ function(importThirdPartyHeaderOnlyLibrary library_type name version hash anchor
 
   add_osquery_library("${identifier}" INTERFACE)
   add_dependencies("${identifier}" "${identifier}_extractor")
+
+  # So that's possible to download and extract dependencies before building, to have the IDE working correctly
+  add_dependencies("prepare_for_ide" "${identifier}_extractor")
 
   target_include_directories("${identifier}" INTERFACE "${base_folder}/${include_folder}")
 endfunction()
