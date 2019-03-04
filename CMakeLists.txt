@@ -54,7 +54,6 @@ function(main)
     add_subdirectory("tests")
   endif()
 
-  processLinkWholeArchiveSettings()
 endfunction()
 
 main()
