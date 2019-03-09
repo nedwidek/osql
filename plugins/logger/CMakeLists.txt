@@ -217,7 +217,7 @@ function(generatePluginsLoggerSyslog)
     add_test(
       NAME plugins_logger_tests_syslogtests_test
       COMMAND "${CMAKE_COMMAND}" -E env
-              "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_testfiles,INTERFACE_BINARY_DIR>"
+              "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
               "$<TARGET_FILE:plugins_logger_tests_syslogtests>"
     )
   else()
@@ -250,7 +250,7 @@ function(generatePluginsLoggerTlslogger)
   add_test(
     NAME osquery_logger_plugins_tests_tlstests_test
     COMMAND "${CMAKE_COMMAND}" -E env
-            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_testfiles,INTERFACE_BINARY_DIR>"
+            "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
             "$<TARGET_FILE:plugins_logger_tests_tlstests>"
   )
 endfunction()

@@ -15,11 +15,11 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryToolsTestsMain)
-  generateCopyFileTarget("osquery_tools_tests_conffiles" "REGEX" "*.conf")
-  generateCopyFileTarget("osquery_tools_tests_configfiles" "REGEX" "*.config")
-  generateCopyFileTarget("osquery_tools_tests_plistfiles" "REGEX" "*.plist")
-  generateCopyFileTarget("osquery_tools_tests_testfiles" "REGEX" "*")
-  generateCopyFileTarget("osquery_tools_tests_awsfiles" "REGEX" "aws/*")
+  generateCopyFileTarget("osquery_tools_tests_conffiles" "REGEX" "*.conf" "${TEST_CONFIGS_DIR}")
+  generateCopyFileTarget("osquery_tools_tests_configfiles" "REGEX" "*.config" "${TEST_CONFIGS_DIR}")
+  generateCopyFileTarget("osquery_tools_tests_plistfiles" "REGEX" "*.plist" "${TEST_CONFIGS_DIR}")
+  generateCopyFileTarget("osquery_tools_tests_testfiles" "REGEX" "*" "${TEST_CONFIGS_DIR}")
+  generateCopyFileTarget("osquery_tools_tests_awsfiles" "REGEX" "aws/*" "${TEST_CONFIGS_DIR}")
 endfunction()
 
 osqueryToolsTestsMain()

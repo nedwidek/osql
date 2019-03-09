@@ -66,35 +66,35 @@ function(generatePluginsConfigParsers)
   add_test(
     NAME plugins_config_parsers_tests_decoratorstests_test
     COMMAND "${CMAKE_COMMAND}" -E env
-            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_conffiles,INTERFACE_BINARY_DIR>"
+            "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
             "$<TARGET_FILE:plugins_config_parsers_tests_decoratorstests>"
   )
 
   add_test(
     NAME plugins_carver_tests_eventsparsertests_test
     COMMAND "${CMAKE_COMMAND}" -E env
-            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_conffiles,INTERFACE_BINARY_DIR>"
+            "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
             "$<TARGET_FILE:plugins_config_parsers_tests_eventsparsertests>"
   )
 
   add_test(
     NAME plugins_carver_tests_filepathstests_test
     COMMAND "${CMAKE_COMMAND}" -E env
-            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_conffiles,INTERFACE_BINARY_DIR>"
+            "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
             "$<TARGET_FILE:plugins_config_parsers_tests_filepathstests>"
   )
 
   add_test(
     NAME plugins_carver_tests_optionstests_test
     COMMAND "${CMAKE_COMMAND}" -E env
-            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_conffiles,INTERFACE_BINARY_DIR>"
+            "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
             "$<TARGET_FILE:plugins_config_parsers_tests_optionstests>"
   )
 
   add_test(
     NAME plugins_carver_tests_viewstests_test
     COMMAND "${CMAKE_COMMAND}" -E env
-            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_conffiles,INTERFACE_BINARY_DIR>"
+            "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
             "$<TARGET_FILE:plugins_config_parsers_tests_viewstests>"
   )
 endfunction()

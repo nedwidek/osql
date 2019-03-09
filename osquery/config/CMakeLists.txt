@@ -49,14 +49,14 @@ function(generateOsqueryConfig)
   add_test(
     NAME osquery_config_tests_test
     COMMAND "${CMAKE_COMMAND}" -E env
-            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_conffiles,INTERFACE_BINARY_DIR>"
+            "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
             "$<TARGET_FILE:osquery_config_tests>"
   )
 
   add_test(
     NAME osquery_config_tests_packs_test
     COMMAND "${CMAKE_COMMAND}" -E env
-            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_conffiles,INTERFACE_BINARY_DIR>"
+            "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
             "$<TARGET_FILE:osquery_config_tests_packs>"
   )
 

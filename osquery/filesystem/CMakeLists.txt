@@ -79,7 +79,7 @@ function(generateOsqueryFilesystem)
   add_test(
     NAME osquery_filesystem_tests_test
     COMMAND "${CMAKE_COMMAND}" -E env
-            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_plistfiles,INTERFACE_BINARY_DIR>"
+            "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
             "$<TARGET_FILE:osquery_filesystem_tests>"
   )
 endfunction()

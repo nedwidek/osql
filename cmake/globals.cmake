@@ -58,6 +58,8 @@ if(DEFINED PLATFORM_POSIX)
 
 endif()
 
+set(TEST_CONFIGS_DIR "${CMAKE_BINARY_DIR}/test_configs")
+
 # osquery versions
 set(OSQUERY_VERSION 3.3.2)
 set(OSQUERY_BUILD_VERSION 3.3.2)

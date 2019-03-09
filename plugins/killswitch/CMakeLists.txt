@@ -45,7 +45,7 @@ function(generatePluginsKillswitchFilesystem)
   add_test(
     NAME plugins_killswitch_filesystemtests_test
     COMMAND "${CMAKE_COMMAND}" -E env
-            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_conffiles,INTERFACE_BINARY_DIR>"
+            "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
             "$<TARGET_FILE:plugins_killswitch_filesystemtests>"
   )
 endfunction()

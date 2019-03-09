@@ -46,7 +46,7 @@ function(generateOsqueryUtilsAws)
   add_test(
     NAME osquery_aws_tests_awsutil_test
     COMMAND "${CMAKE_COMMAND}" -E env
-            "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_awsfiles,INTERFACE_BINARY_DIR>"
+            "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
             "$<TARGET_FILE:osquery_aws_tests_awsutil>"
   )
 endfunction()

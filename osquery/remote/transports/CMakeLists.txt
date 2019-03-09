@@ -47,7 +47,7 @@ function(generateOsqueryRemoteTransportsTls)
     add_test(
       NAME osquery_remote_transports_tlstests_test
       COMMAND "${CMAKE_COMMAND}" -E env
-              "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_testfiles,INTERFACE_BINARY_DIR>"
+              "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
               "$<TARGET_FILE:osquery_remote_transports_tlstests>"
     )
   endif()

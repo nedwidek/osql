@@ -318,32 +318,32 @@ function(generateOsqueryTablesSystem)
     add_test(
       NAME osquery_tables_system_tests_apps_test
       COMMAND "${CMAKE_COMMAND}" -E env
-              "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_plistfiles,INTERFACE_BINARY_DIR>"
+              "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
               "$<TARGET_FILE:osquery_tables_system_tests_apps>"
     )
     add_test(NAME osquery_tables_system_tests_asl_test COMMAND osquery_tables_system_tests_asl)
     add_test(
       NAME osquery_tables_system_tests_certificates_test
       COMMAND "${CMAKE_COMMAND}" -E env
-              "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_testfiles,INTERFACE_BINARY_DIR>"
+              "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
               "$<TARGET_FILE:osquery_tables_system_tests_certificates>"
     )
     add_test(
       NAME osquery_tables_system_tests_extendedattributes_test
       COMMAND "${CMAKE_COMMAND}" -E env
-              "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_testfiles,INTERFACE_BINARY_DIR>"
+              "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
               "$<TARGET_FILE:osquery_tables_system_tests_extendedattributes>"
     )
     add_test(
       NAME osquery_tables_system_tests_firewall_test
       COMMAND "${CMAKE_COMMAND}" -E env
-              "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_plistfiles,INTERFACE_BINARY_DIR>"
+              "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
               "$<TARGET_FILE:osquery_tables_system_tests_firewall>"
     )
     add_test(
       NAME osquery_tables_system_tests_launchd_test
       COMMAND "${CMAKE_COMMAND}" -E env
-              "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_plistfiles,INTERFACE_BINARY_DIR>"
+              "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
               "$<TARGET_FILE:osquery_tables_system_tests_launchd>"
     )
     add_test(NAME osquery_tables_system_tests_mdfind_test COMMAND osquery_tables_system_tests_mdfind)
@@ -352,7 +352,7 @@ function(generateOsqueryTablesSystem)
     add_test(
       NAME osquery_tables_system_tests_startupitems_test
       COMMAND "${CMAKE_COMMAND}" -E env
-              "TEST_CONF_FILES_DIR=$<TARGET_PROPERTY:osquery_tools_tests_plistfiles,INTERFACE_BINARY_DIR>"
+              "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
               "$<TARGET_FILE:osquery_tables_system_tests_startupitems>"
     )
     add_test(NAME osquery_tables_system_tests_signature_test COMMAND osquery_tables_system_tests_signature)

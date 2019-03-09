@@ -389,7 +389,7 @@ function(generateUnsupportedPlatformSourceFile)
   set(unsupported_platform_source_file "${source_file}" PARENT_SCOPE)
 endfunction()
 
-function(generateCopyFileTarget name type relative_file_paths)
+function(generateCopyFileTarget name type relative_file_paths destination)
 
   set(source_base_path "${CMAKE_CURRENT_SOURCE_DIR}")
   string(REPLACE "${CMAKE_SOURCE_DIR}" "${OSQUERY_SOURCE_DIR}" source_base_path "${source_base_path}")
@@ -409,27 +409,34 @@ function(generateCopyFileTarget name type relative_file_paths)
 
   foreach(directory ${intermediate_directories})
     add_custom_command(
-      OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${directory}"
-      COMMAND "${CMAKE_COMMAND}" -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/${directory}"
+      OUTPUT "${destination}/${directory}"
+      COMMAND "${CMAKE_COMMAND}" -E make_directory "${destination}/${directory}"
     )
-    list(APPEND created_directories "${CMAKE_CURRENT_BINARY_DIR}/${directory}")
+    list(APPEND created_directories "${destination}/${directory}")
   endforeach()
 
   add_custom_target("${name}_create_dirs" DEPENDS "${created_directories}")
 
   foreach(file ${relative_file_paths})
+
+    get_filename_component(filename "${file}" NAME)
+
+    if("${filename}" STREQUAL "BUCK")
+      continue()
+    endif()
+
     add_custom_command(
-      OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${file}"
-      COMMAND "${CMAKE_COMMAND}" -E copy "${source_base_path}/${file}" "${CMAKE_CURRENT_BINARY_DIR}/${file}"
+      OUTPUT "${destination}/${file}"
+      COMMAND "${CMAKE_COMMAND}" -E copy "${source_base_path}/${file}" "${destination}/${file}"
     )
-    list(APPEND copied_files "${CMAKE_CURRENT_BINARY_DIR}/${file}")
+    list(APPEND copied_files "${destination}/${file}")
   endforeach()
 
   add_custom_target("${name}_copy_files" DEPENDS "${name}_create_dirs" "${copied_files}")
 
   add_dependencies("${name}" "${name}_copy_files")
 
-  set_target_properties("${name}" PROPERTIES INTERFACE_BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}")
+  set_target_properties("${name}" PROPERTIES INTERFACE_BINARY_DIR "${destination}")
 
 endfunction()
 
