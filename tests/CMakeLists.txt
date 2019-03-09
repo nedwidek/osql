@@ -15,6 +15,8 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(testsMain)
+  add_subdirectory("integration/tables")
+
   generateTestsHelper()
 endfunction()
 
