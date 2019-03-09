@@ -66,7 +66,7 @@ function(generateOsqueryDatabasePluginsTestsRocksDBTests)
 endfunction()
 
 function(generateOsqueryDatabasePluginsTestsDatabaseTestUtils)
-  add_osquery_library(osquery_database_plugins_tests_databasetestutils utils.cpp)
+  add_osquery_library(osquery_database_plugins_tests_databasetestutils EXCLUDE_FROM_ALL utils.cpp)
 
   set(public_header_files
     utils.h

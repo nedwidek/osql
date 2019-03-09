@@ -21,7 +21,7 @@ function(osqueryConfigTestsMain)
 endfunction()
 
 function(generateOsqueryConfigTestsTestUtils)
-  add_osquery_library(osquery_config_tests_testutils test_utils.cpp)
+  add_osquery_library(osquery_config_tests_testutils EXCLUDE_FROM_ALL test_utils.cpp)
 
   set(public_header_files
     test_utils.h

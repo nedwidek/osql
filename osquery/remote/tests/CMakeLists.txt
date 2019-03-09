@@ -20,7 +20,7 @@ function(osqueryRemoteTestsMain)
 endfunction()
 
 function(generateOsqueryRemoteTestsUtils)
-  add_osquery_library(osquery_remote_tests_utils test_utils.cpp)
+  add_osquery_library(osquery_remote_tests_utils EXCLUDE_FROM_ALL test_utils.cpp)
 
   set(public_header_files
     test_utils.h

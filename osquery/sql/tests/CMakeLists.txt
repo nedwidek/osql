@@ -22,7 +22,7 @@ function(osquerySqlMain)
 endfunction()
 
 function(generateOsquerySqlTestsTestUtils)
-  add_osquery_library(osquery_sql_tests_testutils sql_test_utils.cpp)
+  add_osquery_library(osquery_sql_tests_testutils EXCLUDE_FROM_ALL sql_test_utils.cpp)
 
   set(public_header_files
     sql_test_utils.h

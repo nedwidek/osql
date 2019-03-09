@@ -19,7 +19,7 @@ function(osquery_extensions_thrift_main)
 endfunction()
 
 function(generateOsqueryExtensionsThriftOsquerycpp2)
-  add_osquery_library(osquery_extensions_thrift_osquery-cpp2
+  add_osquery_library(osquery_extensions_thrift_osquery-cpp2 EXCLUDE_FROM_ALL
     gen/Extension.cpp
     gen/ExtensionManager.cpp
     gen/osquery_constants.cpp

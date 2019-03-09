@@ -19,7 +19,7 @@ function(testsMain)
 endfunction()
 
 function(generateTestsHelper)
-  add_osquery_library(tests_helper test_util.cpp)
+  add_osquery_library(tests_helper EXCLUDE_FROM_ALL test_util.cpp)
 
   set(public_header_files
     test_util.h

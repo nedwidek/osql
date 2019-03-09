@@ -131,7 +131,7 @@ function(generateOsqueryEvents)
 endfunction()
 
 function(generateOsqueryEventsRegistry)
-  add_osquery_library(osquery_events_registry events.cpp)
+  add_osquery_library(osquery_events_registry EXCLUDE_FROM_ALL events.cpp)
 
   target_link_libraries(osquery_events_registry PUBLIC
     global_cxx_settings
