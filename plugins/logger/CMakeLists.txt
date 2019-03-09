@@ -84,7 +84,7 @@ function(generatePluginsLoggerAwskinesis)
   )
 
   generateIncludeNamespace(plugins_logger_awskinesis "plugins/logger" "FILE_ONLY" ${public_header_files})
-  add_test(NAME osquery_logger_plugins_tests_awskinesistests_test COMMAND osquery_logger_plugins_tests_awskinesistests)
+  add_test(NAME plugins_logger_tests_awskinesistests_test COMMAND plugins_logger_tests_awskinesistests)
 endfunction()
 
 function(generatePluginsLoggerAwslogforwarder)
@@ -124,7 +124,7 @@ function(generatePluginsLoggerBuffered)
   )
 
   generateIncludeNamespace(plugins_logger_buffered "plugins/logger" "FILE_ONLY" ${public_header_files})
-  add_test(NAME plugins_logger_tests_bufferedtests_test COMMAND osquery_logger_tests_bufferedtests)
+  add_test(NAME plugins_logger_tests_bufferedtests_test COMMAND plugins_logger_tests_bufferedtests)
 endfunction()
 
 function(generatePluginsLoggerFilesystem)
