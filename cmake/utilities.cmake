@@ -451,8 +451,6 @@ function(add_osquery_executable)
     endif()
   endforeach()
 
-  #string(REPLACE ";" " " osquery_exe_args "${osquery_exe_args}")
-
   add_executable(${osquery_exe_name} ${osquery_exe_args})
 endfunction()
 
@@ -461,27 +459,18 @@ function(add_osquery_library)
   set(osquery_lib_ARGN ${ARGN})
 
   list(GET osquery_lib_ARGN 0 osquery_lib_name)
-  #foreach(arg ${osquery_lib_ARGN})
-    #message("${arg}")
-  #endforeach()
   list(REMOVE_AT osquery_lib_ARGN 0)
-  #message("LIBNAME ${osquery_lib_name}")
 
   foreach(arg ${osquery_lib_ARGN})
     list(FIND osquery_lib_options "${arg}" arg_POS)
     if(${arg_POS} EQUAL -1 AND NOT IS_ABSOLUTE "${arg}")
       set(base_path "${CMAKE_CURRENT_SOURCE_DIR}")
-      # message("BASEPATH ${base_path}")
-      # message("ARG ${arg}")
-      # message("${CMAKE_CURRENT_SOURCE_DIR}")
       string(REPLACE "${CMAKE_SOURCE_DIR}" "${OSQUERY_SOURCE_DIR}" base_path "${base_path}")
       list(APPEND osquery_lib_args "${base_path}/${arg}")
     else()
       list(APPEND osquery_lib_args "${arg}")
     endif()
   endforeach()
-
-  #string(REPLACE ";" " " osquery_lib_args "${osquery_lib_args}")
 
   add_library(${osquery_lib_name} ${osquery_lib_args})
 endfunction()
