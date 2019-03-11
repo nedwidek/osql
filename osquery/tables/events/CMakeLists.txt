@@ -97,11 +97,11 @@ function(generateOsqueryTablesEvents)
     add_test(NAME osquery_tables_events_tests_selinuxevents_test COMMAND osquery_tables_events_tests_selinuxevents)
   endif()
 
-  add_test(
-    NAME osquery_tables_events_tests_fileevents_test
-    COMMAND "${CMAKE_COMMAND}" -E env
-            "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
-            "$<TARGET_FILE:osquery_tables_events_tests_fileevents>"
+  add_test(NAME osquery_tables_events_tests_fileevents_test COMMAND osquery_tables_events_tests_fileevents)
+
+  set_tests_properties(
+    osquery_tables_events_tests_fileevents_test
+    PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
   )
 endfunction()
 

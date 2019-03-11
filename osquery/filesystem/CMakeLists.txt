@@ -76,11 +76,11 @@ function(generateOsqueryFilesystem)
 
   generateIncludeNamespace(osquery_filesystem "osquery/filesystem" "FULL_PATH" ${public_header_files})
 
-  add_test(
-    NAME osquery_filesystem_tests_test
-    COMMAND "${CMAKE_COMMAND}" -E env
-            "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
-            "$<TARGET_FILE:osquery_filesystem_tests>"
+  add_test(NAME osquery_filesystem_tests_test COMMAND osquery_filesystem_tests)
+
+  set_tests_properties(
+    osquery_filesystem_tests_test
+    PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
   )
 endfunction()
 

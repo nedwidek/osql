@@ -49,11 +49,11 @@ function(generateOsqueryRemoteEnrollTlsenroll)
 
   generateIncludeNamespace(osquery_remote_enroll_tlsenroll "osquery/remote/enroll" "FILE_ONLY" ${public_header_files})
 
-  add_test(
-    NAME osquery_remote_enroll_tests_test
-    COMMAND "${CMAKE_COMMAND}" -E env
-            "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
-            "$<TARGET_FILE:osquery_remote_enroll_tests>"
+  add_test(NAME osquery_remote_enroll_tests_test COMMAND osquery_remote_enroll_tests)
+
+  set_tests_properties(
+    osquery_remote_enroll_tests_test
+    PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
   )
 endfunction()
 

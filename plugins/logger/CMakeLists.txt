@@ -214,11 +214,11 @@ function(generatePluginsLoggerSyslog)
 
     generateIncludeNamespace(plugins_logger_syslog "plugins/logger" "FILE_ONLY" ${public_header_files})
 
-    add_test(
-      NAME plugins_logger_tests_syslogtests_test
-      COMMAND "${CMAKE_COMMAND}" -E env
-              "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
-              "$<TARGET_FILE:plugins_logger_tests_syslogtests>"
+    add_test(NAME plugins_logger_tests_syslogtests_test COMMAND plugins_logger_tests_syslogtests)
+
+    set_tests_properties(
+      plugins_logger_tests_syslogtests_test
+      PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
     )
   else()
      add_osquery_library(plugins_logger_syslog INTERFACE)
@@ -247,11 +247,12 @@ function(generatePluginsLoggerTlslogger)
   )
 
   generateIncludeNamespace(plugins_logger_tlslogger "plugins/logger" "FILE_ONLY" ${public_header_files})
-  add_test(
-    NAME osquery_logger_plugins_tests_tlstests_test
-    COMMAND "${CMAKE_COMMAND}" -E env
-            "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
-            "$<TARGET_FILE:plugins_logger_tests_tlstests>"
+
+  add_test(NAME osquery_logger_plugins_tests_tlstests_test COMMAND plugins_logger_tests_tlstests)
+
+  set_tests_properties(
+    osquery_logger_plugins_tests_tlstests_test
+    PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
   )
 endfunction()
 

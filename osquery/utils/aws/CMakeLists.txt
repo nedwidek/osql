@@ -43,11 +43,11 @@ function(generateOsqueryUtilsAws)
 
   generateIncludeNamespace(osquery_utils_aws "osquery/utils/aws" "FILE_ONLY" ${public_header_files})
 
-  add_test(
-    NAME osquery_aws_tests_awsutil_test
-    COMMAND "${CMAKE_COMMAND}" -E env
-            "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
-            "$<TARGET_FILE:osquery_aws_tests_awsutil>"
+  add_test(NAME osquery_aws_tests_awsutil_test COMMAND osquery_aws_tests_awsutil)
+
+  set_tests_properties(
+    osquery_aws_tests_awsutil_test
+    PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
   )
 endfunction()
 

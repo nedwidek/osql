@@ -44,11 +44,11 @@ function(generateOsqueryRemoteTransportsTls)
   generateIncludeNamespace(osquery_remote_transports_tls "osquery/remote/transports" "FILE_ONLY" ${public_header_files})
 
   if(DEFINED PLATFORM_POSIX)
-    add_test(
-      NAME osquery_remote_transports_tlstests_test
-      COMMAND "${CMAKE_COMMAND}" -E env
-              "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
-              "$<TARGET_FILE:osquery_remote_transports_tlstests>"
+    add_test(NAME osquery_remote_transports_tlstests_test COMMAND osquery_remote_transports_tlstests)
+
+    set_tests_properties(
+      osquery_remote_transports_tlstests_test
+      PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
     )
   endif()
 endfunction()
