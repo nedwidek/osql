@@ -16,8 +16,8 @@ cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryConfigTestsMain)
   generateOsqueryConfigTestsTestUtils()
-  generateOsqueryConfigTests()
-  generateOsqueryConfigTestsPacks()
+  generateOsqueryConfigTestsTest()
+  generateOsqueryConfigTestsPacksTest()
 endfunction()
 
 function(generateOsqueryConfigTestsTestUtils)
@@ -37,10 +37,10 @@ function(generateOsqueryConfigTestsTestUtils)
   )
 endfunction()
 
-function(generateOsqueryConfigTests)
-  add_osquery_executable(osquery_config_tests config_tests.cpp)
+function(generateOsqueryConfigTestsTest)
+  add_osquery_executable(osquery_config_tests-test config_tests.cpp)
 
-  target_link_libraries(osquery_config_tests PRIVATE
+  target_link_libraries(osquery_config_tests-test PRIVATE
     global_cxx_settings
     osquery_config
     osquery_database_plugins_ephemeral
@@ -61,10 +61,10 @@ function(generateOsqueryConfigTests)
 
 endfunction()
 
-function(generateOsqueryConfigTestsPacks)
-  add_osquery_executable(osquery_config_tests_packs packs.cpp)
+function(generateOsqueryConfigTestsPacksTest)
+  add_osquery_executable(osquery_config_tests_packs-test packs.cpp)
 
-  target_link_libraries(osquery_config_tests_packs PRIVATE
+  target_link_libraries(osquery_config_tests_packs-test PRIVATE
     global_cxx_settings
     osquery_config
     osquery_database_plugins_ephemeral

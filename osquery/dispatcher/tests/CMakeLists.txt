@@ -15,14 +15,14 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryDispatcherTestsMain)
-  generateOsqueryDispatcherTests()
-  generateOsqueryDispatcherTestsScheduler()
+  generateOsqueryDispatcherTestsTest()
+  generateOsqueryDispatcherTestsSchedulerTest()
 endfunction()
 
-function(generateOsqueryDispatcherTests)
-  add_osquery_executable(osquery_dispatcher_tests dispatcher.cpp)
+function(generateOsqueryDispatcherTestsTest)
+  add_osquery_executable(osquery_dispatcher_tests-test dispatcher.cpp)
 
-  target_link_libraries(osquery_dispatcher_tests PRIVATE
+  target_link_libraries(osquery_dispatcher_tests-test PRIVATE
     global_cxx_settings
     osquery_database
     osquery_database_plugins_ephemeral
@@ -37,10 +37,10 @@ function(generateOsqueryDispatcherTests)
   )
 endfunction()
 
-function(generateOsqueryDispatcherTestsScheduler)
-  add_osquery_executable(osquery_dispatcher_tests_scheduler scheduler.cpp)
+function(generateOsqueryDispatcherTestsSchedulerTest)
+  add_osquery_executable(osquery_dispatcher_tests_scheduler-test scheduler.cpp)
 
-    target_link_libraries(osquery_dispatcher_tests_scheduler PRIVATE
+    target_link_libraries(osquery_dispatcher_tests_scheduler-test PRIVATE
     global_cxx_settings
     osquery_database
     osquery_database_plugins_ephemeral

@@ -15,14 +15,14 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryDatabaseTestsMain)
-  generateOsqueryDatabaseTests()
-  generateOsqueryDatabaseTestsResults()
+  generateOsqueryDatabaseTestsTest()
+  generateOsqueryDatabaseTestsResultsTest()
 endfunction()
 
-function(generateOsqueryDatabaseTests)
-  add_osquery_executable(osquery_database_tests database.cpp)
+function(generateOsqueryDatabaseTestsTest)
+  add_osquery_executable(osquery_database_tests-test database.cpp)
 
-  target_link_libraries(osquery_database_tests PRIVATE
+  target_link_libraries(osquery_database_tests-test PRIVATE
     global_cxx_settings
     osquery_database_plugins_ephemeral
     osquery_core
@@ -39,10 +39,10 @@ function(generateOsqueryDatabaseTests)
   )
 endfunction()
 
-function(generateOsqueryDatabaseTestsResults)
-  add_osquery_executable(osquery_database_tests_results results.cpp)
+function(generateOsqueryDatabaseTestsResultsTest)
+  add_osquery_executable(osquery_database_tests_results-test results.cpp)
 
-  target_link_libraries(osquery_database_tests_results PRIVATE
+  target_link_libraries(osquery_database_tests_results-test PRIVATE
     global_cxx_settings
     osquery_database_plugins_ephemeral
     osquery_core_sql

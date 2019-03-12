@@ -84,7 +84,7 @@ function(generatePluginsLoggerAwskinesis)
   )
 
   generateIncludeNamespace(plugins_logger_awskinesis "plugins/logger" "FILE_ONLY" ${public_header_files})
-  add_test(NAME plugins_logger_tests_awskinesistests_test COMMAND plugins_logger_tests_awskinesistests)
+  add_test(NAME plugins_logger_tests_awskinesisloggertests-test COMMAND plugins_logger_tests_awskinesisloggertests-test)
 endfunction()
 
 function(generatePluginsLoggerAwslogforwarder)
@@ -124,7 +124,7 @@ function(generatePluginsLoggerBuffered)
   )
 
   generateIncludeNamespace(plugins_logger_buffered "plugins/logger" "FILE_ONLY" ${public_header_files})
-  add_test(NAME plugins_logger_tests_bufferedtests_test COMMAND plugins_logger_tests_bufferedtests)
+  add_test(NAME plugins_logger_tests_bufferedloggertests-test COMMAND plugins_logger_tests_bufferedloggertests-test)
 endfunction()
 
 function(generatePluginsLoggerFilesystem)
@@ -146,7 +146,7 @@ function(generatePluginsLoggerFilesystem)
   )
 
   generateIncludeNamespace(plugins_logger_filesystem "plugins/logger" "FILE_ONLY" ${public_header_files})
-  add_test(NAME plugins_logger_tests_filesystemtests_test COMMAND plugins_logger_tests_filesystemtests)
+  add_test(NAME plugins_logger_tests_filesystemloggertests-test COMMAND plugins_logger_tests_filesystemloggertests-test)
 endfunction()
 
 function(generatePluginsLoggerKafkaproducer)
@@ -171,7 +171,7 @@ function(generatePluginsLoggerKafkaproducer)
     )
 
     generateIncludeNamespace(plugins_logger_kafkaproducer "plugins/logger" "FILE_ONLY" ${public_header_files})
-    add_test(NAME plugins_logger_tests_kafkaproducertests_test COMMAND plugins_logger_tests_kafkaproducertests)
+    add_test(NAME plugins_logger_tests_kafkaproducerloggertests-test COMMAND plugins_logger_tests_kafkaproducerloggertests-test)
   else()
     add_osquery_library(plugins_logger_kafkaproducer INTERFACE)
   endif()
@@ -214,10 +214,10 @@ function(generatePluginsLoggerSyslog)
 
     generateIncludeNamespace(plugins_logger_syslog "plugins/logger" "FILE_ONLY" ${public_header_files})
 
-    add_test(NAME plugins_logger_tests_syslogtests_test COMMAND plugins_logger_tests_syslogtests)
+    add_test(NAME plugins_logger_tests_syslogloggertests-test COMMAND plugins_logger_tests_syslogloggertests-test)
 
     set_tests_properties(
-      plugins_logger_tests_syslogtests_test
+      plugins_logger_tests_syslogloggertests-test
       PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
     )
   else()
@@ -248,10 +248,10 @@ function(generatePluginsLoggerTlslogger)
 
   generateIncludeNamespace(plugins_logger_tlslogger "plugins/logger" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_logger_plugins_tests_tlstests_test COMMAND plugins_logger_tests_tlstests)
+  add_test(NAME plugins_logger_tests_tlsloggertests-test COMMAND plugins_logger_tests_tlsloggertests-test)
 
   set_tests_properties(
-    osquery_logger_plugins_tests_tlstests_test
+    plugins_logger_tests_tlsloggertests-test
     PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
   )
 endfunction()

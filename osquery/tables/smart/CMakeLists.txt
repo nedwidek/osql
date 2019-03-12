@@ -54,7 +54,7 @@ function(generateOsqueryTablesSmart)
   endif()
 
   if(DEFINED PLATFORM_POSIX)
-    add_test(NAME osquery_tables_smart_tests_smartdrives_test COMMAND osquery_tables_smart_tests_smartdrives)
+    add_test(NAME osquery_tables_smart_tests_smartdrivestests-test COMMAND osquery_tables_smart_tests_smartdrivestests-test)
   endif()
 endfunction()
 

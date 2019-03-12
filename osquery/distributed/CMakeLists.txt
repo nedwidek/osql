@@ -37,7 +37,7 @@ function(generateOsqueryDistributed)
     osquery_utils_system_time
   )
 
-  add_test(NAME osquery_distributed_tests_test COMMAND osquery_distributed_tests)
+  add_test(NAME osquery_distributed_tests-test COMMAND osquery_distributed_tests-test)
 endfunction()
 
 osqueryDistributedMain()

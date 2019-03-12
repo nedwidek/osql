@@ -63,18 +63,18 @@ function(generatePluginsConfigParsers)
 
   generateIncludeNamespace(plugins_config_parsers "plugins/config/parsers" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME plugins_config_parsers_tests_decoratorstests_test COMMAND plugins_config_parsers_tests_decoratorstests)
-  add_test(NAME plugins_carver_tests_eventsparsertests_test COMMAND plugins_config_parsers_tests_eventsparsertests)
-  add_test(NAME plugins_carver_tests_filepathstests_test COMMAND plugins_config_parsers_tests_filepathstests)
-  add_test(NAME plugins_carver_tests_optionstests_test COMMAND plugins_config_parsers_tests_optionstests)
-  add_test(NAME plugins_carver_tests_viewstests_test COMMAND plugins_config_parsers_tests_viewstests)
+  add_test(NAME plugins_config_parsers_tests_decoratorstests-test COMMAND plugins_config_parsers_tests_decoratorstests-test)
+  add_test(NAME plugins_config_parsers_tests_eventsparsertests-test COMMAND plugins_config_parsers_tests_eventsparsertests-test)
+  add_test(NAME plugins_config_parsers_tests_filepathstests-test COMMAND plugins_config_parsers_tests_filepathstests-test)
+  add_test(NAME plugins_config_parsers_tests_optionstests-test COMMAND plugins_config_parsers_tests_optionstests-test)
+  add_test(NAME plugins_config_parsers_tests_viewstests-test COMMAND plugins_config_parsers_tests_viewstests-test)
 
   set_tests_properties(
-    plugins_config_parsers_tests_decoratorstests_test
-    plugins_carver_tests_eventsparsertests_test
-    plugins_carver_tests_filepathstests_test
-    plugins_carver_tests_optionstests_test
-    plugins_carver_tests_viewstests_test
+    plugins_config_parsers_tests_decoratorstests-test
+    plugins_config_parsers_tests_eventsparsertests-test
+    plugins_config_parsers_tests_filepathstests-test
+    plugins_config_parsers_tests_optionstests-test
+    plugins_config_parsers_tests_viewstests-test
     PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
   )
 endfunction()

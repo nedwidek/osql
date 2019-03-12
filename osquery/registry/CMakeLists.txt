@@ -39,7 +39,7 @@ function(generateOsqueryRegistry)
     thirdparty_boost
   )
 
-  add_test(NAME osquery_registry_tests_test COMMAND osquery_registry_tests)
+  add_test(NAME osquery_registry_tests-test COMMAND osquery_registry_tests-test)
 endfunction()
 
 osquery_registry_main()

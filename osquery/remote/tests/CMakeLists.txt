@@ -16,7 +16,7 @@ cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryRemoteTestsMain)
   generateOsqueryRemoteTestsUtils()
-  generateOsqueryRemoteTestsRequestsTests()
+  generateOsqueryRemoteTestsRequeststestsTest()
 endfunction()
 
 function(generateOsqueryRemoteTestsUtils)
@@ -44,10 +44,10 @@ function(generateOsqueryRemoteTestsUtils)
   )
 endfunction()
 
-function(generateOsqueryRemoteTestsRequestsTests)
-  add_osquery_executable(osquery_remote_tests_requeststests requests_tests.cpp)
+function(generateOsqueryRemoteTestsRequeststestsTest)
+  add_osquery_executable(osquery_remote_tests_requeststests-test requests_tests.cpp)
 
-  target_link_libraries(osquery_remote_tests_requeststests PRIVATE
+  target_link_libraries(osquery_remote_tests_requeststests-test PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_database

@@ -15,13 +15,13 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(pluginsKillswitchTestsMain)
-  generatePluginsKillswitchFilesystemTests()
+  generatePluginsKillswitchKillswitchfilesystemplugintestsTest()
 endfunction()
 
-function(generatePluginsKillswitchFilesystemTests)
-  add_osquery_executable(plugins_killswitch_filesystemtests killswitch_filesystem_tests.cpp)
+function(generatePluginsKillswitchKillswitchfilesystemplugintestsTest)
+  add_osquery_executable(plugins_killswitch_killswitchfilesystemplugintests-test killswitch_filesystem_tests.cpp)
 
-  target_link_libraries(plugins_killswitch_filesystemtests PRIVATE
+  target_link_libraries(plugins_killswitch_killswitchfilesystemplugintests-test PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_database

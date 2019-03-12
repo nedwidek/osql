@@ -15,11 +15,12 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryRemoteSerializersMain)
-  generateOsqueryRemoteSerializersJson()
 
   if(BUILD_TESTING)
-    generateOsqueryRemoteSerializersJsonTests()
+    generateOsqueryRemoteserializersjsontestsTest()
   endif()
+
+  generateOsqueryRemoteSerializersJson()
 endfunction()
 
 function(generateOsqueryRemoteSerializersJson)
@@ -40,13 +41,13 @@ function(generateOsqueryRemoteSerializersJson)
 
   generateIncludeNamespace(osquery_remote_serializers_json "osquery/remote/serializers" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_remote_serializers_jsontests_test COMMAND osquery_remote_serializers_jsontests)
+  add_test(NAME osquery_remote_serializers_remotejsonserializerstests-test COMMAND osquery_remote_serializers_remotejsonserializerstests-test)
 endfunction()
 
-function(generateOsqueryRemoteSerializersJsonTests)
-  add_osquery_executable(osquery_remote_serializers_jsontests tests/json_serializers_tests.cpp)
+function(generateOsqueryRemoteserializersjsontestsTest)
+  add_osquery_executable(osquery_remote_serializers_remotejsonserializerstests-test tests/json_serializers_tests.cpp)
 
-  target_link_libraries(osquery_remote_serializers_jsontests PRIVATE
+  target_link_libraries(osquery_remote_serializers_remotejsonserializerstests-test PRIVATE
     global_cxx_settings
     osquery_remote_serializers_json
     thirdparty_googletest

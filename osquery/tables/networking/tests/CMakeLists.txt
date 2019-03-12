@@ -15,19 +15,19 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryTablesNetworkingTestsMain)
-  generateOsqueryTablesNetworkingTests()
+  generateOsqueryTablesNetworkingTestsNetworkingtablestestsTest()
 
   if(DEFINED PLATFORM_MACOS)
-    generateOsqueryTablesNetworkingTestsWifi()
+    generateOsqueryTablesNetworkingTestsWifitestsTest()
   elseif(DEFINED PLATFORM_LINUX)
-    generateOsqueryTablesNetworkingTestsIptables()
+    generateOsqueryTablesNetworkingTestsIptablestestsTest()
   endif()
 endfunction()
 
-function(generateOsqueryTablesNetworkingTests)
-  add_osquery_executable(osquery_tables_networking_tests networking_tables_tests.cpp)
+function(generateOsqueryTablesNetworkingTestsNetworkingtablestestsTest)
+  add_osquery_executable(osquery_tables_networking_tests_networkingtablestests-test networking_tables_tests.cpp)
 
-  target_link_libraries(osquery_tables_networking_tests PRIVATE
+  target_link_libraries(osquery_tables_networking_tests_networkingtablestests-test PRIVATE
     global_cxx_settings
     osquery_tables_networking
     osquery_core
@@ -46,10 +46,10 @@ function(generateOsqueryTablesNetworkingTests)
   )
 endfunction()
 
-function(generateOsqueryTablesNetworkingTestsWifi)
-  add_osquery_executable(osquery_tables_networking_tests_wifi darwin/wifi_tests.mm)
+function(generateOsqueryTablesNetworkingTestsWifitestsTest)
+  add_osquery_executable(osquery_tables_networking_tests_wifitests-test darwin/wifi_tests.mm)
 
-  target_link_libraries(osquery_tables_networking_tests_wifi PRIVATE
+  target_link_libraries(osquery_tables_networking_tests_wifitests-test PRIVATE
     global_cxx_settings
     osquery_tables_networking
     osquery_core
@@ -69,10 +69,10 @@ function(generateOsqueryTablesNetworkingTestsWifi)
   )
 endfunction()
 
-function(generateOsqueryTablesNetworkingTestsIptables)
-  add_osquery_executable(osquery_tables_networking_tests_iptables linux/iptables_tests.cpp)
+function(generateOsqueryTablesNetworkingTestsIptablestestsTest)
+  add_osquery_executable(osquery_tables_networking_tests_iptablestests-test linux/iptables_tests.cpp)
 
-  target_link_libraries(osquery_tables_networking_tests_iptables PRIVATE
+  target_link_libraries(osquery_tables_networking_tests_iptablestests-test PRIVATE
     global_cxx_settings
     osquery_tables_networking
     osquery_core

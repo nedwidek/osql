@@ -15,17 +15,17 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(pluginsConfigParsersTestsMain)
-  generatePluginsConfigParsersTestsDecoratorsTests()
-  generatePluginsConfigParsersTestsEventsParserTests()
-  generatePluginsConfigParsersTestsFilePathsTests()
-  generatePluginsConfigParsersTestsOptionsTests()
-  generatePluginsConfigParsersTestsViewsTests()
+  generatePluginsConfigParsersTestsDecoratorstestsTest()
+  generatePluginsConfigParsersTestsEventsparsertestsTest()
+  generatePluginsConfigParsersTestsFilepathstestsTest()
+  generatePluginsConfigParsersTestsOptionstestsTest()
+  generatePluginsConfigParsersTestsViewstestsTest()
 endfunction()
 
-function(generatePluginsConfigParsersTestsDecoratorsTests)
-  add_osquery_executable(plugins_config_parsers_tests_decoratorstests decorators_tests.cpp)
+function(generatePluginsConfigParsersTestsDecoratorstestsTest)
+  add_osquery_executable(plugins_config_parsers_tests_decoratorstests-test decorators_tests.cpp)
 
-  target_link_libraries(plugins_config_parsers_tests_decoratorstests PRIVATE
+  target_link_libraries(plugins_config_parsers_tests_decoratorstests-test PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_core
@@ -46,11 +46,11 @@ function(generatePluginsConfigParsersTestsDecoratorsTests)
   )
 endfunction()
 
-function(generatePluginsConfigParsersTestsEventsParserTests)
+function(generatePluginsConfigParsersTestsEventsparsertestsTest)
 
-  add_osquery_executable(plugins_config_parsers_tests_eventsparsertests events_parser_tests.cpp)
+  add_osquery_executable(plugins_config_parsers_tests_eventsparsertests-test events_parser_tests.cpp)
 
-  target_link_libraries(plugins_config_parsers_tests_eventsparsertests PRIVATE
+  target_link_libraries(plugins_config_parsers_tests_eventsparsertests-test PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_core
@@ -72,36 +72,10 @@ function(generatePluginsConfigParsersTestsEventsParserTests)
 
 endfunction()
 
-function(generatePluginsConfigParsersTestsFilePathsTests)
-  add_osquery_executable(plugins_config_parsers_tests_filepathstests file_paths_tests.cpp)
+function(generatePluginsConfigParsersTestsFilepathstestsTest)
+  add_osquery_executable(plugins_config_parsers_tests_filepathstests-test file_paths_tests.cpp)
 
-  target_link_libraries(plugins_config_parsers_tests_filepathstests PRIVATE
-    global_cxx_settings
-    osquery_config_tests_testutils
-    osquery_core
-    osquery_database
-    osquery_database_plugins_ephemeral
-    osquery_dispatcher
-    osquery_events
-    osquery_extensions
-    osquery_filesystem
-    osquery_registry
-    osquery_remote_enroll_tlsenroll
-    osquery_utils_conversions
-    osquery_utils_json
-    plugins_config_tlsconfig
-    plugins_config_parsers
-    specs_tables
-    osquery_tools_tests_conffiles
-    thirdparty_googletest
-  )
-endfunction()
-
-function(generatePluginsConfigParsersTestsOptionsTests)
-
-  add_osquery_executable(plugins_config_parsers_tests_optionstests options_tests.cpp)
-
-  target_link_libraries(plugins_config_parsers_tests_optionstests PRIVATE
+  target_link_libraries(plugins_config_parsers_tests_filepathstests-test PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_core
@@ -123,10 +97,36 @@ function(generatePluginsConfigParsersTestsOptionsTests)
   )
 endfunction()
 
-function(generatePluginsConfigParsersTestsViewsTests)
-  add_osquery_executable(plugins_config_parsers_tests_viewstests views_tests.cpp)
+function(generatePluginsConfigParsersTestsOptionstestsTest)
 
-  target_link_libraries(plugins_config_parsers_tests_viewstests PRIVATE
+  add_osquery_executable(plugins_config_parsers_tests_optionstests-test options_tests.cpp)
+
+  target_link_libraries(plugins_config_parsers_tests_optionstests-test PRIVATE
+    global_cxx_settings
+    osquery_config_tests_testutils
+    osquery_core
+    osquery_database
+    osquery_database_plugins_ephemeral
+    osquery_dispatcher
+    osquery_events
+    osquery_extensions
+    osquery_filesystem
+    osquery_registry
+    osquery_remote_enroll_tlsenroll
+    osquery_utils_conversions
+    osquery_utils_json
+    plugins_config_tlsconfig
+    plugins_config_parsers
+    specs_tables
+    osquery_tools_tests_conffiles
+    thirdparty_googletest
+  )
+endfunction()
+
+function(generatePluginsConfigParsersTestsViewstestsTest)
+  add_osquery_executable(plugins_config_parsers_tests_viewstests-test views_tests.cpp)
+
+  target_link_libraries(plugins_config_parsers_tests_viewstests-test PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_core

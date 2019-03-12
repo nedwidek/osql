@@ -16,9 +16,9 @@ cmake_minimum_required(VERSION 3.13.3)
 
 function(osquerySqlMain)
   generateOsquerySqlTestsTestUtils()
-  generateOsquerySqlTests()
-  generateOsquerySqlTestsVirtualTable()
-  generateOsquerySqlTestsSqliteUtil()
+  generateOsquerySqlTestsTest()
+  generateOsquerySqlTestsVirtualtableTestsTest()
+  generateOsquerySqlTestsSqliteutiltestsTest()
 endfunction()
 
 function(generateOsquerySqlTestsTestUtils)
@@ -44,10 +44,10 @@ function(generateOsquerySqlTestsTestUtils)
   )
 endfunction()
 
-function(generateOsquerySqlTests)
-  add_osquery_executable(osquery_sql_tests sql.cpp)
+function(generateOsquerySqlTestsTest)
+  add_osquery_executable(osquery_sql_tests-test sql.cpp)
 
-  target_link_libraries(osquery_sql_tests PRIVATE
+  target_link_libraries(osquery_sql_tests-test PRIVATE
     global_cxx_settings
     osquery_database
     osquery_distributed
@@ -63,10 +63,10 @@ function(generateOsquerySqlTests)
   )
 endfunction()
 
-function(generateOsquerySqlTestsVirtualTable)
-  add_osquery_executable(osquery_sql_tests_virtualtable virtual_table.cpp)
+function(generateOsquerySqlTestsVirtualtableTestsTest)
+  add_osquery_executable(osquery_sql_tests_virtualtabletests-test virtual_table.cpp)
 
-  target_link_libraries(osquery_sql_tests_virtualtable PRIVATE
+  target_link_libraries(osquery_sql_tests_virtualtabletests-test PRIVATE
     global_cxx_settings
     osquery_database
     osquery_database_plugins_ephemeral
@@ -82,10 +82,10 @@ function(generateOsquerySqlTestsVirtualTable)
   )
 endfunction()
 
-function(generateOsquerySqlTestsSqliteUtil)
-  add_osquery_executable(osquery_sql_tests_sqliteutils sqlite_util_tests.cpp)
+function(generateOsquerySqlTestsSqliteutiltestsTest)
+  add_osquery_executable(osquery_sql_tests_sqliteutilstests-test sqlite_util_tests.cpp)
 
-  target_link_libraries(osquery_sql_tests_sqliteutils PRIVATE
+  target_link_libraries(osquery_sql_tests_sqliteutilstests-test PRIVATE
     global_cxx_settings
     osquery_database
     osquery_distributed

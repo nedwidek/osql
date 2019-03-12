@@ -43,10 +43,10 @@ function(generateOsqueryUtilsAws)
 
   generateIncludeNamespace(osquery_utils_aws "osquery/utils/aws" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_aws_tests_awsutil_test COMMAND osquery_aws_tests_awsutil)
+  add_test(NAME osquery_utils_aws_tests-test COMMAND osquery_utils_aws_tests-test)
 
   set_tests_properties(
-    osquery_aws_tests_awsutil_test
+    osquery_utils_aws_tests-test
     PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
   )
 endfunction()

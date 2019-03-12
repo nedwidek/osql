@@ -15,12 +15,13 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryFilesystemMain)
-  generateOsqueryFilesystem()
-  generateOsqueryFilesystemMockfilestructure()
 
   if(BUILD_TESTING)
-    generateOsqueryFilesystemTests()
+    generateOsqueryFilesystemtestsTest()
   endif()
+
+  generateOsqueryFilesystem()
+  generateOsqueryFilesystemMockfilestructure()
 endfunction()
 
 function(generateOsqueryFilesystem)
@@ -76,10 +77,10 @@ function(generateOsqueryFilesystem)
 
   generateIncludeNamespace(osquery_filesystem "osquery/filesystem" "FULL_PATH" ${public_header_files})
 
-  add_test(NAME osquery_filesystem_tests_test COMMAND osquery_filesystem_tests)
+  add_test(NAME osquery_filesystem_filesystemtests-test COMMAND osquery_filesystem_filesystemtests-test)
 
   set_tests_properties(
-    osquery_filesystem_tests_test
+    osquery_filesystem_filesystemtests-test
     PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
   )
 endfunction()
@@ -102,7 +103,7 @@ function(generateOsqueryFilesystemMockfilestructure)
   generateIncludeNamespace(osquery_filesystem_mockfilestructure "osquery/filesystem" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-function(generateOsqueryFilesystemTests)
+function(generateOsqueryFilesystemtestsTest)
 
   set(source_files
     tests/fileops.cpp
@@ -113,9 +114,9 @@ function(generateOsqueryFilesystemTests)
     list(APPEND source_files tests/darwin/plist_tests.cpp)
   endif()
 
-  add_osquery_executable(osquery_filesystem_tests ${source_files})
+  add_osquery_executable(osquery_filesystem_filesystemtests-test ${source_files})
 
-  target_link_libraries(osquery_filesystem_tests PRIVATE
+  target_link_libraries(osquery_filesystem_filesystemtests-test PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_core

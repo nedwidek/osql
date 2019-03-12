@@ -73,9 +73,9 @@ function(generateOsquerySql)
 
   generateIncludeNamespace(osquery_sql "osquery/sql" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_sql_tests_test COMMAND osquery_sql_tests)
-  add_test(NAME osquery_sql_tests_virtualtable_test COMMAND osquery_sql_tests_virtualtable)
-  add_test(NAME osquery_sql_tests_sqliteutils_test COMMAND osquery_sql_tests_sqliteutils)
+  add_test(NAME osquery_sql_tests-test COMMAND osquery_sql_tests-test)
+  add_test(NAME osquery_sql_tests_virtualtabletests-test COMMAND osquery_sql_tests_virtualtabletests-test)
+  add_test(NAME osquery_sql_tests_sqliteutilstests-test COMMAND osquery_sql_tests_sqliteutilstests-test)
 endfunction()
 
 osquery_sql_main()

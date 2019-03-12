@@ -16,14 +16,14 @@ cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryTablesApplicationsPosixTestsMain)
   if (DEFINED PLATFORM_POSIX)
-    generateOsqueryTablesApplicationsPosixTestsPrometheusMetrics()
+    generateOsqueryTablesApplicationsPosixTestsPrometheusmetricstestsTest()
   endif()
 endfunction()
 
-function(generateOsqueryTablesApplicationsPosixTestsPrometheusMetrics)
-  add_osquery_executable(osquery_tables_applications_posix_tests_prometheusmetrics prometheus_metrics_tests.cpp)
+function(generateOsqueryTablesApplicationsPosixTestsPrometheusmetricstestsTest)
+  add_osquery_executable(osquery_tables_applications_posix_tests_prometheusmetricstests-test prometheus_metrics_tests.cpp)
 
-  target_link_libraries(osquery_tables_applications_posix_tests_prometheusmetrics PRIVATE
+  target_link_libraries(osquery_tables_applications_posix_tests_prometheusmetricstests-test PRIVATE
     global_cxx_settings
     osquery_database
     osquery_distributed

@@ -16,7 +16,7 @@ cmake_minimum_required(VERSION 3.13.3)
 
 function(testsIntegrationTablesMain)
   generateTestsIntegrationTablesHelper()
-  generateTestsIntegrationTablesTests()
+  generateTestsIntegrationTablesTestsTest()
 
 endfunction()
 
@@ -39,7 +39,7 @@ function(generateTestsIntegrationTablesHelper)
   )
 endfunction()
 
-function(generateTestsIntegrationTablesTests)
+function(generateTestsIntegrationTablesTestsTest)
   set(source_files
     carbon_black_info.cpp
     carves.cpp
@@ -303,9 +303,9 @@ function(generateTestsIntegrationTablesTests)
     list(APPEND source_files ${platform_source_files})
   endif()
 
-  add_osquery_executable(tests_integration_tables_test ${source_files})
+  add_osquery_executable(tests_integration_tables-test ${source_files})
 
-  target_link_libraries(tests_integration_tables_test PRIVATE
+  target_link_libraries(tests_integration_tables-test PRIVATE
     global_cxx_settings
     osquery_database
     osquery_database_plugins_ephemeral
@@ -320,7 +320,7 @@ function(generateTestsIntegrationTablesTests)
     thirdparty_googletest
   )
 
-  add_test(NAME tests_integration_tables_test COMMAND tests_integration_tables_test CONFIGURATIONS exclude_from_all)
+  add_test(NAME tests_integration_tables-test COMMAND tests_integration_tables-test CONFIGURATIONS exclude_from_all)
 
 endfunction()
 

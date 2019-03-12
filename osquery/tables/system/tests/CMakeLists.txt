@@ -16,39 +16,39 @@ cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryTablesSystemTestsMain)
 
-  generateOsqueryTablesSystemTestsCommonDeps()
+  generateOsqueryTablesSystemTestsCommondeps()
 
   if(DEFINED PLATFORM_LINUX)
-    generateOsqueryTablesSystemTestsMd()
-    generateOsqueryTablesSystemTestsPcidevices()
-    generateOsqueryTablesSystemTestsPortage()
+    generateOsqueryTablesSystemTestsMdtablestestsTest()
+    generateOsqueryTablesSystemTestsPcidevicestestsTest()
+    generateOsqueryTablesSystemTestsPortagetestsTest()
   endif()
 
   if(DEFINED PLATFORM_POSIX)
-    generateOsqueryTablesSystemTestsKnownhosts()
-    generateOsqueryTablesSystemTestsShellhistory()
-    generateOsqueryTablesSystemTestsSudoers()
-    generateOsqueryTablesSystemTestsYumsources()
+    generateOsqueryTablesSystemTestsKnownhoststestsTest()
+    generateOsqueryTablesSystemTestsShellhistorytestsTest()
+    generateOsqueryTablesSystemTestsSudoerstestsTest()
+    generateOsqueryTablesSystemTestsYumsourcestestsTest()
   endif()
 
-  generateOsqueryTablesSystemTests()
+  generateOsqueryTablesSystemtablestestsTest()
 
   if(DEFINED PLATFORM_MACOS)
-    generateOsqueryTablesSystemTestsApps()
-    generateOsqueryTablesSystemTestsAsl()
-    generateOsqueryTablesSystemTestsCertificates()
-    generateOsqueryTablesSystemTestsExtendedattributes()
-    generateOsqueryTablesSystemTestsFirewall()
-    generateOsqueryTablesSystemTestsLaunchd()
-    generateOsqueryTablesSystemTestsMdfind()
-    generateOsqueryTablesSystemTestsProcesses()
-    generateOsqueryTablesSystemTestsSmc()
-    generateOsqueryTablesSystemTestsStartupitems()
-    generateOsqueryTablesSystemTestsSignature()
+    generateOsqueryTablesSystemTestsAppstestsTest()
+    generateOsqueryTablesSystemTestsAsltestsTest()
+    generateOsqueryTablesSystemTestsCertificatestestsTest()
+    generateOsqueryTablesSystemTestsExtendedattributestestsTest()
+    generateOsqueryTablesSystemTestsFirewalltestsTest()
+    generateOsqueryTablesSystemTestsLaunchdtestsTest()
+    generateOsqueryTablesSystemTestsMdfindtestsTest()
+    generateOsqueryTablesSystemTestsProcessestestsTest()
+    generateOsqueryTablesSystemTestsSmctestsTest()
+    generateOsqueryTablesSystemTestsStartupitemstestsTest()
+    generateOsqueryTablesSystemTestsSignaturetestsTest()
   endif()
 endfunction()
 
-function(generateOsqueryTablesSystemTestsCommonDeps)
+function(generateOsqueryTablesSystemTestsCommondeps)
   add_osquery_library(osquery_tables_system_tests_commondeps INTERFACE)
 
   target_link_libraries(osquery_tables_system_tests_commondeps INTERFACE
@@ -67,160 +67,160 @@ function(generateOsqueryTablesSystemTestsCommonDeps)
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsMd)
-  add_osquery_executable(osquery_tables_system_tests_md linux/md_tables_tests.cpp)
+function(generateOsqueryTablesSystemTestsMdtablestestsTest)
+  add_osquery_executable(osquery_tables_system_tests_mdtablestests-test linux/md_tables_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests_md PRIVATE
+  target_link_libraries(osquery_tables_system_tests_mdtablestests-test PRIVATE
     osquery_tables_system_tests_commondeps
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsPcidevices)
-  add_osquery_executable(osquery_tables_system_tests_pcidevices linux/pci_devices_tests.cpp)
+function(generateOsqueryTablesSystemTestsPcidevicestestsTest)
+  add_osquery_executable(osquery_tables_system_tests_pcidevicestests-test linux/pci_devices_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests_pcidevices PRIVATE
+  target_link_libraries(osquery_tables_system_tests_pcidevicestests-test PRIVATE
     osquery_tables_system_tests_commondeps
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsPortage)
-  add_osquery_executable(osquery_tables_system_tests_portage linux/portage_tests.cpp)
+function(generateOsqueryTablesSystemTestsPortagetestsTest)
+  add_osquery_executable(osquery_tables_system_tests_portagetests-test linux/portage_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests_portage PRIVATE
+  target_link_libraries(osquery_tables_system_tests_portagetests-test PRIVATE
     osquery_tables_system_tests_commondeps
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsKnownhosts)
-  add_osquery_executable(osquery_tables_system_tests_knownhosts posix/known_hosts_tests.cpp)
+function(generateOsqueryTablesSystemTestsKnownhoststestsTest)
+  add_osquery_executable(osquery_tables_system_tests_knownhoststests-test posix/known_hosts_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests_knownhosts PRIVATE
+  target_link_libraries(osquery_tables_system_tests_knownhoststests-test PRIVATE
     osquery_tables_system_tests_commondeps
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsShellhistory)
-  add_osquery_executable(osquery_tables_system_tests_shellhistory posix/shell_history_tests.cpp)
+function(generateOsqueryTablesSystemTestsShellhistorytestsTest)
+  add_osquery_executable(osquery_tables_system_tests_shellhistorytests-test posix/shell_history_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests_shellhistory PRIVATE
+  target_link_libraries(osquery_tables_system_tests_shellhistorytests-test PRIVATE
     osquery_tables_system_tests_commondeps
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsSudoers)
-  add_osquery_executable(osquery_tables_system_tests_sudoers posix/sudoers_tests.cpp)
+function(generateOsqueryTablesSystemTestsSudoerstestsTest)
+  add_osquery_executable(osquery_tables_system_tests_sudoerstests-test posix/sudoers_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests_sudoers PRIVATE
+  target_link_libraries(osquery_tables_system_tests_sudoerstests-test PRIVATE
     osquery_tables_system_tests_commondeps
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsYumsources)
-  add_osquery_executable(osquery_tables_system_tests_yumsources posix/yum_sources_tests.cpp)
+function(generateOsqueryTablesSystemTestsYumsourcestestsTest)
+  add_osquery_executable(osquery_tables_system_tests_yumsourcestests-test posix/yum_sources_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests_yumsources PRIVATE
+  target_link_libraries(osquery_tables_system_tests_yumsourcestests-test PRIVATE
     osquery_tables_system_tests_commondeps
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTests)
-  add_osquery_executable(osquery_tables_system_tests system_tables_tests.cpp)
+function(generateOsqueryTablesSystemtablestestsTest)
+  add_osquery_executable(osquery_tables_system_tests_systemtablestests-test system_tables_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests PRIVATE
+  target_link_libraries(osquery_tables_system_tests_systemtablestests-test PRIVATE
     osquery_tables_system_tests_commondeps
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsApps)
-  add_osquery_executable(osquery_tables_system_tests_apps darwin/apps_tests.cpp)
+function(generateOsqueryTablesSystemTestsAppstestsTest)
+  add_osquery_executable(osquery_tables_system_tests_appstests-test darwin/apps_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests_apps PRIVATE
+  target_link_libraries(osquery_tables_system_tests_appstests-test PRIVATE
     osquery_tables_system_tests_commondeps
     osquery_tools_tests_plistfiles
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsAsl)
-  add_osquery_executable(osquery_tables_system_tests_asl darwin/asl_tests.cpp)
+function(generateOsqueryTablesSystemTestsAsltestsTest)
+  add_osquery_executable(osquery_tables_system_tests_asltests-test darwin/asl_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests_asl PRIVATE
+  target_link_libraries(osquery_tables_system_tests_asltests-test PRIVATE
     osquery_tables_system_tests_commondeps
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsCertificates)
-  add_osquery_executable(osquery_tables_system_tests_certificates darwin/certificates_tests.cpp)
+function(generateOsqueryTablesSystemTestsCertificatestestsTest)
+  add_osquery_executable(osquery_tables_system_tests_certificatestests-test darwin/certificates_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests_certificates PRIVATE
+  target_link_libraries(osquery_tables_system_tests_certificatestests-test PRIVATE
     osquery_tables_system_tests_commondeps
     osquery_tools_tests_testfiles
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsExtendedattributes)
-  add_osquery_executable(osquery_tables_system_tests_extendedattributes darwin/extended_attributes_tests.cpp)
+function(generateOsqueryTablesSystemTestsExtendedattributestestsTest)
+  add_osquery_executable(osquery_tables_system_tests_extendedattributestests-test darwin/extended_attributes_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests_extendedattributes PRIVATE
+  target_link_libraries(osquery_tables_system_tests_extendedattributestests-test PRIVATE
     osquery_tables_system_tests_commondeps
     osquery_tools_tests_testfiles
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsFirewall)
-  add_osquery_executable(osquery_tables_system_tests_firewall darwin/firewall_tests.cpp)
+function(generateOsqueryTablesSystemTestsFirewalltestsTest)
+  add_osquery_executable(osquery_tables_system_tests_firewalltests-test darwin/firewall_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests_firewall PRIVATE
+  target_link_libraries(osquery_tables_system_tests_firewalltests-test PRIVATE
     osquery_tables_system_tests_commondeps
     osquery_tools_tests_plistfiles
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsLaunchd)
-  add_osquery_executable(osquery_tables_system_tests_launchd darwin/launchd_tests.cpp)
+function(generateOsqueryTablesSystemTestsLaunchdtestsTest)
+  add_osquery_executable(osquery_tables_system_tests_launchdtests-test darwin/launchd_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests_launchd PRIVATE
+  target_link_libraries(osquery_tables_system_tests_launchdtests-test PRIVATE
     osquery_tables_system_tests_commondeps
     osquery_tools_tests_plistfiles
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsMdfind)
-  add_osquery_executable(osquery_tables_system_tests_mdfind darwin/mdfind_tests.cpp)
+function(generateOsqueryTablesSystemTestsMdfindtestsTest)
+  add_osquery_executable(osquery_tables_system_tests_mdfindtests-test darwin/mdfind_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests_mdfind PRIVATE
+  target_link_libraries(osquery_tables_system_tests_mdfindtests-test PRIVATE
     osquery_tables_system_tests_commondeps
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsProcesses)
-  add_osquery_executable(osquery_tables_system_tests_processes darwin/processes_tests.cpp)
+function(generateOsqueryTablesSystemTestsProcessestestsTest)
+  add_osquery_executable(osquery_tables_system_tests_processestests-test darwin/processes_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests_processes PRIVATE
+  target_link_libraries(osquery_tables_system_tests_processestests-test PRIVATE
     osquery_tables_system_tests_commondeps
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsSmc)
-  add_osquery_executable(osquery_tables_system_tests_smc darwin/smc_tests.cpp)
+function(generateOsqueryTablesSystemTestsSmctestsTest)
+  add_osquery_executable(osquery_tables_system_tests_smctests-test darwin/smc_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests_smc PRIVATE
+  target_link_libraries(osquery_tables_system_tests_smctests-test PRIVATE
     osquery_tables_system_tests_commondeps
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsStartupitems)
-  add_osquery_executable(osquery_tables_system_tests_startupitems darwin/startup_items_tests.cpp)
+function(generateOsqueryTablesSystemTestsStartupitemstestsTest)
+  add_osquery_executable(osquery_tables_system_tests_startupitemstests-test darwin/startup_items_tests.cpp)
 
-  target_link_libraries(osquery_tables_system_tests_startupitems PRIVATE
+  target_link_libraries(osquery_tables_system_tests_startupitemstests-test PRIVATE
     osquery_tables_system_tests_commondeps
     osquery_tools_tests_plistfiles
   )
 endfunction()
 
-function(generateOsqueryTablesSystemTestsSignature)
-  add_osquery_executable(osquery_tables_system_tests_signature darwin/signature_tests.mm)
+function(generateOsqueryTablesSystemTestsSignaturetestsTest)
+  add_osquery_executable(osquery_tables_system_tests_signaturetests-test darwin/signature_tests.mm)
 
-  target_link_libraries(osquery_tables_system_tests_signature PRIVATE
+  target_link_libraries(osquery_tables_system_tests_signaturetests-test PRIVATE
     osquery_tables_system_tests_commondeps
   )
 endfunction()

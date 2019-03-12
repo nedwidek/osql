@@ -45,10 +45,10 @@ function(generateOsqueryKillswitch)
 
   generateIncludeNamespace(osquery_killswitch "osquery/killswitch" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_killswitch_tests_test COMMAND osquery_killswitch_tests)
+  add_test(NAME osquery_killswitch_tests-test COMMAND osquery_killswitch_tests-test)
 
   set_tests_properties(
-    osquery_killswitch_tests_test
+    osquery_killswitch_tests-test
     PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
   )
 endfunction()

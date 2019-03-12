@@ -15,13 +15,13 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryDistributedTests)
-  generateOsqueryDistributesTests()
+  generateOsqueryDistributesTestsTest()
 endfunction()
 
-function(generateOsqueryDistributesTests)
-  add_osquery_executable(osquery_distributed_tests distributed_tests.cpp)
+function(generateOsqueryDistributesTestsTest)
+  add_osquery_executable(osquery_distributed_tests-test distributed_tests.cpp)
 
-  target_link_libraries(osquery_distributed_tests PRIVATE
+  target_link_libraries(osquery_distributed_tests-test PRIVATE
     global_cxx_settings
     osquery_core_plugins
     osquery_utils_conversions

@@ -15,15 +15,15 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryDatabasePluginsTestsMain)
-  generateOsqueryDatabasePluginsTestsSqlitePluginTests()
-  generateOsqueryDatabasePluginsTestsRocksDBTests()
+  generateOsqueryDatabasePluginsTestsSqliteplugintestsTest()
+  generateOsqueryDatabasePluginsTestsRocksdbtestsTest()
   generateOsqueryDatabasePluginsTestsDatabaseTestUtils()
 endfunction()
 
-function(generateOsqueryDatabasePluginsTestsSqlitePluginTests)
-  add_osquery_executable(osquery_database_plugins_tests_sqliteplugintests sqlite.cpp)
+function(generateOsqueryDatabasePluginsTestsSqliteplugintestsTest)
+  add_osquery_executable(osquery_database_plugins_tests_sqliteplugintests-test sqlite.cpp)
 
-  target_link_libraries(osquery_database_plugins_tests_sqliteplugintests PRIVATE
+  target_link_libraries(osquery_database_plugins_tests_sqliteplugintests-test PRIVATE
     global_cxx_settings
     osquery_core
     osquery_database_plugins_ephemeral
@@ -42,10 +42,10 @@ function(generateOsqueryDatabasePluginsTestsSqlitePluginTests)
   )
 endfunction()
 
-function(generateOsqueryDatabasePluginsTestsRocksDBTests)
-  add_osquery_executable(osquery_database_plugins_tests_rocksdbtests rocksdb.cpp)
+function(generateOsqueryDatabasePluginsTestsRocksdbtestsTest)
+  add_osquery_executable(osquery_database_plugins_tests_rocksdbtests-test rocksdb.cpp)
 
-  target_link_libraries(osquery_database_plugins_tests_rocksdbtests PRIVATE
+  target_link_libraries(osquery_database_plugins_tests_rocksdbtests-test PRIVATE
     global_cxx_settings
 
     osquery_core

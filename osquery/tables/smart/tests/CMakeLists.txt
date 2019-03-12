@@ -16,14 +16,14 @@ cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryTablesSmartTestsMain)
   if(DEFINED PLATFORM_POSIX)
-    generateOsqueryTablesSmartTestsSmartDrives()
+    generateOsqueryTablesSmartTestsSmartdrivestestsTest()
   endif()
 endfunction()
 
-function(generateOsqueryTablesSmartTestsSmartDrives)
-  add_osquery_executable(osquery_tables_smart_tests_smartdrives smart_drives_tests.cpp)
+function(generateOsqueryTablesSmartTestsSmartdrivestestsTest)
+  add_osquery_executable(osquery_tables_smart_tests_smartdrivestests-test smart_drives_tests.cpp)
 
-  target_link_libraries(osquery_tables_smart_tests_smartdrives PRIVATE
+  target_link_libraries(osquery_tables_smart_tests_smartdrivestests-test PRIVATE
     global_cxx_settings
     osquery_headers
     osquery_core

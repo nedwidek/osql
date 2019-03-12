@@ -15,17 +15,17 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryCoreTestsMain)
-  generateOsqueryCoreTestsFlagsTests()
-  generateOsqueryCoreTestsSystemTests()
-  generateOsqueryCoreTestsTablesTests()
-  generateOsqueryCoreTestsWatcherPermissionsTests()
-  generateOsqueryCoreTestsQueryTests()
+  generateOsqueryCoreTestsFlagstestsTest()
+  generateOsqueryCoreTestsSystemtestsTest()
+  generateOsqueryCoreTestsTablestestsTest()
+  generateOsqueryCoreTestsWatcherpermissionstestsTest()
+  generateOsqueryCoreTestsQuerytestsTest()
 endfunction()
 
-function(generateOsqueryCoreTestsFlagsTests)
-  add_osquery_executable(osquery_core_tests_flagstests flags_tests.cpp)
+function(generateOsqueryCoreTestsFlagstestsTest)
+  add_osquery_executable(osquery_core_tests_flagstests-test flags_tests.cpp)
 
-  target_link_libraries(osquery_core_tests_flagstests PRIVATE
+  target_link_libraries(osquery_core_tests_flagstests-test PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_core
@@ -44,10 +44,10 @@ function(generateOsqueryCoreTestsFlagsTests)
   )
 endfunction()
 
-function(generateOsqueryCoreTestsSystemTests)
-  add_osquery_executable(osquery_core_tests_systemtests system_test.cpp)
+function(generateOsqueryCoreTestsSystemtestsTest)
+  add_osquery_executable(osquery_core_tests_systemtests-test system_test.cpp)
 
-  target_link_libraries(osquery_core_tests_systemtests PRIVATE
+  target_link_libraries(osquery_core_tests_systemtests-test PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_core
@@ -66,10 +66,10 @@ function(generateOsqueryCoreTestsSystemTests)
   )
 endfunction()
 
-function(generateOsqueryCoreTestsTablesTests)
-  add_osquery_executable(osquery_core_tests_tablestests tables_tests.cpp)
+function(generateOsqueryCoreTestsTablestestsTest)
+  add_osquery_executable(osquery_core_tests_tablestests-test tables_tests.cpp)
 
-  target_link_libraries(osquery_core_tests_tablestests PRIVATE
+  target_link_libraries(osquery_core_tests_tablestests-test PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_core
@@ -88,7 +88,7 @@ function(generateOsqueryCoreTestsTablesTests)
   )
 endfunction()
 
-function(generateOsqueryCoreTestsWatcherPermissionsTests)
+function(generateOsqueryCoreTestsWatcherpermissionstestsTest)
 
   set(source_files
     watcher_tests.cpp
@@ -98,9 +98,9 @@ function(generateOsqueryCoreTestsWatcherPermissionsTests)
     list(APPEND source_files posix/permissions_tests.cpp)
   endif()
 
-  add_osquery_executable(osquery_core_tests_watcherpermissionstests ${source_files})
+  add_osquery_executable(osquery_core_tests_watcherpermissionstests-test ${source_files})
 
-  target_link_libraries(osquery_core_tests_watcherpermissionstests PRIVATE
+  target_link_libraries(osquery_core_tests_watcherpermissionstests-test PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_core
@@ -120,7 +120,7 @@ function(generateOsqueryCoreTestsWatcherPermissionsTests)
   )
 endfunction()
 
-function(generateOsqueryCoreTestsQueryTests)
+function(generateOsqueryCoreTestsQuerytestsTest)
   add_osquery_executable(osquery_core_tests_querytests query_tests.cpp)
 
   target_link_libraries(osquery_core_tests_querytests PRIVATE

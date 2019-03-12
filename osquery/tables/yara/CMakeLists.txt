@@ -66,7 +66,7 @@ function(generateOsqueryTablesYara)
 
   generateIncludeNamespace(osquery_tables_yara "osquery/tables/yara" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_tables_yara_tests_test COMMAND osquery_tables_yara_tests)
+  add_test(NAME osquery_tables_yara_tests-test COMMAND osquery_tables_yara_tests-test)
   
 endfunction()
 

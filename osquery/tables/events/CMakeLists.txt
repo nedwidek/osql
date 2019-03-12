@@ -94,13 +94,13 @@ function(generateOsqueryTablesEvents)
 
     generateIncludeNamespace(osquery_tables_events "osquery/tables/events" "FULL_PATH" ${platform_public_header_files})
 
-    add_test(NAME osquery_tables_events_tests_selinuxevents_test COMMAND osquery_tables_events_tests_selinuxevents)
+    add_test(NAME osquery_tables_events_tests_selinuxeventstests-test COMMAND osquery_tables_events_tests_selinuxeventstests-test)
   endif()
 
-  add_test(NAME osquery_tables_events_tests_fileevents_test COMMAND osquery_tables_events_tests_fileevents)
+  add_test(NAME osquery_tables_events_tests_fileeventstests-test COMMAND osquery_tables_events_tests_fileeventstests-test)
 
   set_tests_properties(
-    osquery_tables_events_tests_fileevents_test
+    osquery_tables_events_tests_fileeventstests-test
     PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
   )
 endfunction()

@@ -15,25 +15,25 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(pluginsLoggerTestsMain)
-  generatePluginsLoggerTestsFilesystemTests()
-  generatePluginsLoggerTestsBufferedTests()
+  generatePluginsLoggerTestsFilesystemloggertestsTest()
+  generatePluginsLoggerTestsBufferedloggertestsTest()
 
   if(DEFINED PLATFORM_LINUX OR DEFINED PLATFORM_MACOS)
-    generatePluginsLoggerTestsKafkaProducerTests()
+    generatePluginsLoggerTestsKafkaproducerloggertestsTest()
   endif()
 
-  generatePluginsLoggerTestsAwsKinesisTests()
-  generatePluginsLoggerTestsTlsTests()
+  generatePluginsLoggerTestsAwskinesisloggertestsTest()
+  generatePluginsLoggerTestsTlsloggertestsTest()
 
   if (DEFINED PLATFORM_POSIX)
-    generatePluginsLoggerTestsSyslogTests()
+    generatePluginsLoggerTestsSyslogloggertestsTest()
   endif()
 endfunction()
 
-function(generatePluginsLoggerTestsFilesystemTests)
-  add_osquery_executable(plugins_logger_tests_filesystemtests filesystem_logger.cpp)
+function(generatePluginsLoggerTestsFilesystemloggertestsTest)
+  add_osquery_executable(plugins_logger_tests_filesystemloggertests-test filesystem_logger.cpp)
 
-  target_link_libraries(plugins_logger_tests_filesystemtests PRIVATE
+  target_link_libraries(plugins_logger_tests_filesystemloggertests-test PRIVATE
     global_cxx_settings
     osquery_core
     osquery_core_plugins
@@ -53,10 +53,10 @@ function(generatePluginsLoggerTestsFilesystemTests)
   )
 endfunction()
 
-function(generatePluginsLoggerTestsBufferedTests)
-  add_osquery_executable(plugins_logger_tests_bufferedtests buffered_tests.cpp)
+function(generatePluginsLoggerTestsBufferedloggertestsTest)
+  add_osquery_executable(plugins_logger_tests_bufferedloggertests-test buffered_tests.cpp)
 
-  target_link_libraries(plugins_logger_tests_bufferedtests PRIVATE
+  target_link_libraries(plugins_logger_tests_bufferedloggertests-test PRIVATE
     global_cxx_settings
     osquery_core
     osquery_core_plugins
@@ -76,10 +76,10 @@ function(generatePluginsLoggerTestsBufferedTests)
   )
 endfunction()
 
-function(generatePluginsLoggerTestsKafkaProducerTests)
-  add_osquery_executable(plugins_logger_tests_kafkaproducertests kafka_producer_tests.cpp)
+function(generatePluginsLoggerTestsKafkaproducerloggertestsTest)
+  add_osquery_executable(plugins_logger_tests_kafkaproducerloggertests-test kafka_producer_tests.cpp)
 
-  target_link_libraries(plugins_logger_tests_kafkaproducertests PRIVATE
+  target_link_libraries(plugins_logger_tests_kafkaproducerloggertests-test PRIVATE
     global_cxx_settings
     osquery_core
     osquery_core_plugins
@@ -100,10 +100,10 @@ function(generatePluginsLoggerTestsKafkaProducerTests)
   )
 endfunction()
 
-function(generatePluginsLoggerTestsAwsKinesisTests)
-  add_osquery_executable(plugins_logger_tests_awskinesistests aws_kinesis_logger_tests.cpp)
+function(generatePluginsLoggerTestsAwskinesisloggertestsTest)
+  add_osquery_executable(plugins_logger_tests_awskinesisloggertests-test aws_kinesis_logger_tests.cpp)
 
-  target_link_libraries(plugins_logger_tests_awskinesistests PRIVATE
+  target_link_libraries(plugins_logger_tests_awskinesisloggertests-test PRIVATE
     global_cxx_settings
     osquery_core
     osquery_core_plugins
@@ -125,10 +125,10 @@ function(generatePluginsLoggerTestsAwsKinesisTests)
   )
 endfunction()
 
-function(generatePluginsLoggerTestsTlsTests)
-  add_osquery_executable(plugins_logger_tests_tlstests tls_logger_tests.cpp)
+function(generatePluginsLoggerTestsTlsloggertestsTest)
+  add_osquery_executable(plugins_logger_tests_tlsloggertests-test tls_logger_tests.cpp)
 
-  target_link_libraries(plugins_logger_tests_tlstests PRIVATE
+  target_link_libraries(plugins_logger_tests_tlsloggertests-test PRIVATE
     global_cxx_settings
     osquery_core
     osquery_core_plugins
@@ -151,10 +151,10 @@ function(generatePluginsLoggerTestsTlsTests)
   )
 endfunction()
 
-function(generatePluginsLoggerTestsSyslogTests)
-  add_osquery_executable(plugins_logger_tests_syslogtests syslog_logger_tests.cpp)
+function(generatePluginsLoggerTestsSyslogloggertestsTest)
+  add_osquery_executable(plugins_logger_tests_syslogloggertests-test syslog_logger_tests.cpp)
 
-  target_link_libraries(plugins_logger_tests_syslogtests PRIVATE
+  target_link_libraries(plugins_logger_tests_syslogloggertests-test PRIVATE
     global_cxx_settings
     osquery_core
     osquery_core_plugins

@@ -58,7 +58,7 @@ function(generateOsqueryLoggerDataLogger)
     osquery_logger
   )
 
-  add_test(NAME osquery_logger_tests_test COMMAND osquery_logger_tests)
+  add_test(NAME osquery_logger_tests-test COMMAND osquery_logger_tests-test)
 endfunction()
 
 osquery_logger_main()

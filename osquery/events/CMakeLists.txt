@@ -116,17 +116,17 @@ function(generateOsqueryEvents)
 
   generateIncludeNamespace(osquery_events "osquery/events" "FULL_PATH" ${platform_public_header_files})
 
-  add_test(NAME osquery_events_tests_databasetests_test COMMAND osquery_events_tests_databasetests)
+  add_test(NAME osquery_events_tests_databasetests-test COMMAND osquery_events_tests_databasetests-test)
 
   if(DEFINED PLATFORM_LINUX)
-    add_test(NAME osquery_events_tests_syslogtests_test COMMAND osquery_events_tests_syslogtests)
-    add_test(NAME osquery_events_tests_audittests_test COMMAND osquery_events_tests_audittests)
-    add_test(NAME osquery_events_tests_processfileeventstests_test COMMAND osquery_events_tests_processfileeventstests)
-    add_test(NAME osquery_events_tests_inotifytests_test COMMAND osquery_events_tests_inotifytests)
+    add_test(NAME osquery_events_tests_syslogtests-test COMMAND osquery_events_tests_syslogtests-test)
+    add_test(NAME osquery_events_tests_audittests-test COMMAND osquery_events_tests_audittests-test)
+    add_test(NAME osquery_events_tests_processfileeventstests-test COMMAND osquery_events_tests_processfileeventstests-test)
+    add_test(NAME osquery_events_tests_inotifytests-test COMMAND osquery_events_tests_inotifytests-test)
   endif()
 
   if(DEFINED PLATFORM_MACOS)
-    add_test(NAME osquery_events_tests_fseventstests_test COMMAND osquery_events_tests_fseventstests)
+    add_test(NAME osquery_events_tests_fseventstests-test COMMAND osquery_events_tests_fseventstests-test)
   endif()
 endfunction()
 
@@ -140,7 +140,7 @@ function(generateOsqueryEventsRegistry)
     osquery_headers
   )
 
-  add_test(NAME osquery_events_tests_test COMMAND osquery_events_tests)
+  add_test(NAME osquery_events_tests-test COMMAND osquery_events_tests-test)
 endfunction()
 
 osqueryEventsMain()

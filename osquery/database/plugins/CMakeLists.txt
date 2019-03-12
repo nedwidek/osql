@@ -70,7 +70,7 @@ function(generateOsqueryDatabasePluginsRocksdb)
 
   generateIncludeNamespace(osquery_database_plugins_rocksdb "osquery/database/plugins" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_database_plugins_tests_rocksdbtests_test COMMAND osquery_database_plugins_tests_rocksdbtests)
+  add_test(NAME osquery_database_plugins_tests_rocksdbtests-test COMMAND osquery_database_plugins_tests_rocksdbtests-test)
 endfunction()
 
 function(generateOsqueryDatabasePluginsSqlite)
@@ -96,7 +96,7 @@ function(generateOsqueryDatabasePluginsSqlite)
 
   generateIncludeNamespace(osquery_database_plugins_sqlite "osquery/database/plugins" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_database_plugins_tests_sqliteplugintests_test COMMAND osquery_database_plugins_tests_sqliteplugintests)
+  add_test(NAME osquery_database_plugins_tests_sqliteplugintests-test COMMAND osquery_database_plugins_tests_sqliteplugintests-test)
 endfunction()
 
 osquery_database_plugins_main()

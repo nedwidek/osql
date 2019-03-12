@@ -15,10 +15,10 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryTablesYaraTestsMain)
-  generateOsqueryTablesYaraTests()
+  generateOsqueryTablesYaraTestsTest()
 endfunction()
 
-function(generateOsqueryTablesYaraTests)
+function(generateOsqueryTablesYaraTestsTest)
 
   if(DEFINED PLATFORM_POSIX)
     set(source_files yara_tests.cpp)
@@ -26,9 +26,9 @@ function(generateOsqueryTablesYaraTests)
     set(source_files yara_tests_win_empty.cpp)
   endif()
 
-  add_osquery_executable(osquery_tables_yara_tests ${source_files})
+  add_osquery_executable(osquery_tables_yara_tests-test ${source_files})
 
-  target_link_libraries(osquery_tables_yara_tests PRIVATE
+  target_link_libraries(osquery_tables_yara_tests-test PRIVATE
     global_cxx_settings
     osquery_tables_yara
     osquery_core

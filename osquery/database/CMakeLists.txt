@@ -37,8 +37,8 @@ function(generateOsqueryDatabase)
     thirdparty_boost
   )
 
-  add_test(NAME osquery_database_tests_test COMMAND osquery_database_tests)
-  add_test(NAME osquery_database_tests_results_test COMMAND osquery_database_tests_results)
+  add_test(NAME osquery_database_tests-test COMMAND osquery_database_tests-test)
+  add_test(NAME osquery_database_tests_results-test COMMAND osquery_database_tests_results-test)
 endfunction()
 
 osquery_database_main()

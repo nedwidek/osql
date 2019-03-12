@@ -19,10 +19,10 @@ if(NOT DEFINED PLATFORM_WINDOWS)
 endif()
 
 function(osqueryUtilsSystemLinuxEbpfTestsMain)
-    generateOsqueryUtilsSystemLinuxEbpfTests()
+    generateOsqueryUtilsSystemLinuxEbpfTestsTest()
 endfunction()
 
-function(generateOsqueryUtilsSystemLinuxEbpfTests)
+function(generateOsqueryUtilsSystemLinuxEbpfTestsTest)
 
   set(source_files
     empty.cpp
@@ -38,9 +38,9 @@ function(generateOsqueryUtilsSystemLinuxEbpfTests)
     list(APPEND source_files ${platform_source_files})
   endif()
 
-  add_osquery_executable(osquery_utils_system_linux_ebpf_tests ${source_files})
+  add_osquery_executable(osquery_utils_system_linux_ebpf_tests-test ${source_files})
 
-  target_link_libraries(osquery_utils_system_linux_ebpf_tests PRIVATE
+  target_link_libraries(osquery_utils_system_linux_ebpf_tests-test PRIVATE
     global_cxx_settings
     osquery_utils_system_linux_ebpf
     thirdparty_googletest

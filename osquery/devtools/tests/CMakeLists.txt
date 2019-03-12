@@ -15,13 +15,13 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryDevtoolsTestsMain)
-  generateOsqueryDevtoolsTestsPrinterTests()
+  generateOsqueryDevtoolsTestsPrintertestsTest()
 endfunction()
 
-function(generateOsqueryDevtoolsTestsPrinterTests)
-  add_osquery_executable(osquery_devtools_tests_printertests printer_tests.cpp)
+function(generateOsqueryDevtoolsTestsPrintertestsTest)
+  add_osquery_executable(osquery_devtools_tests_printertests-test printer_tests.cpp)
 
-  target_link_libraries(osquery_devtools_tests_printertests PRIVATE
+  target_link_libraries(osquery_devtools_tests_printertests-test PRIVATE
     global_cxx_settings
     osquery_database
     osquery_database_plugins_ephemeral

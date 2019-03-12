@@ -16,7 +16,10 @@ cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryEV2Main)
   generateOsqueryEV2()
-  generateOsqueryEV2Test()
+
+  if(BUILD_TESTING)
+    generateOsqueryEV2testsTest()
+  endif()
 endfunction()
 
 function(generateOsqueryEV2)
@@ -44,7 +47,7 @@ function(generateOsqueryEV2)
   generateIncludeNamespace(osquery_ev2 "osquery/ev2" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-function(generateOsqueryEV2Tests)
+function(generateOsqueryEV2testsTest)
   set(source_files
     tests/buffered_subscription.cpp
     tests/manager.cpp
@@ -52,9 +55,9 @@ function(generateOsqueryEV2Tests)
     tests/utils.cpp
   )
 
-  add_osquery_executable(osquery_ev2_tests ${source_files})
+  add_osquery_executable(osquery_ev2_ev2tests-test ${source_files})
 
-  target_link_libraries(osquery_ev2_tests PRIVATE
+  target_link_libraries(osquery_ev2_ev2tests-test PRIVATE
     global_cxx_settings
     osquery_ev2
   )
@@ -63,9 +66,9 @@ function(generateOsqueryEV2Tests)
     tests/utils.h
   )
 
-  generateIncludeNamespace(osquery_ev2_tests "osquery/ev2" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_ev2_ev2tests-test "osquery/ev2" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_ev2_tests_test COMMAND osquery_ev2_tests)
+  add_test(NAME osquery_ev2_ev2tests-test COMMAND osquery_ev2_ev2tests-test)
 endfunction()
 
 osqueryEV2Main()

@@ -50,7 +50,7 @@ function(generateOsqueryUtilsSystemLinuxTracing)
 
     generateIncludeNamespace(osquery_utils_system_linux_tracing "osquery/utils/system/linux/tracing" "FILE_ONLY" ${public_header_files})
 
-    add_test(NAME osquery_utils_system_linux_tracing_tests_test COMMAND osquery_utils_system_linux_tracing_tests)
+    add_test(NAME osquery_utils_system_linux_tracing_tests-test COMMAND osquery_utils_system_linux_tracing_tests-test)
   else()
     add_osquery_library(osquery_utils_system_linux_tracing INTERFACE)
   endif()

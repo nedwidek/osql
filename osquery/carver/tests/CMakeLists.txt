@@ -15,13 +15,13 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryCarverTestsMain)
-  generateOsqueryCarverTests()
+  generateOsqueryCarverTestsTest()
 endfunction()
 
-function(generateOsqueryCarverTests)
-  add_osquery_executable(osquery_carver_tests carver_tests.cpp)
+function(generateOsqueryCarverTestsTest)
+  add_osquery_executable(osquery_carver_tests-test carver_tests.cpp)
 
-  target_link_libraries(osquery_carver_tests PRIVATE
+  target_link_libraries(osquery_carver_tests-test PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_carver

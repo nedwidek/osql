@@ -15,11 +15,12 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osquery_carver_main)
-  generateOsqueryCarver()
 
   if (BUILD_TESTING)
     add_subdirectory("tests")
   endif()
+
+  generateOsqueryCarver()
 endfunction()
 
 function(generateOsqueryCarver)
@@ -48,7 +49,7 @@ function(generateOsqueryCarver)
 
   generateIncludeNamespace(osquery_carver "osquery/carver" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_carver_tests_test COMMAND osquery_carver_tests)
+  add_test(NAME osquery_carver_tests-test COMMAND osquery_carver_tests-test)
 endfunction()
 
 osquery_carver_main()

@@ -88,7 +88,7 @@ function(generateOsqueryRemoteUtility)
 
   generateIncludeNamespace(osquery_remote_utility "osquery/remote" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_remote_tests_requeststests_test COMMAND osquery_remote_tests_requeststests)
+  add_test(NAME osquery_remote_tests_requeststests-test COMMAND osquery_remote_tests_requeststests-test)
 endfunction()
 
 osquery_remote_main()

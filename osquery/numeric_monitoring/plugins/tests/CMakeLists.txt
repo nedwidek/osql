@@ -15,13 +15,13 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryNumericmonitoringPluginsTestsMain)
-  osqueryNumericmonitoringPluginsTestsFilesystem()
+  osqueryNumericmonitoringPluginsTestsFilesystemTest()
 endfunction()
 
-function(osqueryNumericmonitoringPluginsTestsFilesystem)
-  add_osquery_executable(osquery_numericmonitoring_plugins_tests_filesystem filesystem.cpp)
+function(osqueryNumericmonitoringPluginsTestsFilesystemTest)
+  add_osquery_executable(osquery_numericmonitoring_plugins_tests_filesystem-test filesystem.cpp)
 
-  target_link_libraries(osquery_numericmonitoring_plugins_tests_filesystem PRIVATE
+  target_link_libraries(osquery_numericmonitoring_plugins_tests_filesystem-test PRIVATE
     global_cxx_settings
     osquery_database
     osquery_database_plugins_ephemeral

@@ -59,7 +59,7 @@ function(generateOsqueryUtilsSystemLinuxEbpf)
 
     generateIncludeNamespace(osquery_utils_system_linux_ebpf "osquery/utils/system/linux/ebpf" "FILE_ONLY" ${public_header_files})
 
-    add_test(NAME osquery_utils_system_linux_ebpf_tests_test COMMAND osquery_utils_system_linux_ebpf_tests)
+    add_test(NAME osquery_utils_system_linux_ebpf_tests-test COMMAND osquery_utils_system_linux_ebpf_tests-test)
   else()
     add_osquery_library(osquery_utils_system_linux_ebpf INTERFACE)
   endif()

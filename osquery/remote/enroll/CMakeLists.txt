@@ -15,11 +15,11 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryRemoteEnrollTlsenrollMain)
-  generateOsqueryRemoteEnrollTlsenroll()
-
   if(BUILD_TESTING)
-    generateOsqueryRemoteEnrollTests()
+    generateOsqueryRemoteenrolltestsTest()
   endif()
+
+  generateOsqueryRemoteEnrollTlsenroll()
 endfunction()
 
 function(generateOsqueryRemoteEnrollTlsenroll)
@@ -49,15 +49,15 @@ function(generateOsqueryRemoteEnrollTlsenroll)
 
   generateIncludeNamespace(osquery_remote_enroll_tlsenroll "osquery/remote/enroll" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_remote_enroll_tests_test COMMAND osquery_remote_enroll_tests)
+  add_test(NAME osquery_remote_enroll_remoteenrolltests-test COMMAND osquery_remote_enroll_remoteenrolltests-test)
 
   set_tests_properties(
-    osquery_remote_enroll_tests_test
+    osquery_remote_enroll_remoteenrolltests-test
     PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
   )
 endfunction()
 
-function(generateOsqueryRemoteEnrollTests)
+function(generateOsqueryRemoteenrolltestsTest)
 
   set(source_files
     tests/enroll_tests.cpp
@@ -67,9 +67,9 @@ function(generateOsqueryRemoteEnrollTests)
     list(APPEND source_files tests/plugins/tls_enroll_tests.cpp)
   endif()
 
-  add_osquery_executable(osquery_remote_enroll_tests ${source_files})
+  add_osquery_executable(osquery_remote_enroll_remoteenrolltests-test ${source_files})
 
-  target_link_libraries(osquery_remote_enroll_tests PRIVATE
+  target_link_libraries(osquery_remote_enroll_remoteenrolltests-test PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_database

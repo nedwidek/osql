@@ -15,14 +15,14 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryNumericmonitoringTestsMain)
-  osqueryNumericmonitoringTests()
-  osqueryNumericmonitoringTestsPreaggregationcache()
+  osqueryNumericmonitoringTestsTest()
+  osqueryNumericmonitoringTestsPreaggregationcacheTest()
 endfunction()
 
-function(osqueryNumericmonitoringTests)
-  add_osquery_executable(osquery_numericmonitoring_tests numeric_monitoring.cpp)
+function(osqueryNumericmonitoringTestsTest)
+  add_osquery_executable(osquery_numericmonitoring_tests-test numeric_monitoring.cpp)
 
-  target_link_libraries(osquery_numericmonitoring_tests PRIVATE
+  target_link_libraries(osquery_numericmonitoring_tests-test PRIVATE
     global_cxx_settings
     osquery_database
     osquery_database_plugins_ephemeral
@@ -37,10 +37,10 @@ function(osqueryNumericmonitoringTests)
   )
 endfunction()
 
-function(osqueryNumericmonitoringTestsPreaggregationcache)
-  add_osquery_executable(osquery_numericmonitoring_tests_preaggregationcache pre_aggregation_cache.cpp)
+function(osqueryNumericmonitoringTestsPreaggregationcacheTest)
+  add_osquery_executable(osquery_numericmonitoring_tests_preaggregationcache-test pre_aggregation_cache.cpp)
 
-  target_link_libraries(osquery_numericmonitoring_tests_preaggregationcache PRIVATE
+  target_link_libraries(osquery_numericmonitoring_tests_preaggregationcache-test PRIVATE
     global_cxx_settings
     osquery_database
     osquery_database_plugins_ephemeral

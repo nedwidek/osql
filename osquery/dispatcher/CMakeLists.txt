@@ -50,8 +50,8 @@ function(generateOsqueryDispatcher)
 
   generateIncludeNamespace(osquery_dispatcher "osquery/dispatcher" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_dispatcher_tests_test COMMAND osquery_dispatcher_tests)
-  add_test(NAME osquery_dispatcher_tests_scheduler_test COMMAND osquery_dispatcher_tests_scheduler)
+  add_test(NAME osquery_dispatcher_tests-test COMMAND osquery_dispatcher_tests-test)
+  add_test(NAME osquery_dispatcher_tests_scheduler-test COMMAND osquery_dispatcher_tests_scheduler-test)
 endfunction()
 
 osquery_dispatcher_main()

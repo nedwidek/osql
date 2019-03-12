@@ -40,7 +40,7 @@ function(generateOsqueryNumericmonitoringPluginsFilesystem)
 
   generateIncludeNamespace(osquery_numericmonitoring_plugins_filesystem "osquery/numeric_monitoring/plugins" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_numericmonitoring_plugins_tests_filesystem_test COMMAND osquery_numericmonitoring_plugins_tests_filesystem)
+  add_test(NAME osquery_numericmonitoring_plugins_tests_filesystem-test COMMAND osquery_numericmonitoring_plugins_tests_filesystem-test)
 endfunction()
 
 osquery_numericmonitoring_plugins_main()

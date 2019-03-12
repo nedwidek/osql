@@ -15,13 +15,13 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryKillswitchTestsMain)
-  generateOsqueryKillswitchTests()
+  generateOsqueryKillswitchTestsTest()
 endfunction()
 
-function(generateOsqueryKillswitchTests)
-  add_osquery_executable(osquery_killswitch_tests killswitch_tests.cpp)
+function(generateOsqueryKillswitchTestsTest)
+  add_osquery_executable(osquery_killswitch_tests-test killswitch_tests.cpp)
 
-  target_link_libraries(osquery_killswitch_tests PRIVATE
+  target_link_libraries(osquery_killswitch_tests-test PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_database

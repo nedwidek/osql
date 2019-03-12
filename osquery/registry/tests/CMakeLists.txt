@@ -15,13 +15,13 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryRegistryTestsMain)
-  osqueryRegistryTests()
+  osqueryRegistryTestsTest()
 endfunction()
 
-function(osqueryRegistryTests)
-  add_osquery_executable(osquery_registry_tests registry.cpp)
+function(osqueryRegistryTestsTest)
+  add_osquery_executable(osquery_registry_tests-test registry.cpp)
 
-  target_link_libraries(osquery_registry_tests PRIVATE
+  target_link_libraries(osquery_registry_tests-test PRIVATE
     global_cxx_settings
     osquery_database
     osquery_database_plugins_ephemeral

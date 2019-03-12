@@ -56,7 +56,7 @@ function(generateOsqueryEventsLinuxProbes)
 
     generateIncludeNamespace("${library_name}" "osquery/events/linux/probes" "FILE_ONLY" ${public_header_files})
 
-    add_test(NAME osquery_events_linux_probes_tests_ebpftracepointtests_test COMMAND osquery_events_linux_probes_tests_ebpftracepointtests)
+    add_test(NAME osquery_events_linux_probes_tests_ebpftracepointtests-test COMMAND osquery_events_linux_probes_tests_ebpftracepointtests-test)
   else()
     add_osquery_library("${library_name}" INTERFACE)
   endif()

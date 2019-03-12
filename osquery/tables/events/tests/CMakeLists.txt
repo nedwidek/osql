@@ -15,17 +15,17 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryTablesEventsTestsMain)
-  generateOsqueryTablesEventsTestsFileEvents()
+  generateOsqueryTablesEventsTestsFileeventstestsTest()
 
   if(DEFINED PLATFORM_LINUX)
-    generateOsqueryTablesEventsTestsSelinuxEvents()
+    generateOsqueryTablesEventsTestsSelinuxeventstestsTest()
   endif()
 endfunction()
 
-function(generateOsqueryTablesEventsTestsFileEvents)
-  add_osquery_executable(osquery_tables_events_tests_fileevents file_events_tests.cpp)
+function(generateOsqueryTablesEventsTestsFileeventstestsTest)
+  add_osquery_executable(osquery_tables_events_tests_fileeventstests-test file_events_tests.cpp)
 
-  target_link_libraries(osquery_tables_events_tests_fileevents PRIVATE
+  target_link_libraries(osquery_tables_events_tests_fileeventstests-test PRIVATE
     global_cxx_settings
     osquery_headers
     osquery_config
@@ -44,10 +44,10 @@ function(generateOsqueryTablesEventsTestsFileEvents)
   )
 endfunction()
 
-function(generateOsqueryTablesEventsTestsSelinuxEvents)
-  add_osquery_executable(osquery_tables_events_tests_selinuxevents linux/selinux_events_tests.cpp)
+function(generateOsqueryTablesEventsTestsSelinuxeventstestsTest)
+  add_osquery_executable(osquery_tables_events_tests_selinuxeventstests-test linux/selinux_events_tests.cpp)
 
-  target_link_libraries(osquery_tables_events_tests_selinuxevents PRIVATE
+  target_link_libraries(osquery_tables_events_tests_selinuxeventstests-test PRIVATE
     global_cxx_settings
     osquery_headers
     osquery_core

@@ -304,41 +304,41 @@ function(generateOsqueryTablesSystem)
   generateIncludeNamespace(osquery_tables_system "osquery/tables/system" "FULL_PATH" ${platform_public_header_files})
 
   if(DEFINED PLATFORM_POSIX)
-    add_test(NAME osquery_tables_system_tests_knownhosts_test COMMAND osquery_tables_system_tests_knownhosts)
-    add_test(NAME osquery_tables_system_tests_shellhistory_test COMMAND osquery_tables_system_tests_shellhistory)
-    add_test(NAME osquery_tables_system_tests_sudoers_test COMMAND osquery_tables_system_tests_sudoers)
-    add_test(NAME osquery_tables_system_tests_yumsources_test COMMAND osquery_tables_system_tests_yumsources)
+    add_test(NAME osquery_tables_system_tests_knownhoststests-test COMMAND osquery_tables_system_tests_knownhoststests-test)
+    add_test(NAME osquery_tables_system_tests_shellhistorytests-test COMMAND osquery_tables_system_tests_shellhistorytests-test)
+    add_test(NAME osquery_tables_system_tests_sudoerstests-test COMMAND osquery_tables_system_tests_sudoerstests-test)
+    add_test(NAME osquery_tables_system_tests_yumsourcestests-test COMMAND osquery_tables_system_tests_yumsourcestests-test)
   endif()
 
   if(DEFINED PLATFORM_LINUX)
-    add_test(NAME osquery_tables_system_tests_md_test COMMAND osquery_tables_system_tests_md)
-    add_test(NAME osquery_tables_system_tests_pcidevices_test COMMAND osquery_tables_system_tests_pcidevices)
-    add_test(NAME osquery_tables_system_tests_portage_test COMMAND osquery_tables_system_tests_portage)
+    add_test(NAME osquery_tables_system_tests_mdtablestests-test COMMAND osquery_tables_system_tests_mdtablestests-test)
+    add_test(NAME osquery_tables_system_tests_pcidevicestests-test COMMAND osquery_tables_system_tests_pcidevicestests-test)
+    add_test(NAME osquery_tables_system_tests_portagetests-test COMMAND osquery_tables_system_tests_portagetests-test)
   elseif(DEFINED PLATFORM_MACOS)
-    add_test(NAME osquery_tables_system_tests_apps_test COMMAND osquery_tables_system_tests_apps)
-    add_test(NAME osquery_tables_system_tests_asl_test COMMAND osquery_tables_system_tests_asl)
-    add_test(NAME osquery_tables_system_tests_certificates_test osquery_tables_system_tests_certificates)
-    add_test(NAME osquery_tables_system_tests_extendedattributes_test COMMAND osquery_tables_system_tests_extendedattributes)
-    add_test(NAME osquery_tables_system_tests_firewall_test COMMAND osquery_tables_system_tests_firewall)
-    add_test(NAME osquery_tables_system_tests_launchd_test COMMAND osquery_tables_system_tests_launchd)
-    add_test(NAME osquery_tables_system_tests_mdfind_test COMMAND osquery_tables_system_tests_mdfind)
-    add_test(NAME osquery_tables_system_tests_processes_test COMMAND osquery_tables_system_tests_processes)
-    add_test(NAME osquery_tables_system_tests_smc_test COMMAND osquery_tables_system_tests_smc)
-    add_test(NAME osquery_tables_system_tests_startupitems_test COMMAND osquery_tables_system_tests_startupitems)
-    add_test(NAME osquery_tables_system_tests_signature_test COMMAND osquery_tables_system_tests_signature)
+    add_test(NAME osquery_tables_system_tests_appstests-test COMMAND osquery_tables_system_tests_appstests-test)
+    add_test(NAME osquery_tables_system_tests_asltests-test COMMAND osquery_tables_system_tests_asltests-test)
+    add_test(NAME osquery_tables_system_tests_certificatestests-test COMMAND osquery_tables_system_tests_certificatestests-test)
+    add_test(NAME osquery_tables_system_tests_extendedattributestests-test COMMAND osquery_tables_system_tests_extendedattributestests-test)
+    add_test(NAME osquery_tables_system_tests_firewalltests-test COMMAND osquery_tables_system_tests_firewalltests-test)
+    add_test(NAME osquery_tables_system_tests_launchdtests-test COMMAND osquery_tables_system_tests_launchdtests-test)
+    add_test(NAME osquery_tables_system_tests_mdfindtests-test COMMAND osquery_tables_system_tests_mdfindtests-test)
+    add_test(NAME osquery_tables_system_tests_processestests-test COMMAND osquery_tables_system_tests_processestests-test)
+    add_test(NAME osquery_tables_system_tests_smctests-test COMMAND osquery_tables_system_tests_smctests-test)
+    add_test(NAME osquery_tables_system_tests_startupitemstests-test COMMAND osquery_tables_system_tests_startupitemstests-test)
+    add_test(NAME osquery_tables_system_tests_signaturetests-test COMMAND osquery_tables_system_tests_signaturetests-test)
 
     set_tests_properties(
-      osquery_tables_system_tests_apps_test
-      osquery_tables_system_tests_certificates_test
-      osquery_tables_system_tests_extendedattributes_test
-      osquery_tables_system_tests_firewall_test
-      osquery_tables_system_tests_launchd_test
-      osquery_tables_system_tests_startupitems_test
+      osquery_tables_system_tests_appstests-test
+      osquery_tables_system_tests_certificatestests-test
+      osquery_tables_system_tests_extendedattributestests-test
+      osquery_tables_system_tests_firewalltests-test
+      osquery_tables_system_tests_launchdtests-test
+      osquery_tables_system_tests_startupitemstests-test
       PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
     )
   endif()
 
-  add_test(NAME osquery_tables_system_tests_test COMMAND osquery_tables_system_tests)
+  add_test(NAME osquery_tables_system_tests_systemtablestests-test COMMAND osquery_tables_system_tests_systemtablestests-test)
 endfunction()
 
 osquery_tables_system_main()

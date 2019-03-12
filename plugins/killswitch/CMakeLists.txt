@@ -42,10 +42,10 @@ function(generatePluginsKillswitchFilesystem)
 
   generateIncludeNamespace(plugins_killswitch_filesystem "osquery/killswitch/plugins" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME plugins_killswitch_filesystemtests_test COMMAND plugins_killswitch_filesystemtests)
+  add_test(NAME plugins_killswitch_killswitchfilesystemplugintests-test COMMAND plugins_killswitch_killswitchfilesystemplugintests-test)
 
   set_tests_properties(
-    plugins_killswitch_filesystemtests_test
+    plugins_killswitch_killswitchfilesystemplugintests-test
     PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
   )
 endfunction()

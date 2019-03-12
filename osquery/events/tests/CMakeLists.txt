@@ -15,26 +15,26 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryEventsTestsMain)
-  generateOsqueryEventsTests()
-  generateOsqueryEventsTestsDatabaseTests()
+  generateOsqueryEventsTestsTest()
+  generateOsqueryEventsTestsDatabasetestsTest()
 
   if(DEFINED PLATFORM_LINUX)
-    generateOsqueryEventsTestsSyslogTests()
-    generateOsqueryEventsTestsAuditTests()
-    generateOsqueryEventsTestsProcessFileEventsTests()
-    generateOsqueryEventsTestsInotifyTests()
+    generateOsqueryEventsTestsSyslogtestsTest()
+    generateOsqueryEventsTestsAudittestsTest()
+    generateOsqueryEventsTestsProcessfileeventstestsTest()
+    generateOsqueryEventsTestsInotifytestsTest()
   endif()
 
   if(DEFINED PLATFORM_MACOS)
-    generateOsqueryEventsTestsFsEventsTests()
+    generateOsqueryEventsTestsFseventstestsTest()
   endif()
 
 endfunction()
 
-function(generateOsqueryEventsTests)
-  add_osquery_executable(osquery_events_tests events_tests.cpp)
+function(generateOsqueryEventsTestsTest)
+  add_osquery_executable(osquery_events_tests-test events_tests.cpp)
 
-  target_link_libraries(osquery_events_tests PRIVATE
+  target_link_libraries(osquery_events_tests-test PRIVATE
     global_cxx_settings
     osquery_tables_system
     osquery_core
@@ -52,10 +52,10 @@ function(generateOsqueryEventsTests)
   )
 endfunction()
 
-function(generateOsqueryEventsTestsDatabaseTests)
-  add_osquery_executable(osquery_events_tests_databasetests events_database_tests.cpp)
+function(generateOsqueryEventsTestsDatabasetestsTest)
+  add_osquery_executable(osquery_events_tests_databasetests-test events_database_tests.cpp)
 
-  target_link_libraries(osquery_events_tests_databasetests PRIVATE
+  target_link_libraries(osquery_events_tests_databasetests-test PRIVATE
     global_cxx_settings
     osquery_tables_system
     osquery_core
@@ -73,10 +73,10 @@ function(generateOsqueryEventsTestsDatabaseTests)
   )
 endfunction()
 
-function(generateOsqueryEventsTestsSyslogTests)
-  add_osquery_executable(osquery_events_tests_syslogtests linux/syslog_tests.cpp)
+function(generateOsqueryEventsTestsSyslogtestsTest)
+  add_osquery_executable(osquery_events_tests_syslogtests-test linux/syslog_tests.cpp)
 
-  target_link_libraries(osquery_events_tests_syslogtests PRIVATE
+  target_link_libraries(osquery_events_tests_syslogtests-test PRIVATE
     global_cxx_settings
     osquery_tables_system
     osquery_core
@@ -94,10 +94,10 @@ function(generateOsqueryEventsTestsSyslogTests)
   )
 endfunction()
 
-function(generateOsqueryEventsTestsAuditTests)
-  add_osquery_executable(osquery_events_tests_audittests linux/audit_tests.cpp)
+function(generateOsqueryEventsTestsAudittestsTest)
+  add_osquery_executable(osquery_events_tests_audittests-test linux/audit_tests.cpp)
 
-  target_link_libraries(osquery_events_tests_audittests PRIVATE
+  target_link_libraries(osquery_events_tests_audittests-test PRIVATE
     global_cxx_settings
     osquery_tables_system
     osquery_core
@@ -115,10 +115,10 @@ function(generateOsqueryEventsTestsAuditTests)
   )
 endfunction()
 
-function(generateOsqueryEventsTestsProcessFileEventsTests)
-  add_osquery_executable(osquery_events_tests_processfileeventstests linux/process_file_events_tests.cpp)
+function(generateOsqueryEventsTestsProcessfileeventstestsTest)
+  add_osquery_executable(osquery_events_tests_processfileeventstests-test linux/process_file_events_tests.cpp)
 
-  target_link_libraries(osquery_events_tests_processfileeventstests PRIVATE
+  target_link_libraries(osquery_events_tests_processfileeventstests-test PRIVATE
     global_cxx_settings
     osquery_tables_system
     osquery_core
@@ -136,10 +136,10 @@ function(generateOsqueryEventsTestsProcessFileEventsTests)
   )
 endfunction()
 
-function(generateOsqueryEventsTestsInotifyTests)
-  add_osquery_executable(osquery_events_tests_inotifytests linux/inotify_tests.cpp)
+function(generateOsqueryEventsTestsInotifytestsTest)
+  add_osquery_executable(osquery_events_tests_inotifytests-test linux/inotify_tests.cpp)
 
-  target_link_libraries(osquery_events_tests_inotifytests PRIVATE
+  target_link_libraries(osquery_events_tests_inotifytests-test PRIVATE
     global_cxx_settings
     osquery_tables_system
     osquery_core
@@ -157,10 +157,10 @@ function(generateOsqueryEventsTestsInotifyTests)
   )
 endfunction()
 
-function(generateOsqueryEventsTestsFseventsTests)
-  add_osquery_executable(osquery_events_tests_fseventstests darwin/fsevents_tests.cpp)
+function(generateOsqueryEventsTestsFseventstestsTest)
+  add_osquery_executable(osquery_events_tests_fseventstests-test darwin/fsevents_tests.cpp)
 
-  target_link_libraries(osquery_events_tests_fseventstests PRIVATE
+  target_link_libraries(osquery_events_tests_fseventstests-test PRIVATE
     global_cxx_settings
     osquery_tables_system
     osquery_core

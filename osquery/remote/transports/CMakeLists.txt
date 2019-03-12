@@ -15,11 +15,12 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryRemoteTransportsMain)
-  generateOsqueryRemoteTransportsTls()
 
   if(BUILD_TESTING AND DEFINED PLATFORM_POSIX)
-    generateOsqueryRemoteTransportsTlsTests()
+    generateOsqueryRemoteTransportsRemotetransportstlstestsTest()
   endif()
+
+  generateOsqueryRemoteTransportsTls()
 endfunction()
 
 function(generateOsqueryRemoteTransportsTls)
@@ -44,21 +45,21 @@ function(generateOsqueryRemoteTransportsTls)
   generateIncludeNamespace(osquery_remote_transports_tls "osquery/remote/transports" "FILE_ONLY" ${public_header_files})
 
   if(DEFINED PLATFORM_POSIX)
-    add_test(NAME osquery_remote_transports_tlstests_test COMMAND osquery_remote_transports_tlstests)
+    add_test(NAME osquery_remote_transports_remotetransportstlstests-test COMMAND osquery_remote_transports_remotetransportstlstests-test)
 
     set_tests_properties(
-      osquery_remote_transports_tlstests_test
+      osquery_remote_transports_remotetransportstlstests-test
       PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
     )
   endif()
 endfunction()
 
 
-function(generateOsqueryRemoteTransportsTlsTests)
+function(generateOsqueryRemoteTransportsRemotetransportstlstestsTest)
 
-  add_osquery_executable(osquery_remote_transports_tlstests tests/tls_transports_tests.cpp)
+  add_osquery_executable(osquery_remote_transports_remotetransportstlstests-test tests/tls_transports_tests.cpp)
 
-  target_link_libraries(osquery_remote_transports_tlstests PRIVATE
+  target_link_libraries(osquery_remote_transports_remotetransportstlstests-test PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_database

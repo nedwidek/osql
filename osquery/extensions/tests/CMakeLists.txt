@@ -15,13 +15,13 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryExtensionsTestsMain)
-  generateOsqueryExtensionsTests()
+  generateOsqueryExtensionsTestsTest()
 endfunction()
 
-function(generateOsqueryExtensionsTests)
-  add_osquery_executable(osquery_extensions_tests extensions.cpp)
+function(generateOsqueryExtensionsTestsTest)
+  add_osquery_executable(osquery_extensions_tests-test extensions.cpp)
 
-  target_link_libraries(osquery_extensions_tests PRIVATE
+  target_link_libraries(osquery_extensions_tests-test PRIVATE
     global_cxx_settings
     osquery_config
     osquery_database

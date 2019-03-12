@@ -45,8 +45,8 @@ function(generateOsqueryNumericmonitoring)
 
   generateIncludeNamespace(osquery_numericmonitoring "osquery/numeric_monitoring" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_numericmonitoring_tests_test COMMAND osquery_numericmonitoring_tests)
-  add_test(NAME osquery_numericmonitoring_tests_preaggregationcache_test COMMAND osquery_numericmonitoring_tests_preaggregationcache)
+  add_test(NAME osquery_numericmonitoring_tests-test COMMAND osquery_numericmonitoring_tests-test)
+  add_test(NAME osquery_numericmonitoring_tests_preaggregationcache-test COMMAND osquery_numericmonitoring_tests_preaggregationcache-test)
 endfunction()
 
 osqueryNumericmonitoringMain()

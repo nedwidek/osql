@@ -100,10 +100,10 @@ function(generateOsqueryCore)
 
   generateIncludeNamespace(osquery_core "osquery/core" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_core_tests_flagstests_test COMMAND osquery_core_tests_flagstests)
-  add_test(NAME osquery_core_tests_systemtests_test COMMAND osquery_core_tests_systemtests)
-  add_test(NAME osquery_core_tests_tablestests_test COMMAND osquery_core_tests_tablestests)
-  add_test(NAME osquery_core_tests_watcherpermissionstests_test COMMAND osquery_core_tests_watcherpermissionstests)
+  add_test(NAME osquery_core_tests_flagstests-test COMMAND osquery_core_tests_flagstests-test)
+  add_test(NAME osquery_core_tests_systemtests-test COMMAND osquery_core_tests_systemtests-test)
+  add_test(NAME osquery_core_tests_tablestests-test COMMAND osquery_core_tests_tablestests-test)
+  add_test(NAME osquery_core_tests_watcherpermissionstests-test COMMAND osquery_core_tests_watcherpermissionstests-test)
 
 endfunction()
 

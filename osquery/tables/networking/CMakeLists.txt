@@ -134,22 +134,22 @@ function(generateOsqueryTablesNetworking)
 
   generateIncludeNamespace(osquery_tables_networking "osquery/tables/networking" "FULL_PATH" ${public_header_files})
 
-  add_test(NAME osquery_tables_networking_tests_test COMMAND osquery_tables_networking_tests)
+  add_test(NAME osquery_tables_networking_tests_networkingtablestests-test COMMAND osquery_tables_networking_tests_networkingtablestests-test)
 
   set_tests_properties(
-    osquery_tables_networking_tests_test
+    osquery_tables_networking_tests_networkingtablestests-test
     PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
   )
 
   if (DEFINED PLATFORM_MACOS)
-    add_test(NAME osquery_tables_networking_tests_wifi_test COMMAND osquery_tables_networking_tests_wifi)
+    add_test(NAME osquery_tables_networking_tests_wifitests-test COMMAND osquery_tables_networking_tests_wifitests-test)
 
     set_tests_properties(
-      osquery_tables_networking_tests_wifi_test
+      osquery_tables_networking_tests_wifitests-test
       PROPERTIES ENVIRONMENT "TEST_CONF_FILES_DIR=${TEST_CONFIGS_DIR}"
     )
   elseif (DEFINED PLATFORM_LINUX)
-    add_test(NAME osquery_tables_networking_tests_iptables_test COMMAND osquery_tables_networking_tests_iptables)
+    add_test(NAME osquery_tables_networking_tests_iptablestests-test COMMAND osquery_tables_networking_tests_iptablestests-test)
   endif()
 
 endfunction()

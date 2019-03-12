@@ -49,7 +49,7 @@ function(generateOsqueryDevtools)
 
   generateIncludeNamespace(osquery_devtools "osquery/devtools" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_devtools_tests_printertests_test COMMAND osquery_devtools_tests_printertests)
+  add_test(NAME osquery_devtools_tests_printertests-test COMMAND osquery_devtools_tests_printertests-test)
 endfunction()
 
 osquery_devtools_main()

@@ -15,13 +15,13 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryLoggerTestsMain)
-  generateOsqueryLoggerTests()
+  generateOsqueryLoggerTestsTest()
 endfunction()
 
-function(generateOsqueryLoggerTests)
-  add_osquery_executable(osquery_logger_tests logger.cpp)
+function(generateOsqueryLoggerTestsTest)
+  add_osquery_executable(osquery_logger_tests-test logger.cpp)
 
-  target_link_libraries(osquery_logger_tests PRIVATE
+  target_link_libraries(osquery_logger_tests-test PRIVATE
     global_cxx_settings
     osquery_core_plugins
     osquery_core
