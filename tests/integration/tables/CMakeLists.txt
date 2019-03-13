@@ -320,7 +320,7 @@ function(generateTestsIntegrationTablesTestsTest)
     thirdparty_googletest
   )
 
-  add_test(NAME tests_integration_tables-test COMMAND tests_integration_tables-test CONFIGURATIONS exclude_from_all)
+  add_test(NAME tests_integration_tables-test COMMAND tests_integration_tables-test)
 
 endfunction()
 
