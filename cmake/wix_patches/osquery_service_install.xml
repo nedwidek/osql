@@ -1,0 +1,18 @@
+<CPackWiXPatch>
+    <CPackWiXFragment Id="CM_CP_osqueryd.osqueryd.exe">
+        <ServiceInstall Id='osqueryd'
+            Name='osqueryd'
+            Account='NT AUTHORITY\SYSTEM'
+            Arguments='--flagfile=[INSTALL_ROOT]osquery.flags'
+            Start='auto'
+            Type='ownProcess'
+            Vital='yes'
+            ErrorControl='critical'/>
+        <ServiceControl Id='osqueryd'
+            Name='osqueryd'
+            Stop='both'
+            Start='install'
+            Remove='uninstall'
+            Wait='no'/>
+    </CPackWiXFragment>
+</CPackWiXPatch>

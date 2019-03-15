@@ -64,3 +64,9 @@ set(TEST_CONFIGS_DIR "${CMAKE_BINARY_DIR}/test_configs")
 set(OSQUERY_VERSION 3.3.2)
 
 set(OSQUERY_SOURCE_DIR "${CMAKE_SOURCE_DIR}/osquery-src")
+
+# Cache variables
+set(PACKAGING_SYSTEM "" CACHE STRING "Packaging system to generate when building packages")
+if(DEFINED PLATFORM_WINDOWS)
+  set(WIX_ROOT_FOLDER_PATH "" CACHE STRING "Root folder of the WIX installation")
+endif()

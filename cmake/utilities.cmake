@@ -473,3 +473,9 @@ function(add_osquery_library)
 
   add_library(${osquery_lib_name} ${osquery_lib_args})
 endfunction()
+
+# This function modifies an existing cache variable but without changing its description
+function(overwrite_cache_variable variable_name value)
+  get_property(current_help_string CACHE "${variable_name}" PROPERTY HELPSTRING)
+  set("${variable_name}" "${value}" CACHE STRING "${current_help_string}" FORCE)
+endfunction()

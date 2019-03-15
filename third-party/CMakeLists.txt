@@ -151,6 +151,7 @@ function(importThirdPartyBinaryLibrary name version hash anchor_file_name)
 
   if (additional_anchor_rel_paths)
     add_osquery_library("${identifier}" INTERFACE IMPORTED GLOBAL)
+    set_target_properties("${identifier}" PROPERTIES INTERFACE_BINARY_DIR "${base_folder}")
 
     list(APPEND libraries "${relative_anchor_path}")
     list(APPEND libraries "${additional_anchor_rel_paths}")

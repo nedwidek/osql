@@ -22,6 +22,7 @@ endif()
 include(cmake/globals.cmake)
 include(cmake/utilities.cmake)
 include(cmake/options.cmake)
+include(cmake/packaging.cmake)
 
 function(main)
   message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
@@ -50,6 +51,10 @@ function(main)
   if(BUILD_TESTING)
     add_subdirectory("tests")
   endif()
+
+  identifyPackagingSystem()
+  generateInstallTargets()
+  generatePackageTarget()
 
 endfunction()
 
