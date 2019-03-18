@@ -17,7 +17,7 @@ cmake_minimum_required(VERSION 3.13.3)
 function(osqueryDatabasePluginsTestsMain)
   generateOsqueryDatabasePluginsTestsSqliteplugintestsTest()
   generateOsqueryDatabasePluginsTestsRocksdbtestsTest()
-  generateOsqueryDatabasePluginsTestsDatabaseTestUtils()
+  generateOsqueryDatabasePluginsTestsDatabasetestutils()
 endfunction()
 
 function(generateOsqueryDatabasePluginsTestsSqliteplugintestsTest)
@@ -27,7 +27,7 @@ function(generateOsqueryDatabasePluginsTestsSqliteplugintestsTest)
     global_cxx_settings
     osquery_core
     osquery_database_plugins_ephemeral
-    osquery_database_plugins_sqlite
+    osquery_database_plugins_sqliteplugin
     osquery_database
     osquery_dispatcher
     osquery_events
@@ -50,7 +50,7 @@ function(generateOsqueryDatabasePluginsTestsRocksdbtestsTest)
 
     osquery_core
     osquery_database_plugins_ephemeral
-    osquery_database_plugins_rocksdb
+    osquery_database_plugins_rocksdbplugin
     osquery_database
     osquery_dispatcher
     osquery_events
@@ -65,7 +65,7 @@ function(generateOsqueryDatabasePluginsTestsRocksdbtestsTest)
   )
 endfunction()
 
-function(generateOsqueryDatabasePluginsTestsDatabaseTestUtils)
+function(generateOsqueryDatabasePluginsTestsDatabasetestutils)
   add_osquery_library(osquery_database_plugins_tests_databasetestutils EXCLUDE_FROM_ALL utils.cpp)
 
   set(public_header_files

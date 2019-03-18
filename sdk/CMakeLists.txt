@@ -15,13 +15,13 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(sdkMain)
-  generateSdkPlugin()
+  generateSdkPluginPluginsdk()
 endfunction()
 
-function(generateSdkPlugin)
-  add_osquery_library(sdk_plugin INTERFACE)
+function(generateSdkPluginPluginsdk)
+  add_osquery_library(sdk_plugin_pluginsdk INTERFACE)
 
-  target_link_libraries(sdk_plugin INTERFACE
+  target_link_libraries(sdk_plugin_pluginsdk INTERFACE
     osquery_utils_conversions
     osquery_utils_debug
     osquery_utils_expected
@@ -43,7 +43,7 @@ function(generateSdkPlugin)
     plugin_sdk.h
   )
 
-  generateIncludeNamespace(sdk_plugin "osquery/sdk" "FILE_ONLY" ${public_headers})
+  generateIncludeNamespace(sdk_plugin_pluginsdk "osquery/sdk" "FILE_ONLY" ${public_headers})
 endfunction()
 
 sdkMain()

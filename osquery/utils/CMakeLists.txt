@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_utils_main)
+function(osqueryUtilsMain)
   add_subdirectory("aws")
   add_subdirectory("system")
   add_subdirectory("status")
@@ -90,4 +90,4 @@ function(generateOsqueryUtils)
 
 endfunction()
 
-osquery_utils_main()
+osqueryUtilsMain()

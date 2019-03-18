@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_process_main)
+function(osqueryProcessMain)
   generateOsqueryProcess()
 endfunction()
 
@@ -58,4 +58,4 @@ function(generateOsqueryProcess)
   endif()
 endfunction()
 
-osquery_process_main()
+osqueryProcessMain()

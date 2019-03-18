@@ -15,10 +15,10 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryDistributedTests)
-  generateOsqueryDistributesTestsTest()
+  generateOsqueryDistributedTestsTest()
 endfunction()
 
-function(generateOsqueryDistributesTestsTest)
+function(generateOsqueryDistributedTestsTest)
   add_osquery_executable(osquery_distributed_tests-test distributed_tests.cpp)
 
   target_link_libraries(osquery_distributed_tests-test PRIVATE
@@ -33,7 +33,7 @@ function(generateOsqueryDistributesTestsTest)
     osquery_remote_enroll_tlsenroll
     osquery_utils_info
     osquery_utils_system_time
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     plugins_config_tlsconfig
     specs_tables
     thirdparty_googletest

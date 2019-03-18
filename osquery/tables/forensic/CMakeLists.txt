@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_tables_forensic_main)
+function(osqueryTablesForensicMain)
   generateOsqueryTablesForensic()
 endfunction()
 
@@ -37,4 +37,4 @@ function(generateOsqueryTablesForensic)
   )
 endfunction()
 
-osquery_tables_forensic_main()
+osqueryTablesForensicMain()

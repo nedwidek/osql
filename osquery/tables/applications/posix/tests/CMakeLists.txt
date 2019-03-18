@@ -32,7 +32,7 @@ function(generateOsqueryTablesApplicationsPosixTestsPrometheusmetricstestsTest)
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_sql
-    osquery_sql_tests_testutils
+    osquery_sql_tests_sqltestutils
     osquery_tables_applications
     plugins_config_tlsconfig
     specs_tables

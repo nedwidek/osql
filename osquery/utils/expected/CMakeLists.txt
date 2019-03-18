@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_utils_expected_main)
+function(osqueryUtilsExpectedMain)
   generateOsqueryUtilsExpected()
 endfunction()
 
@@ -35,4 +35,4 @@ function(generateOsqueryUtilsExpected)
   generateIncludeNamespace(osquery_utils_expected "osquery/utils/expected" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_utils_expected_main()
+osqueryUtilsExpectedMain()

@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_config_main)
+function(osqueryConfigMain)
   if (BUILD_TESTING)
     add_subdirectory("tests")
   endif()
@@ -58,4 +58,4 @@ function(generateOsqueryConfig)
 
 endfunction()
 
-osquery_config_main()
+osqueryConfigMain()

@@ -20,10 +20,10 @@ function(osqueryTablesEventsMain)
     add_subdirectory("tests")
   endif()
 
-  generateOsqueryTablesEvents()
+  generateOsqueryTablesEventsEventstable()
 endfunction()
 
-function(generateOsqueryTablesEvents)
+function(generateOsqueryTablesEventsEventstable)
   set(source_files
     event_utils.cpp
   )
@@ -56,13 +56,13 @@ function(generateOsqueryTablesEvents)
     )
   endif()
 
-  add_osquery_library(osquery_tables_events EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_tables_events_eventstable EXCLUDE_FROM_ALL
     ${source_files}
   )
 
-  enableLinkWholeArchive(osquery_tables_events)
+  enableLinkWholeArchive(osquery_tables_events_eventstable)
 
-  target_link_libraries(osquery_tables_events PUBLIC
+  target_link_libraries(osquery_tables_events_eventstable PUBLIC
     osquery_headers
     osquery_config
     osquery_core
@@ -75,14 +75,14 @@ function(generateOsqueryTablesEvents)
   )
 
   if(DEFINED PLATFORM_MACOS)
-    target_link_libraries(osquery_tables_events PUBLIC bsm)
+    target_link_libraries(osquery_tables_events_eventstable PUBLIC bsm)
   endif()
 
   set(public_header_files
     event_utils.h
   )
 
-  generateIncludeNamespace(osquery_tables_events "osquery/tables/events" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_tables_events_eventstable "osquery/tables/events" "FILE_ONLY" ${public_header_files})
 
   if(DEFINED PLATFORM_LINUX)
     set(platform_public_header_files
@@ -92,7 +92,7 @@ function(generateOsqueryTablesEvents)
       linux/socket_events.h
     )
 
-    generateIncludeNamespace(osquery_tables_events "osquery/tables/events" "FULL_PATH" ${platform_public_header_files})
+    generateIncludeNamespace(osquery_tables_events_eventstable "osquery/tables/events" "FULL_PATH" ${platform_public_header_files})
 
     add_test(NAME osquery_tables_events_tests_selinuxeventstests-test COMMAND osquery_tables_events_tests_selinuxeventstests-test)
   endif()

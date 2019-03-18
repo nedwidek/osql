@@ -47,7 +47,7 @@ function(generatePluginsLoggerTestsFilesystemloggertestsTest)
     osquery_utils_info
     osquery_utils_system_time
     plugins_config_tlsconfig
-    plugins_logger_filesystem
+    plugins_logger_filesystemlogger
     specs_tables
     thirdparty_googletest
   )
@@ -138,7 +138,7 @@ function(generatePluginsLoggerTestsTlsloggertestsTest)
     osquery_logger_datalogger
     osquery_registry
     osquery_remote_enroll_tlsenroll
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     osquery_utils_conversions
     osquery_utils_info
     osquery_utils_system_time
@@ -172,7 +172,7 @@ function(generatePluginsLoggerTestsSyslogloggertestsTest)
     specs_tables
     thirdparty_googletest
     thirdparty_gflags
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     osquery_tools_tests_testfiles
   )
 endfunction()

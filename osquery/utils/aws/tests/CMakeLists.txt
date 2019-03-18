@@ -14,11 +14,11 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osqueryAwsTestsMain)
-  generateOsqueryAwsTestsAwsUtilTest()
+function(osqueryUtilsAwsTestsMain)
+  generateOsqueryUtilsAwsTestsTest()
 endfunction()
 
-function(generateOsqueryAwsTestsAwsUtilTest)
+function(generateOsqueryUtilsAwsTestsTest)
   add_osquery_executable(osquery_utils_aws_tests-test aws_util_tests.cpp)
 
   target_link_libraries(osquery_utils_aws_tests-test PRIVATE
@@ -39,4 +39,4 @@ function(generateOsqueryAwsTestsAwsUtilTest)
   )
 endfunction()
 
-osqueryAwsTestsMain()
+osqueryUtilsAwsTestsMain()

@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_utils_status_main)
+function(osqueryUtilsStatusMain)
   generateOsqueryUtilsStatus()
 endfunction()
 
@@ -36,4 +36,4 @@ function(generateOsqueryUtilsStatus)
   generateIncludeNamespace(osquery_utils_status "osquery/utils/status" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_utils_status_main()
+osqueryUtilsStatusMain()

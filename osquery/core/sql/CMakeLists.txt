@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_core_sql_main)
+function(osqueryCoreSqlMain)
   generateOsqueryCoreSql()
 endfunction()
 
@@ -50,4 +50,4 @@ function(generateOsqueryCoreSql)
   generateIncludeNamespace(osquery_core_sql "osquery/core/sql" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_core_sql_main()
+osqueryCoreSqlMain()

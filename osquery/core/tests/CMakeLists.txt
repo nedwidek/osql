@@ -134,7 +134,7 @@ function(generateOsqueryCoreTestsQuerytestsTest)
     osquery_extensions
     osquery_registry
     osquery_remote_enroll_tlsenroll
-    osquery_sql_tests_testutils
+    osquery_sql_tests_sqltestutils
     tests_helper
     osquery_utils_info
     plugins_config_tlsconfig

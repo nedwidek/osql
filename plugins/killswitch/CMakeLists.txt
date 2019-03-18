@@ -19,18 +19,18 @@ function(pluginsKillswitchMain)
     add_subdirectory("tests")
   endif()
 
-  generatePluginsKillswitchFilesystem()
+  generatePluginsKillswitchKillswitchfilesystem()
   generatePluginsKillswitchTls()
 endfunction()
 
-function(generatePluginsKillswitchFilesystem)
-  add_osquery_library(plugins_killswitch_filesystem EXCLUDE_FROM_ALL
+function(generatePluginsKillswitchKillswitchfilesystem)
+  add_osquery_library(plugins_killswitch_killswitchfilesystem EXCLUDE_FROM_ALL
     killswitch_filesystem.cpp
   )
 
-  enableLinkWholeArchive(plugins_killswitch_filesystem)
+  enableLinkWholeArchive(plugins_killswitch_killswitchfilesystem)
 
-  target_link_libraries(plugins_killswitch_filesystem PUBLIC
+  target_link_libraries(plugins_killswitch_killswitchfilesystem PUBLIC
     global_cxx_settings
     osquery_killswitch
     osquery_utils_config
@@ -40,7 +40,7 @@ function(generatePluginsKillswitchFilesystem)
     killswitch_filesystem.h
   )
 
-  generateIncludeNamespace(plugins_killswitch_filesystem "osquery/killswitch/plugins" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(plugins_killswitch_killswitchfilesystem "osquery/killswitch/plugins" "FILE_ONLY" ${public_header_files})
 
   add_test(NAME plugins_killswitch_killswitchfilesystemplugintests-test COMMAND plugins_killswitch_killswitchfilesystemplugintests-test)
 
@@ -51,24 +51,24 @@ function(generatePluginsKillswitchFilesystem)
 endfunction()
 
 function(generatePluginsKillswitchTls)
-  add_osquery_library(plugins_killswitch_tls EXCLUDE_FROM_ALL
+  add_osquery_library(plugins_killswitch_killswitchtls EXCLUDE_FROM_ALL
     killswitch_tls.cpp
   )
 
-  enableLinkWholeArchive(plugins_killswitch_tls)
+  enableLinkWholeArchive(plugins_killswitch_killswitchtls)
 
-  target_link_libraries(plugins_killswitch_tls PUBLIC
+  target_link_libraries(plugins_killswitch_killswitchtls PUBLIC
     global_cxx_settings
     osquery_killswitch
     osquery_remote_utility
-    osquery_remote_serializers_json
+    osquery_remote_serializers_serializerjson
   )
 
   set(public_header_files
     killswitch_tls.h
   )
 
-  generateIncludeNamespace(plugins_killswitch_tls "osquery/killswitch/plugins" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(plugins_killswitch_killswitchtls "osquery/killswitch/plugins" "FILE_ONLY" ${public_header_files})
 endfunction()
 
 pluginsKillswitchMain()

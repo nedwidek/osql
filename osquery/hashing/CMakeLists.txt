@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_hashing_main)
+function(osqueryHashingMain)
   generateOsqueryHashing()
 endfunction()
 
@@ -38,4 +38,4 @@ function(generateOsqueryHashing)
   generateIncludeNamespace(osquery_hashing "osquery/hashing" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_hashing_main()
+osqueryHashingMain()

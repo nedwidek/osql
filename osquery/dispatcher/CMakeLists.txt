@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_dispatcher_main)
+function(osqueryDispatcherMain)
 
   if(BUILD_TESTING)
     add_subdirectory("tests")
@@ -54,4 +54,4 @@ function(generateOsqueryDispatcher)
   add_test(NAME osquery_dispatcher_tests_scheduler-test COMMAND osquery_dispatcher_tests_scheduler-test)
 endfunction()
 
-osquery_dispatcher_main()
+osqueryDispatcherMain()

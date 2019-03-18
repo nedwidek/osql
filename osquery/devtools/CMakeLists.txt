@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_devtools_main)
+function(osqueryDevtoolsMain)
 
   if(BUILD_TESTING)
     add_subdirectory("tests")
@@ -52,4 +52,4 @@ function(generateOsqueryDevtools)
   add_test(NAME osquery_devtools_tests_printertests-test COMMAND osquery_devtools_tests_printertests-test)
 endfunction()
 
-osquery_devtools_main()
+osqueryDevtoolsMain()

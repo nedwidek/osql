@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_database_main)
+function(osqueryDatabaseMain)
   add_subdirectory("plugins")
 
   if(BUILD_TESTING)
@@ -41,4 +41,4 @@ function(generateOsqueryDatabase)
   add_test(NAME osquery_database_tests_results-test COMMAND osquery_database_tests_results-test)
 endfunction()
 
-osquery_database_main()
+osqueryDatabaseMain()

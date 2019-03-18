@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_sql_main)
+function(osquerySqlMain)
 
   if(BUILD_TESTING)
     add_subdirectory("tests")
@@ -78,4 +78,4 @@ function(generateOsquerySql)
   add_test(NAME osquery_sql_tests_sqliteutilstests-test COMMAND osquery_sql_tests_sqliteutilstests-test)
 endfunction()
 
-osquery_sql_main()
+osquerySqlMain()

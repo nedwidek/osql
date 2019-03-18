@@ -20,15 +20,15 @@ function(osqueryRemoteSerializersMain)
     generateOsqueryRemoteserializersjsontestsTest()
   endif()
 
-  generateOsqueryRemoteSerializersJson()
+  generateOsqueryRemoteSerializersSerializerjson()
 endfunction()
 
-function(generateOsqueryRemoteSerializersJson)
-  add_osquery_library(osquery_remote_serializers_json EXCLUDE_FROM_ALL
+function(generateOsqueryRemoteSerializersSerializerjson)
+  add_osquery_library(osquery_remote_serializers_serializerjson EXCLUDE_FROM_ALL
     json.cpp
   )
 
-  target_link_libraries(osquery_remote_serializers_json PUBLIC
+  target_link_libraries(osquery_remote_serializers_serializerjson PUBLIC
     global_cxx_settings
     osquery_remote_requests
     osquery_utils_json
@@ -39,7 +39,7 @@ function(generateOsqueryRemoteSerializersJson)
     json.h
   )
 
-  generateIncludeNamespace(osquery_remote_serializers_json "osquery/remote/serializers" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_remote_serializers_serializerjson "osquery/remote/serializers" "FILE_ONLY" ${public_header_files})
 
   add_test(NAME osquery_remote_serializers_remotejsonserializerstests-test COMMAND osquery_remote_serializers_remotejsonserializerstests-test)
 endfunction()
@@ -49,7 +49,7 @@ function(generateOsqueryRemoteserializersjsontestsTest)
 
   target_link_libraries(osquery_remote_serializers_remotejsonserializerstests-test PRIVATE
     global_cxx_settings
-    osquery_remote_serializers_json
+    osquery_remote_serializers_serializerjson
     thirdparty_googletest
   )
 endfunction()

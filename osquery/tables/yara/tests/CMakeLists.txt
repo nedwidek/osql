@@ -30,15 +30,15 @@ function(generateOsqueryTablesYaraTestsTest)
 
   target_link_libraries(osquery_tables_yara_tests-test PRIVATE
     global_cxx_settings
-    osquery_tables_yara
+    osquery_tables_yara_yaratable
     osquery_core
     osquery_filesystem
     osquery_remote_httpclient
     osquery_utils
     osquery_utils_conversions
-    osquery_tables_system
+    osquery_tables_system_systemtable
     osquery_config_tests_testutils
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     osquery_database
     osquery_database_plugins_ephemeral
     thirdparty_boost

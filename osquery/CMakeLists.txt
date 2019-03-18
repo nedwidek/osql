@@ -38,11 +38,11 @@ function(osqueryMain)
   add_subdirectory("extensions")
   add_subdirectory("events")
 
-  generateOsqueryHeadersTarget()
-  generateOsquerydTarget()
+  generateOsqueryHeaders()
+  generateOsqueryd()
 endfunction()
 
-function(generateOsqueryHeadersTarget)
+function(generateOsqueryHeaders)
   add_osquery_library(osquery_headers INTERFACE)
   target_include_directories(osquery_headers INTERFACE "${OSQUERY_SOURCE_DIR}/osquery/include")
 
@@ -51,14 +51,14 @@ function(generateOsqueryHeadersTarget)
     osquery_core_plugins
     osquery_utils_info
     osquery_utils_macros
-    osquery_utils_system
+    osquery_utils_system_systemutils
     thirdparty_gflags
     thirdparty_sqlite
     thirdparty_googletest_headers
   )
 endfunction()
 
-function(generateOsquerydTarget)
+function(generateOsqueryd)
   # Upstream uses an empty executable that links to a library with a
   # a main() entry point; try to emulate this.
   set(source_file "${CMAKE_CURRENT_BINARY_DIR}/empty_osqueryd_target_source_file.cpp")

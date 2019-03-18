@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_tables_main)
+function(osqueryTablesMain)
   add_subdirectory("applications")
   add_subdirectory("cloud")
   add_subdirectory("events")
@@ -27,40 +27,40 @@ function(osquery_tables_main)
   add_subdirectory("utility")
   add_subdirectory("yara")
   
-  generateOsqueryTables()
+  generateOsqueryTablesTableimplementations()
 endfunction()
 
-function(generateOsqueryTables)
-  add_osquery_library(osquery_tables INTERFACE)
+function(generateOsqueryTablesTableimplementations)
+  add_osquery_library(osquery_tables_tableimplementations INTERFACE)
 
   if(DEFINED PLATFORM_POSIX)
-    target_link_libraries(osquery_tables INTERFACE
-      osquery_tables_sleuthkit
-      osquery_tables_yara
-      osquery_tables_lldpd
+    target_link_libraries(osquery_tables_tableimplementations INTERFACE
+      osquery_tables_sleuthkit_sleuthkittable
+      osquery_tables_yara_yaratable
+      osquery_tables_lldpd_llpdtable
     )
   endif()
 
   if(DEFINED PLATFORM_LINUX OR DEFINED PLATFORM_MACOS)
-    target_link_libraries(osquery_tables INTERFACE
+    target_link_libraries(osquery_tables_tableimplementations INTERFACE
       osquery_tables_cloud
       osquery_tables_smart
     )
 
   elseif(DEFINED PLATFORM_WINDOWS)
-    target_link_libraries(osquery_tables INTERFACE
+    target_link_libraries(osquery_tables_tableimplementations INTERFACE
       osquery_tables_cloud
     )
   endif()
 
-  target_link_libraries(osquery_tables INTERFACE
+  target_link_libraries(osquery_tables_tableimplementations INTERFACE
     osquery_tables_applications
-    osquery_tables_events
+    osquery_tables_events_eventstable
     osquery_tables_forensic
     osquery_tables_networking
-    osquery_tables_system
-    osquery_tables_utility
+    osquery_tables_system_systemtable
+    osquery_tables_utility_utilitytable
   )
 endfunction()
 
-osquery_tables_main()
+osqueryTablesMain()

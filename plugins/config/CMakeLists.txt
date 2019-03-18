@@ -47,7 +47,7 @@ function(generatePluginsConfigTlsconfig)
     osquery_config
     osquery_remote_requests
     osquery_remote_utility
-    osquery_remote_serializers_json
+    osquery_remote_serializers_serializerjson
   )
 
   set(public_header_files

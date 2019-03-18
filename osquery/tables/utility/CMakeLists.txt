@@ -14,27 +14,27 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_tables_utility_main)
-  generateTablesUtility()
+function(osqueryTablesUtilityMain)
+  generateTablesUtilityUtilitytable()
 endfunction()
 
-function(generateTablesUtility)
-  add_osquery_library(osquery_tables_utility EXCLUDE_FROM_ALL
+function(generateTablesUtilityUtilitytable)
+  add_osquery_library(osquery_tables_utility_utilitytable EXCLUDE_FROM_ALL
     file.cpp
     osquery.cpp
     time.cpp
   )
 
-  target_link_libraries(osquery_tables_utility PUBLIC
+  target_link_libraries(osquery_tables_utility_utilitytable PUBLIC
     global_cxx_settings
     osquery_config
     osquery_core
     osquery_filesystem
     osquery_process
     osquery_utils_macros
-    osquery_utils_system
+    osquery_utils_system_systemutils
     thirdparty_boost
   )
 endfunction()
 
-osquery_tables_utility_main()
+osqueryTablesUtilityMain()

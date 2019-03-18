@@ -31,7 +31,7 @@ function(osqueryTablesSystemTestsMain)
     generateOsqueryTablesSystemTestsYumsourcestestsTest()
   endif()
 
-  generateOsqueryTablesSystemtablestestsTest()
+  generateOsqueryTablesSystemTestsSystemtablestestsTest()
 
   if(DEFINED PLATFORM_MACOS)
     generateOsqueryTablesSystemTestsAppstestsTest()
@@ -53,13 +53,13 @@ function(generateOsqueryTablesSystemTestsCommondeps)
 
   target_link_libraries(osquery_tables_system_tests_commondeps INTERFACE
     global_cxx_settings
-    osquery_tables_system
+    osquery_tables_system_systemtable
     osquery_core
     osquery_filesystem
     osquery_utils
     osquery_utils_conversions
     osquery_config_tests_testutils
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_core_sql
@@ -123,7 +123,7 @@ function(generateOsqueryTablesSystemTestsYumsourcestestsTest)
   )
 endfunction()
 
-function(generateOsqueryTablesSystemtablestestsTest)
+function(generateOsqueryTablesSystemTestsSystemtablestestsTest)
   add_osquery_executable(osquery_tables_system_tests_systemtablestests-test system_tables_tests.cpp)
 
   target_link_libraries(osquery_tables_system_tests_systemtablestests-test PRIVATE

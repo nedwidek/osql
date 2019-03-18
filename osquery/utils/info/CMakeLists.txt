@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_utils_info_main)
+function(osqueryUtilsInfoMain)
   generateOsqueryUtilsInfo()
 endfunction()
 
@@ -40,4 +40,4 @@ function(generateOsqueryUtilsInfo)
   generateIncludeNamespace(osquery_utils_info "osquery/utils/info" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_utils_info_main()
+osqueryUtilsInfoMain()

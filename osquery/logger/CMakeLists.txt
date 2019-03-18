@@ -14,14 +14,14 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_logger_main)
+function(osqueryLoggerMain)
 
   if(BUILD_TESTING)
     add_subdirectory("tests")
   endif()
 
   generateOsqueryLogger()
-  generateOsqueryLoggerDataLogger()
+  generateOsqueryLoggerDatalogger()
 endfunction()
 
 function(generateOsqueryLogger)
@@ -38,7 +38,7 @@ function(generateOsqueryLogger)
   generateIncludeNamespace(osquery_logger "osquery" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-function(generateOsqueryLoggerDataLogger)
+function(generateOsqueryLoggerDatalogger)
   add_osquery_library(osquery_logger_datalogger EXCLUDE_FROM_ALL
     logger.cpp
   )
@@ -61,4 +61,4 @@ function(generateOsqueryLoggerDataLogger)
   add_test(NAME osquery_logger_tests-test COMMAND osquery_logger_tests-test)
 endfunction()
 
-osquery_logger_main()
+osqueryLoggerMain()

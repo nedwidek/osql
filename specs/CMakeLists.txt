@@ -24,7 +24,7 @@ function(specsMain)
   list(APPEND table_target_list "${generateForeignTables_output}")
 
   foreach(table_target ${table_target_list})
-    target_link_libraries("${table_target}" PUBLIC osquery_tables)
+    target_link_libraries("${table_target}" PUBLIC osquery_tables_tableimplementations)
     enableLinkWholeArchive("${table_target}")
   endforeach()
 

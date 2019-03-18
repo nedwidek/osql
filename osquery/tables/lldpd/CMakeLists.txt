@@ -14,16 +14,16 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_tables_lldpd_main)
-  generateOsqueryTablesLldpd()
+function(osqueryTablesLldpdMain)
+  generateOsqueryTablesLldpdLlpdtable()
 endfunction()
 
-function(generateOsqueryTablesLldpd)
-  add_osquery_library(osquery_tables_lldpd EXCLUDE_FROM_ALL
+function(generateOsqueryTablesLldpdLlpdtable)
+  add_osquery_library(osquery_tables_lldpd_llpdtable EXCLUDE_FROM_ALL
     lldp_neighbors.cpp
   )
 
-  target_link_libraries(osquery_tables_lldpd PUBLIC
+  target_link_libraries(osquery_tables_lldpd_llpdtable PUBLIC
     global_cxx_settings
     osquery_headers
     osquery_logger
@@ -31,4 +31,4 @@ function(generateOsqueryTablesLldpd)
   )
 endfunction()
 
-osquery_tables_lldpd_main()
+osqueryTablesLldpdMain()

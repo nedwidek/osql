@@ -15,20 +15,20 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryRemoteTestsMain)
-  generateOsqueryRemoteTestsUtils()
+  generateOsqueryRemoteTestsRemotetestsutils()
   generateOsqueryRemoteTestsRequeststestsTest()
 endfunction()
 
-function(generateOsqueryRemoteTestsUtils)
-  add_osquery_library(osquery_remote_tests_utils EXCLUDE_FROM_ALL test_utils.cpp)
+function(generateOsqueryRemoteTestsRemotetestsutils)
+  add_osquery_library(osquery_remote_tests_remotetestsutils EXCLUDE_FROM_ALL test_utils.cpp)
 
   set(public_header_files
     test_utils.h
   )
 
-  generateIncludeNamespace(osquery_remote_tests_utils "osquery/remote/tests" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_remote_tests_remotetestsutils "osquery/remote/tests" "FILE_ONLY" ${public_header_files})
 
-  target_link_libraries(osquery_remote_tests_utils PUBLIC
+  target_link_libraries(osquery_remote_tests_remotetestsutils PUBLIC
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_database
@@ -39,7 +39,7 @@ function(generateOsqueryRemoteTestsUtils)
     osquery_utils_conversions
     osquery_utils_info
     plugins_config_tlsconfig
-    plugins_killswitch_filesystem
+    plugins_killswitch_killswitchfilesystem
     tests_helper
   )
 endfunction()
@@ -55,11 +55,11 @@ function(generateOsqueryRemoteTestsRequeststestsTest)
     osquery_events
     osquery_extensions
     osquery_remote_enroll_tlsenroll
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     osquery_utils_conversions
     osquery_utils_info
     plugins_config_tlsconfig
-    plugins_killswitch_filesystem
+    plugins_killswitch_killswitchfilesystem
     tests_helper
     thirdparty_googletest
   )

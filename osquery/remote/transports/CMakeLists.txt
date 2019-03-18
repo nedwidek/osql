@@ -20,15 +20,15 @@ function(osqueryRemoteTransportsMain)
     generateOsqueryRemoteTransportsRemotetransportstlstestsTest()
   endif()
 
-  generateOsqueryRemoteTransportsTls()
+  generateOsqueryRemoteTransportsTransportstls()
 endfunction()
 
-function(generateOsqueryRemoteTransportsTls)
-  add_osquery_library(osquery_remote_transports_tls EXCLUDE_FROM_ALL
+function(generateOsqueryRemoteTransportsTransportstls)
+  add_osquery_library(osquery_remote_transports_transportstls EXCLUDE_FROM_ALL
     tls.cpp
   )
 
-  target_link_libraries(osquery_remote_transports_tls PUBLIC
+  target_link_libraries(osquery_remote_transports_transportstls PUBLIC
     global_cxx_settings
     osquery_headers
     osquery_core
@@ -42,7 +42,7 @@ function(generateOsqueryRemoteTransportsTls)
     tls.h
   )
 
-  generateIncludeNamespace(osquery_remote_transports_tls "osquery/remote/transports" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_remote_transports_transportstls "osquery/remote/transports" "FILE_ONLY" ${public_header_files})
 
   if(DEFINED PLATFORM_POSIX)
     add_test(NAME osquery_remote_transports_remotetransportstlstests-test COMMAND osquery_remote_transports_remotetransportstlstests-test)
@@ -67,11 +67,11 @@ function(generateOsqueryRemoteTransportsRemotetransportstlstestsTest)
     osquery_events
     osquery_extensions
     osquery_remote_enroll_tlsenroll
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     osquery_utils_conversions
     osquery_utils_info
     plugins_config_tlsconfig
-    plugins_killswitch_filesystem
+    plugins_killswitch_killswitchfilesystem
     tests_helper
     thirdparty_googletest
     osquery_tools_tests_testfiles

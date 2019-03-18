@@ -88,7 +88,7 @@ function(generateOsqueryTablesNetworking)
     osquery_remote_httpclient
     osquery_utils
     osquery_utils_conversions
-    osquery_tables_system
+    osquery_tables_system_systemtable
     thirdparty_boost
   )
 

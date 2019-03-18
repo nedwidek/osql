@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_tables_applications_main)
+function(osqueryTablesApplicationsMain)
 
   if(BUILD_TESTING)
     add_subdirectory("posix/tests")
@@ -62,7 +62,7 @@ function(generateOsqueryTablesApplications)
     global_cxx_settings
     osquery_config
     osquery_filesystem
-    osquery_tables_system
+    osquery_tables_system_systemtable
     osquery_utils_conversions
     osquery_utils_info
     osquery_utils_json
@@ -87,4 +87,4 @@ function(generateOsqueryTablesApplications)
   endif()
 endfunction()
 
-osquery_tables_applications_main()
+osqueryTablesApplicationsMain()

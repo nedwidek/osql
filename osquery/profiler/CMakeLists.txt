@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_profiler_main)
+function(osqueryProfilerMain)
   generateOsqueryProfiler()
 endfunction()
 
@@ -46,4 +46,4 @@ function(generateOsqueryProfiler)
   generateIncludeNamespace(osquery_profiler "osquery/profiler" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_profiler_main()
+osqueryProfilerMain()

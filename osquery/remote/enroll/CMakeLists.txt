@@ -34,8 +34,8 @@ function(generateOsqueryRemoteEnrollTlsenroll)
     osquery_process
     osquery_remote_httpclient
     osquery_remote_requests
-    osquery_remote_serializers_json
-    osquery_remote_transports_tls
+    osquery_remote_serializers_serializerjson
+    osquery_remote_transports_transportstls
     osquery_utils_json
     osquery_utils_system_time
     thirdparty_boost
@@ -78,11 +78,11 @@ function(generateOsqueryRemoteenrolltestsTest)
     osquery_extensions
     osquery_process
     osquery_remote_enroll_tlsenroll
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     osquery_utils_conversions
     osquery_utils_info
     plugins_config_tlsconfig
-    plugins_killswitch_filesystem
+    plugins_killswitch_killswitchfilesystem
     tests_helper
     thirdparty_googletest
     osquery_tools_tests_testfiles

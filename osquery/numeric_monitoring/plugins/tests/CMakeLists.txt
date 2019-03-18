@@ -15,19 +15,19 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryNumericmonitoringPluginsTestsMain)
-  osqueryNumericmonitoringPluginsTestsFilesystemTest()
+  osqueryNumericmonitoringPluginsTestsNumericmonitoringfilesstemtestsTest()
 endfunction()
 
-function(osqueryNumericmonitoringPluginsTestsFilesystemTest)
-  add_osquery_executable(osquery_numericmonitoring_plugins_tests_filesystem-test filesystem.cpp)
+function(osqueryNumericmonitoringPluginsTestsNumericmonitoringfilesstemtestsTest)
+  add_osquery_executable(osquery_numericmonitoring_plugins_tests_numericmonitoringfilesystemtests-test filesystem.cpp)
 
-  target_link_libraries(osquery_numericmonitoring_plugins_tests_filesystem-test PRIVATE
+  target_link_libraries(osquery_numericmonitoring_plugins_tests_numericmonitoringfilesystemtests-test PRIVATE
     global_cxx_settings
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_extensions
     osquery_numericmonitoring
-    osquery_numericmonitoring_plugins_filesystem
+    osquery_numericmonitoring_plugins_numericmonitoringfilesystem
     osquery_remote_enroll_tlsenroll
     plugins_config_tlsconfig
     specs_tables

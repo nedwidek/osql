@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_tables_cloud_main)
+function(osqueryTablesCloudMain)
   generateOsqueryTablesCloud()
 endfunction()
 
@@ -33,4 +33,4 @@ function(generateOsqueryTablesCloud)
   )
 endfunction()
 
-osquery_tables_cloud_main()
+osqueryTablesCloudMain()

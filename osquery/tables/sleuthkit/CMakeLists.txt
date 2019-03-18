@@ -14,16 +14,16 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_tables_sleuthkit_main)
+function(osqueryTablesSleuthkitMain)
   generateOsqueryTablesSleuthkit()
 endfunction()
 
 function(generateOsqueryTablesSleuthkit)
-  add_osquery_library(osquery_tables_sleuthkit EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_tables_sleuthkit_sleuthkittable EXCLUDE_FROM_ALL
     sleuthkit.cpp
   )
 
-  target_link_libraries(osquery_tables_sleuthkit PUBLIC
+  target_link_libraries(osquery_tables_sleuthkit_sleuthkittable PUBLIC
     global_cxx_settings
     osquery_headers
     osquery_hashing
@@ -33,4 +33,4 @@ function(generateOsqueryTablesSleuthkit)
   )
 endfunction()
 
-osquery_tables_sleuthkit_main()
+osqueryTablesSleuthkitMain()

@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_carver_main)
+function(osqueryCarverMain)
 
   if (BUILD_TESTING)
     add_subdirectory("tests")
@@ -37,7 +37,7 @@ function(generateOsqueryCarver)
     osquery_filesystem
     osquery_hashing
     osquery_remote_utility
-    osquery_remote_serializers_json
+    osquery_remote_serializers_serializerjson
     osquery_utils
     thirdparty_boost
     thirdparty_gflags
@@ -52,4 +52,4 @@ function(generateOsqueryCarver)
   add_test(NAME osquery_carver_tests-test COMMAND osquery_carver_tests-test)
 endfunction()
 
-osquery_carver_main()
+osqueryCarverMain()

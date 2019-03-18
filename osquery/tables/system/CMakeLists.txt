@@ -14,16 +14,16 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_tables_system_main)
+function(osqueryTablesSystemMain)
 
   if(BUILD_TESTING)
     add_subdirectory("tests")
   endif()
 
-  generateOsqueryTablesSystem()
+  generateOsqueryTablesSystemSystemtable()
 endfunction()
 
-function(generateOsqueryTablesSystem)
+function(generateOsqueryTablesSystemSystemtable)
   set(source_files
     cpuid.cpp
     hash.cpp
@@ -212,11 +212,11 @@ function(generateOsqueryTablesSystem)
     )
   endif()
 
-  add_osquery_library(osquery_tables_system EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_tables_system_systemtable EXCLUDE_FROM_ALL
     ${source_files}
   )
 
-  target_link_libraries(osquery_tables_system PUBLIC
+  target_link_libraries(osquery_tables_system_systemtable PUBLIC
     global_cxx_settings
     osquery_headers
     osquery_core
@@ -229,7 +229,7 @@ function(generateOsqueryTablesSystem)
     osquery_utils_conversions
     osquery_utils_expected
     osquery_utils_system_filepath
-    osquery_utils_system
+    osquery_utils_system_systemutils
     osquery_utils_system_time
     osquery_utils_system_uptime
     thirdparty_augeas
@@ -240,7 +240,7 @@ function(generateOsqueryTablesSystem)
   )
 
   if(DEFINED PLATFORM_LINUX)
-    target_link_libraries(osquery_tables_system PUBLIC
+    target_link_libraries(osquery_tables_system_systemtable PUBLIC
       thirdparty_libdevmapper
       thirdparty_libdpkg
       thirdparty_libelfin
@@ -250,7 +250,7 @@ function(generateOsqueryTablesSystem)
     )
 
   elseif(DEFINED PLATFORM_MACOS)
-    target_link_libraries(osquery_tables_system PUBLIC
+    target_link_libraries(osquery_tables_system_systemtable PUBLIC
       thirdparty_openssl
     )
   endif()
@@ -263,7 +263,7 @@ function(generateOsqueryTablesSystem)
     user_groups.h
   )
 
-  generateIncludeNamespace(osquery_tables_system "osquery/tables/system" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_tables_system_systemtable "osquery/tables/system" "FILE_ONLY" ${public_header_files})
 
   if(DEFINED PLATFORM_POSIX)
     set(platform_public_header_files
@@ -301,7 +301,7 @@ function(generateOsqueryTablesSystem)
     )
   endif()
 
-  generateIncludeNamespace(osquery_tables_system "osquery/tables/system" "FULL_PATH" ${platform_public_header_files})
+  generateIncludeNamespace(osquery_tables_system_systemtable "osquery/tables/system" "FULL_PATH" ${platform_public_header_files})
 
   if(DEFINED PLATFORM_POSIX)
     add_test(NAME osquery_tables_system_tests_knownhoststests-test COMMAND osquery_tables_system_tests_knownhoststests-test)
@@ -341,4 +341,4 @@ function(generateOsqueryTablesSystem)
   add_test(NAME osquery_tables_system_tests_systemtablestests-test COMMAND osquery_tables_system_tests_systemtablestests-test)
 endfunction()
 
-osquery_tables_system_main()
+osqueryTablesSystemMain()

@@ -14,9 +14,9 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_utils_conversions_main)
-  generateOsqueryUtilsConversionsTo()
+function(osqueryUtilsConversionsMain)
   generateOsqueryUtilsConversions()
+  generateOsqueryUtilsConversionsTo()
 endfunction()
 
 function(generateOsqueryUtilsConversions)
@@ -94,4 +94,4 @@ function(generateOsqueryUtilsConversionsTo)
   generateIncludeNamespace(osquery_utils_conversions_to "osquery/utils/conversions" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_utils_conversions_main()
+osqueryUtilsConversionsMain()

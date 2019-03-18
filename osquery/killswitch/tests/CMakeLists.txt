@@ -32,7 +32,7 @@ function(generateOsqueryKillswitchTestsTest)
     osquery_utils_conversions
     osquery_utils_info
     plugins_config_tlsconfig
-    plugins_killswitch_filesystem
+    plugins_killswitch_killswitchfilesystem
     tests_helper
     osquery_tools_tests_conffiles
     thirdparty_googletest

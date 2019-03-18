@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_utils_macros_main)
+function(osqueryUtilsMacrosMain)
   generateOsqueryUtilsMacros()
 endfunction()
 
@@ -32,4 +32,4 @@ function(generateOsqueryUtilsMacros)
   generateIncludeNamespace(osquery_utils_macros "osquery/utils/macros" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_utils_macros_main()
+osqueryUtilsMacrosMain()

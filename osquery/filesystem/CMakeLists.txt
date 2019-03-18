@@ -17,7 +17,7 @@ cmake_minimum_required(VERSION 3.13.3)
 function(osqueryFilesystemMain)
 
   if(BUILD_TESTING)
-    generateOsqueryFilesystemtestsTest()
+    generateOsqueryFilesystemTest()
   endif()
 
   generateOsqueryFilesystem()
@@ -103,7 +103,7 @@ function(generateOsqueryFilesystemMockfilestructure)
   generateIncludeNamespace(osquery_filesystem_mockfilestructure "osquery/filesystem" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-function(generateOsqueryFilesystemtestsTest)
+function(generateOsqueryFilesystemTest)
 
   set(source_files
     tests/fileops.cpp

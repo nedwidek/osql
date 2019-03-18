@@ -16,7 +16,7 @@ cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryEventsTestsMain)
   generateOsqueryEventsTestsTest()
-  generateOsqueryEventsTestsDatabasetestsTest()
+  generateOsqueryEventsTestsEventsdatabasetestsTest()
 
   if(DEFINED PLATFORM_LINUX)
     generateOsqueryEventsTestsSyslogtestsTest()
@@ -36,14 +36,14 @@ function(generateOsqueryEventsTestsTest)
 
   target_link_libraries(osquery_events_tests-test PRIVATE
     global_cxx_settings
-    osquery_tables_system
+    osquery_tables_system_systemtable
     osquery_core
     osquery_events
     osquery_filesystem
     osquery_utils
     osquery_utils_conversions
     osquery_config_tests_testutils
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_core_sql
@@ -52,19 +52,19 @@ function(generateOsqueryEventsTestsTest)
   )
 endfunction()
 
-function(generateOsqueryEventsTestsDatabasetestsTest)
-  add_osquery_executable(osquery_events_tests_databasetests-test events_database_tests.cpp)
+function(generateOsqueryEventsTestsEventsdatabasetestsTest)
+  add_osquery_executable(osquery_events_tests_eventsdatabasetests-test events_database_tests.cpp)
 
-  target_link_libraries(osquery_events_tests_databasetests-test PRIVATE
+  target_link_libraries(osquery_events_tests_eventsdatabasetests-test PRIVATE
     global_cxx_settings
-    osquery_tables_system
+    osquery_tables_system_systemtable
     osquery_core
     osquery_events
     osquery_filesystem
     osquery_utils
     osquery_utils_conversions
     osquery_config_tests_testutils
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_core_sql
@@ -78,14 +78,14 @@ function(generateOsqueryEventsTestsSyslogtestsTest)
 
   target_link_libraries(osquery_events_tests_syslogtests-test PRIVATE
     global_cxx_settings
-    osquery_tables_system
+    osquery_tables_system_systemtable
     osquery_core
     osquery_events
     osquery_filesystem
     osquery_utils
     osquery_utils_conversions
     osquery_config_tests_testutils
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_core_sql
@@ -99,14 +99,14 @@ function(generateOsqueryEventsTestsAudittestsTest)
 
   target_link_libraries(osquery_events_tests_audittests-test PRIVATE
     global_cxx_settings
-    osquery_tables_system
+    osquery_tables_system_systemtable
     osquery_core
     osquery_events
     osquery_filesystem
     osquery_utils
     osquery_utils_conversions
     osquery_config_tests_testutils
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_core_sql
@@ -120,14 +120,14 @@ function(generateOsqueryEventsTestsProcessfileeventstestsTest)
 
   target_link_libraries(osquery_events_tests_processfileeventstests-test PRIVATE
     global_cxx_settings
-    osquery_tables_system
+    osquery_tables_system_systemtable
     osquery_core
     osquery_events
     osquery_filesystem
     osquery_utils
     osquery_utils_conversions
     osquery_config_tests_testutils
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_core_sql
@@ -141,14 +141,14 @@ function(generateOsqueryEventsTestsInotifytestsTest)
 
   target_link_libraries(osquery_events_tests_inotifytests-test PRIVATE
     global_cxx_settings
-    osquery_tables_system
+    osquery_tables_system_systemtable
     osquery_core
     osquery_events
     osquery_filesystem
     osquery_utils
     osquery_utils_conversions
     osquery_config_tests_testutils
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_core_sql
@@ -162,14 +162,14 @@ function(generateOsqueryEventsTestsFseventstestsTest)
 
   target_link_libraries(osquery_events_tests_fseventstests-test PRIVATE
     global_cxx_settings
-    osquery_tables_system
+    osquery_tables_system_systemtable
     osquery_core
     osquery_events
     osquery_filesystem
     osquery_utils
     osquery_utils_conversions
     osquery_config_tests_testutils
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_core_sql

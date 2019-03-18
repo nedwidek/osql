@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_utils_system_linux_ebpf_main)
+function(osqueryUtilsSystemLinuxEbpfMain)
 
   if(BUILD_TESTING)
     add_subdirectory("tests")
@@ -65,4 +65,4 @@ function(generateOsqueryUtilsSystemLinuxEbpf)
   endif()
 endfunction()
 
-osquery_utils_system_linux_ebpf_main()
+osqueryUtilsSystemLinuxEbpfMain()

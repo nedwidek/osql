@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_utils_json_main)
+function(osqueryUtilsJsonMain)
   generateOsqueryUtilsJson()
 endfunction()
 
@@ -28,7 +28,7 @@ function(generateOsqueryUtilsJson)
     osquery_utils
     osquery_utils_conversions
     osquery_utils_status
-    osquery_utils_system
+    osquery_utils_system_systemutils
     thirdparty_rapidjson
   )
 
@@ -43,4 +43,4 @@ function(generateOsqueryUtilsJson)
   generateIncludeNamespace(osquery_utils_json "osquery/utils/json" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_utils_json_main()
+osqueryUtilsJsonMain()

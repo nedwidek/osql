@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_core_main)
+function(osqueryCoreMain)
   add_subdirectory("plugins")
   add_subdirectory("sql")
 
@@ -63,7 +63,7 @@ function(generateOsqueryCore)
     osquery_utils_conversions
     osquery_utils_info
     osquery_utils_system_env
-    osquery_utils_system
+    osquery_utils_system_systemutils
     osquery_utils_system_time
     osquery_logger
     osquery_extensions
@@ -107,4 +107,4 @@ function(generateOsqueryCore)
 
 endfunction()
 
-osquery_core_main()
+osqueryCoreMain()

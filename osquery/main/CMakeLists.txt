@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_main_main)
+function(osqueryMainMain)
   generateOsqueryMain()
 endfunction()
 
@@ -46,8 +46,8 @@ function(generateOsqueryMain)
     osquery_core_sql
     osquery_database
     osquery_database_plugins_ephemeral
-    osquery_database_plugins_rocksdb
-    osquery_database_plugins_sqlite
+    osquery_database_plugins_rocksdbplugin
+    osquery_database_plugins_sqliteplugin
     osquery_devtools
     osquery_dispatcher
     osquery_extensions
@@ -55,21 +55,21 @@ function(generateOsqueryMain)
     osquery_logger_datalogger
     osquery_process
     osquery_numericmonitoring
-    osquery_numericmonitoring_plugins_filesystem
+    osquery_numericmonitoring_plugins_numericmonitoringfilesystem
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_sql
     plugins_config_filesystemconfig
     plugins_config_tlsconfig
     plugins_config_parsers
-    plugins_distributed_tls
+    plugins_distributed_tls_distributedtls
     plugins_logger_buffered
-    plugins_logger_filesystem
+    plugins_logger_filesystemlogger
     plugins_logger_stdout
     plugins_logger_syslog
     plugins_logger_tlslogger
-    plugins_killswitch_filesystem
-    plugins_killswitch_tls
+    plugins_killswitch_killswitchfilesystem
+    plugins_killswitch_killswitchtls
     specs_tables
     thirdparty_boost
   )
@@ -106,4 +106,4 @@ function(generateOsqueryMain)
   generateIncludeNamespace(osquery_main "osquery/main" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_main_main()
+osqueryMainMain()

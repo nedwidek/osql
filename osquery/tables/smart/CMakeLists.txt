@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_tables_smart_main)
+function(osqueryTablesSmartMain)
 
   if(BUILD_TESTING)
     add_subdirectory("tests")
@@ -58,4 +58,4 @@ function(generateOsqueryTablesSmart)
   endif()
 endfunction()
 
-osquery_tables_smart_main()
+osqueryTablesSmartMain()

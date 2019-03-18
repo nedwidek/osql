@@ -14,21 +14,21 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_numericmonitoring_plugins_main)
+function(osqueryNumericmonitoringPluginsMain)
 
   if(BUILD_TESTING)
     add_subdirectory("tests")
   endif()
 
-  generateOsqueryNumericmonitoringPluginsFilesystem()
+  generateOsqueryNumericmonitoringPluginsNumericmonitoringfilesystem()
 endfunction()
 
-function(generateOsqueryNumericmonitoringPluginsFilesystem)
-  add_osquery_library(osquery_numericmonitoring_plugins_filesystem EXCLUDE_FROM_ALL
+function(generateOsqueryNumericmonitoringPluginsNumericmonitoringfilesystem)
+  add_osquery_library(osquery_numericmonitoring_plugins_numericmonitoringfilesystem EXCLUDE_FROM_ALL
     filesystem.cpp
   )
 
-  target_link_libraries(osquery_numericmonitoring_plugins_filesystem PUBLIC
+  target_link_libraries(osquery_numericmonitoring_plugins_numericmonitoringfilesystem PUBLIC
     global_cxx_settings
     osquery_filesystem
     osquery_numericmonitoring
@@ -38,9 +38,9 @@ function(generateOsqueryNumericmonitoringPluginsFilesystem)
     filesystem.h
   )
 
-  generateIncludeNamespace(osquery_numericmonitoring_plugins_filesystem "osquery/numeric_monitoring/plugins" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_numericmonitoring_plugins_numericmonitoringfilesystem "osquery/numeric_monitoring/plugins" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_numericmonitoring_plugins_tests_filesystem-test COMMAND osquery_numericmonitoring_plugins_tests_filesystem-test)
+  add_test(NAME osquery_numericmonitoring_plugins_tests_numericmonitoringfilesystemtests-test COMMAND osquery_numericmonitoring_plugins_tests_numericmonitoringfilesystemtests-test)
 endfunction()
 
-osquery_numericmonitoring_plugins_main()
+osqueryNumericmonitoringPluginsMain()

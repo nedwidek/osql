@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_core_plugins_main)
+function(osqueryCorePluginsMain)
   generateOsqueryCorePlugins()
 endfunction()
 
@@ -41,4 +41,4 @@ function(generateOsqueryCorePlugins)
   generateIncludeNamespace(osquery_core_plugins "osquery/plugins" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_core_plugins_main()
+osqueryCorePluginsMain()

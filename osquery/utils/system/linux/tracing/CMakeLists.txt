@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_utils_system_linux_tracing_main)
+function(osqueryUtilsSystemLinuxTracingMain)
 
   if(BUILD_TESTING)
     add_subdirectory("tests")
@@ -56,4 +56,4 @@ function(generateOsqueryUtilsSystemLinuxTracing)
   endif()
 endfunction()
 
-osquery_utils_system_linux_tracing_main()
+osqueryUtilsSystemLinuxTracingMain()

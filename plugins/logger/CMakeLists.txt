@@ -35,7 +35,7 @@ function(pluginsLoggerMain)
   generatePluginsLoggerAwskinesis()
   generatePluginsLoggerAwslogforwarder()
   generatePluginsLoggerBuffered()
-  generatePluginsLoggerFilesystem()
+  generatePluginsLoggerFilesystemlogger()
   generatePluginsLoggerKafkaproducer()
   generatePluginsLoggerStdout()
   generatePluginsLoggerSyslog()
@@ -127,14 +127,14 @@ function(generatePluginsLoggerBuffered)
   add_test(NAME plugins_logger_tests_bufferedloggertests-test COMMAND plugins_logger_tests_bufferedloggertests-test)
 endfunction()
 
-function(generatePluginsLoggerFilesystem)
-  add_osquery_library(plugins_logger_filesystem EXCLUDE_FROM_ALL
+function(generatePluginsLoggerFilesystemlogger)
+  add_osquery_library(plugins_logger_filesystemlogger EXCLUDE_FROM_ALL
     filesystem_logger.cpp
   )
 
-  enableLinkWholeArchive(plugins_logger_filesystem)
+  enableLinkWholeArchive(plugins_logger_filesystemlogger)
 
-  target_link_libraries(plugins_logger_filesystem PUBLIC
+  target_link_libraries(plugins_logger_filesystemlogger PUBLIC
     global_cxx_settings
     plugins_logger_commondeps
     osquery_filesystem
@@ -145,7 +145,7 @@ function(generatePluginsLoggerFilesystem)
     filesystem_logger.h
   )
 
-  generateIncludeNamespace(plugins_logger_filesystem "plugins/logger" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(plugins_logger_filesystemlogger "plugins/logger" "FILE_ONLY" ${public_header_files})
   add_test(NAME plugins_logger_tests_filesystemloggertests-test COMMAND plugins_logger_tests_filesystemloggertests-test)
 endfunction()
 
@@ -236,7 +236,7 @@ function(generatePluginsLoggerTlslogger)
     global_cxx_settings
     plugins_logger_commondeps
     osquery_dispatcher
-    osquery_remote_serializers_json
+    osquery_remote_serializers_serializerjson
     osquery_remote_utility
     plugins_config_parsers
     plugins_logger_buffered

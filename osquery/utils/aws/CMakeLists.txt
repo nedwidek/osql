@@ -31,7 +31,7 @@ function(generateOsqueryUtilsAws)
   target_link_libraries(osquery_utils_aws PUBLIC
     global_cxx_settings
     osquery_remote_httpclient
-    osquery_remote_transports_tls
+    osquery_remote_transports_transportstls
     osquery_utils_json
     osquery_utils_status
     thirdparty_aws-sdk-cpp

@@ -21,7 +21,7 @@ function(osqueryEventsMain)
   endif()
 
   generateOsqueryEvents()
-  generateOsqueryEventsRegistry()
+  generateOsqueryEventsEventsregistry()
 endfunction()
 
 function(generateOsqueryEvents)
@@ -62,7 +62,7 @@ function(generateOsqueryEvents)
     osquery_headers
     osquery_core
     osquery_config
-    osquery_events_registry
+    osquery_events_eventsregistry
     osquery_hashing
     osquery_sql
     osquery_utils_conversions
@@ -116,7 +116,7 @@ function(generateOsqueryEvents)
 
   generateIncludeNamespace(osquery_events "osquery/events" "FULL_PATH" ${platform_public_header_files})
 
-  add_test(NAME osquery_events_tests_databasetests-test COMMAND osquery_events_tests_databasetests-test)
+  add_test(NAME osquery_events_tests_eventsdatabasetests-test COMMAND osquery_events_tests_eventsdatabasetests-test)
 
   if(DEFINED PLATFORM_LINUX)
     add_test(NAME osquery_events_tests_syslogtests-test COMMAND osquery_events_tests_syslogtests-test)
@@ -130,10 +130,10 @@ function(generateOsqueryEvents)
   endif()
 endfunction()
 
-function(generateOsqueryEventsRegistry)
-  add_osquery_library(osquery_events_registry EXCLUDE_FROM_ALL events.cpp)
+function(generateOsqueryEventsEventsregistry)
+  add_osquery_library(osquery_events_eventsregistry EXCLUDE_FROM_ALL events.cpp)
 
-  target_link_libraries(osquery_events_registry PUBLIC
+  target_link_libraries(osquery_events_eventsregistry PUBLIC
     global_cxx_settings
     osquery_core
     osquery_sql

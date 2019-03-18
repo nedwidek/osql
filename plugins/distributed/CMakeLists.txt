@@ -19,20 +19,20 @@ function(pluginsDistributedMain)
 endfunction()
 
 function(generatePluginsDistributedTls)
-  add_osquery_library(plugins_distributed_tls EXCLUDE_FROM_ALL
+  add_osquery_library(plugins_distributed_tls_distributedtls EXCLUDE_FROM_ALL
     tls_distributed.cpp
   )
 
-  enableLinkWholeArchive(plugins_distributed_tls)
+  enableLinkWholeArchive(plugins_distributed_tls_distributedtls)
 
-  target_link_libraries(plugins_distributed_tls PUBLIC
+  target_link_libraries(plugins_distributed_tls_distributedtls PUBLIC
     global_cxx_settings
     osquery_core
     osquery_core_plugins
     osquery_database
     osquery_logger
     osquery_remote_utility
-    osquery_remote_serializers_json
+    osquery_remote_serializers_serializerjson
     osquery_utils_json
   )
 endfunction()

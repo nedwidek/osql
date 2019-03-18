@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_utils_error_main)
+function(osqueryUtilsErrorMain)
   generateOsqueryUtilsError()
 endfunction()
 
@@ -34,4 +34,4 @@ function(generateOsqueryUtilsError)
   generateIncludeNamespace(osquery_utils_error "osquery/utils/error" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_utils_error_main()
+osqueryUtilsErrorMain()

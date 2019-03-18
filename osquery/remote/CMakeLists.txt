@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_remote_main)
+function(osqueryRemoteMain)
   add_subdirectory("serializers")
   add_subdirectory("transports")
   add_subdirectory("enroll")
@@ -77,7 +77,7 @@ function(generateOsqueryRemoteUtility)
   target_link_libraries(osquery_remote_utility INTERFACE
     global_cxx_settings
     osquery_process
-    osquery_remote_transports_tls
+    osquery_remote_transports_transportstls
     osquery_remote_httpclient
     osquery_remote_requests
   )
@@ -91,4 +91,4 @@ function(generateOsqueryRemoteUtility)
   add_test(NAME osquery_remote_tests_requeststests-test COMMAND osquery_remote_tests_requeststests-test)
 endfunction()
 
-osquery_remote_main()
+osqueryRemoteMain()

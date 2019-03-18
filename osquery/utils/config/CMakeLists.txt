@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_utils_config_main)
+function(osqueryUtilsConfigMain)
   generateOsqueryUtilsConfig()
 endfunction()
 
@@ -32,4 +32,4 @@ function(generateOsqueryUtilsConfig)
   generateIncludeNamespace(osquery_utils_config "osquery/utils/config" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_utils_config_main()
+osqueryUtilsConfigMain()

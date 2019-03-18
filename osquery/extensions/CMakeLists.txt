@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_extensions_main)
+function(osqueryExtensionsMain)
   add_subdirectory("thrift")
 
   if(BUILD_TESTING)
@@ -53,4 +53,4 @@ function(generateOsqueryExtensions)
   add_test(NAME osquery_extensions_tests-test COMMAND osquery_extensions_tests-test)
 endfunction()
 
-osquery_extensions_main()
+osqueryExtensionsMain()

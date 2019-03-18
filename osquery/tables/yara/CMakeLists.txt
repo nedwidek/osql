@@ -14,19 +14,19 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_tables_yara_main)
+function(osqueryTablesYaraMain)
 
   if(BUILD_TESTING)
     add_subdirectory("tests")
   endif()
 
-  generateOsqueryTablesYara()
+  generateOsqueryTablesYaraYaratable()
 endfunction()
 
-function(generateOsqueryTablesYara)
+function(generateOsqueryTablesYaraYaratable)
 
   if(PLATFORM_WINDOWS OR PLATFORM_FREEBSD)
-    add_osquery_library(osquery_tables_yara INTERFACE)
+    add_osquery_library(osquery_tables_yara_yaratable INTERFACE)
     return()
   endif()
 
@@ -41,13 +41,13 @@ function(generateOsqueryTablesYara)
     )
   endif()
 
-  add_osquery_library(osquery_tables_yara EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_tables_yara_yaratable EXCLUDE_FROM_ALL
     ${source_files}
   )
 
-  enableLinkWholeArchive(osquery_tables_yara)
+  enableLinkWholeArchive(osquery_tables_yara_yaratable)
 
-  target_link_libraries(osquery_tables_yara PUBLIC
+  target_link_libraries(osquery_tables_yara_yaratable PUBLIC
     global_cxx_settings
     osquery_headers
     osquery_config
@@ -64,10 +64,10 @@ function(generateOsqueryTablesYara)
     yara_utils.h
   )
 
-  generateIncludeNamespace(osquery_tables_yara "osquery/tables/yara" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_tables_yara_yaratable "osquery/tables/yara" "FILE_ONLY" ${public_header_files})
 
   add_test(NAME osquery_tables_yara_tests-test COMMAND osquery_tables_yara_tests-test)
   
 endfunction()
 
-osquery_tables_yara_main()
+osqueryTablesYaraMain()

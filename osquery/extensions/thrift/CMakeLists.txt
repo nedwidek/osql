@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_extensions_thrift_main)
+function(osqueryExtensionsThriftMain)
   generateOsqueryExtensionsThriftOsquerycpp2()
 endfunction()
 
@@ -41,4 +41,4 @@ function(generateOsqueryExtensionsThriftOsquerycpp2)
   generateIncludeNamespace(osquery_extensions_thrift_osquery-cpp2 "" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_extensions_thrift_main()
+osqueryExtensionsThriftMain()

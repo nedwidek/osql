@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_utils_versioning_main)
+function(osqueryUtilsVersioningMain)
   generateOsqueryUtilsVersioningSemantic()
 endfunction()
 
@@ -34,4 +34,4 @@ function(generateOsqueryUtilsVersioningSemantic)
   generateIncludeNamespace(osquery_utils_versioning_semantic "osquery/utils/versioning" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_utils_versioning_main()
+osqueryUtilsVersioningMain()

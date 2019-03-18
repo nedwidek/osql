@@ -14,11 +14,11 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_utils_system_linux_perfevent_main)
-  generateOsqueryUtilsSystemLinuxPerfEvent()
+function(osqueryUtilsSystemLinuxPerfeventMain)
+  generateOsqueryUtilsSystemLinuxPerfevent()
 endfunction()
 
-function(generateOsqueryUtilsSystemLinuxPerfEvent)
+function(generateOsqueryUtilsSystemLinuxPerfevent)
 
   if (DEFINED PLATFORM_LINUX)
     set(source_files
@@ -46,4 +46,4 @@ function(generateOsqueryUtilsSystemLinuxPerfEvent)
   endif()
 endfunction()
 
-osquery_utils_system_linux_tracing_main()
+osqueryUtilsSystemLinuxPerfeventMain()

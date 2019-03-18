@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_utils_system_main)
+function(osqueryUtilsSystemMain)
   generateOsqueryUtilsSystemEnv()
   generateOsqueryUtilsSystemFilepath()
   generateOsqueryUtilsSystemErrno()
@@ -182,11 +182,11 @@ function(generateOsqueryUtilsSystem)
     return()
   endif()
 
-  add_osquery_library(osquery_utils_system EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_utils_system_systemutils EXCLUDE_FROM_ALL
     ${source_files}
   ) 
 
-  target_link_libraries(osquery_utils_system PUBLIC
+  target_link_libraries(osquery_utils_system_systemutils PUBLIC
     global_cxx_settings
     osquery_utils_info
     thirdparty_boost
@@ -204,7 +204,7 @@ function(generateOsqueryUtilsSystem)
     )
   endif()
 
-  generateIncludeNamespace(osquery_utils_system "osquery/utils/system" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_utils_system_systemutils "osquery/utils/system" "FILE_ONLY" ${public_header_files})
 endfunction()
 
 function(generateOsqueryUtilsSystemUptime)
@@ -214,7 +214,7 @@ function(generateOsqueryUtilsSystemUptime)
 
   target_link_libraries(osquery_utils_system_uptime PUBLIC
     global_cxx_settings
-    osquery_utils_system
+    osquery_utils_system_systemutils
   )
 
   set(public_header_files
@@ -224,4 +224,4 @@ function(generateOsqueryUtilsSystemUptime)
   generateIncludeNamespace(osquery_utils_system_uptime "osquery/utils/system" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_utils_system_main()
+osqueryUtilsSystemMain()

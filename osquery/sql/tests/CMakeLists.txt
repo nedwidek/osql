@@ -15,22 +15,22 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osquerySqlMain)
-  generateOsquerySqlTestsTestUtils()
+  generateOsquerySqlTestsSqltestutils()
   generateOsquerySqlTestsTest()
   generateOsquerySqlTestsVirtualtableTestsTest()
   generateOsquerySqlTestsSqliteutiltestsTest()
 endfunction()
 
-function(generateOsquerySqlTestsTestUtils)
-  add_osquery_library(osquery_sql_tests_testutils EXCLUDE_FROM_ALL sql_test_utils.cpp)
+function(generateOsquerySqlTestsSqltestutils)
+  add_osquery_library(osquery_sql_tests_sqltestutils EXCLUDE_FROM_ALL sql_test_utils.cpp)
 
   set(public_header_files
     sql_test_utils.h
   )
 
-  generateIncludeNamespace(osquery_sql_tests_testutils "osquery/sql/tests" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_sql_tests_sqltestutils "osquery/sql/tests" "FILE_ONLY" ${public_header_files})
 
-  target_link_libraries(osquery_sql_tests_testutils PUBLIC
+  target_link_libraries(osquery_sql_tests_sqltestutils PUBLIC
     global_cxx_settings
     osquery_database_plugins_ephemeral
     osquery_distributed
@@ -56,7 +56,7 @@ function(generateOsquerySqlTestsTest)
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_sql
-    osquery_sql_tests_testutils
+    osquery_sql_tests_sqltestutils
     plugins_config_tlsconfig
     specs_tables
     thirdparty_googletest
@@ -94,7 +94,7 @@ function(generateOsquerySqlTestsSqliteutiltestsTest)
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_sql
-    osquery_sql_tests_testutils
+    osquery_sql_tests_sqltestutils
     plugins_config_tlsconfig
     specs_tables
     thirdparty_googletest

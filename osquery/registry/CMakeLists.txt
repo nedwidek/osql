@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_registry_main)
+function(osqueryRegistryMain)
 
   if(BUILD_TESTING)
     add_subdirectory("tests")
@@ -42,4 +42,4 @@ function(generateOsqueryRegistry)
   add_test(NAME osquery_registry_tests-test COMMAND osquery_registry_tests-test)
 endfunction()
 
-osquery_registry_main()
+osqueryRegistryMain()

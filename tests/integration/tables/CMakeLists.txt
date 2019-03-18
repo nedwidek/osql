@@ -15,21 +15,21 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(testsIntegrationTablesMain)
-  generateTestsIntegrationTablesHelper()
+  generateTestsIntegrationTablesIntegrationtestshelper()
   generateTestsIntegrationTablesTestsTest()
 
 endfunction()
 
-function(generateTestsIntegrationTablesHelper)
-  add_osquery_library(tests_integration_tables_helper EXCLUDE_FROM_ALL helper.cpp)
+function(generateTestsIntegrationTablesIntegrationtestshelper)
+  add_osquery_library(tests_integration_tables_integrationtestshelper EXCLUDE_FROM_ALL helper.cpp)
 
   set(public_headers
     helper.h
   )
 
-  generateIncludeNamespace(tests_integration_tables_helper "osquery/tests/integration/tables" "FILE_ONLY" ${public_headers})
+  generateIncludeNamespace(tests_integration_tables_integrationtestshelper "osquery/tests/integration/tables" "FILE_ONLY" ${public_headers})
 
-  target_link_libraries(tests_integration_tables_helper PUBLIC
+  target_link_libraries(tests_integration_tables_integrationtestshelper PUBLIC
     global_cxx_settings
     osquery_database_plugins_ephemeral
     osquery_sql
@@ -316,7 +316,7 @@ function(generateTestsIntegrationTablesTestsTest)
     osquery_utils_info
     plugins_config_tlsconfig
     specs_tables
-    tests_integration_tables_helper
+    tests_integration_tables_integrationtestshelper
     thirdparty_googletest
   )
 

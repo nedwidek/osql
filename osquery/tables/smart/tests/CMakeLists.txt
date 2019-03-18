@@ -35,7 +35,7 @@ function(generateOsqueryTablesSmartTestsSmartdrivestestsTest)
     osquery_logger
     osquery_registry
     osquery_remote_enroll_tlsenroll
-    osquery_tables_events
+    osquery_tables_events_eventstable
     plugins_config_tlsconfig
     plugins_config_parsers
     specs_tables

@@ -38,7 +38,7 @@ function(generateTestsHelper)
     thirdparty_googletest_headers
     osquery_core
     osquery_filesystem
-    osquery_remote_serializers_json
+    osquery_remote_serializers_serializerjson
     osquery_utils_system_time
     specs_tables
     osquery_utils_conversions

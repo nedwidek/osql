@@ -14,17 +14,17 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_events_linux_probes_main)
+function(osqueryEventsLinuxProbesMain)
 
   if(BUILD_TESTING)
     add_subdirectory("tests")
   endif()
 
-  generateOsqueryEventsLinuxProbes()
+  generateOsqueryEventsLinuxProbesProbesevents()
 endfunction()
 
-function(generateOsqueryEventsLinuxProbes)
-  set(library_name "osquery_events_linux_probes_events")
+function(generateOsqueryEventsLinuxProbesProbesevents)
+  set(library_name "osquery_events_linux_probes_probesevents")
 
   if (DEFINED PLATFORM_LINUX)
     set(source_files
@@ -62,5 +62,5 @@ function(generateOsqueryEventsLinuxProbes)
   endif()
 endfunction()
 
-osquery_events_linux_probes_main()
+osqueryEventsLinuxProbesMain()
 

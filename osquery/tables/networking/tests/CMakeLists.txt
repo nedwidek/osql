@@ -35,9 +35,9 @@ function(generateOsqueryTablesNetworkingTestsNetworkingtablestestsTest)
     osquery_remote_httpclient
     osquery_utils
     osquery_utils_conversions
-    osquery_tables_system
+    osquery_tables_system_systemtable
     osquery_config_tests_testutils
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     osquery_database
     osquery_database_plugins_ephemeral
     thirdparty_boost
@@ -57,9 +57,9 @@ function(generateOsqueryTablesNetworkingTestsWifitestsTest)
     osquery_remote_httpclient
     osquery_utils
     osquery_utils_conversions
-    osquery_tables_system
+    osquery_tables_system_systemtable
     osquery_config_tests_testutils
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_core_sql
@@ -80,9 +80,9 @@ function(generateOsqueryTablesNetworkingTestsIptablestestsTest)
     osquery_remote_httpclient
     osquery_utils
     osquery_utils_conversions
-    osquery_tables_system
+    osquery_tables_system_systemtable
     osquery_config_tests_testutils
-    osquery_remote_tests_utils
+    osquery_remote_tests_remotetestsutils
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_core_sql

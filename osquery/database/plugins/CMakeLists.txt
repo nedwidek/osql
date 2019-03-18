@@ -14,15 +14,15 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_database_plugins_main)
+function(osqueryDatabasePluginsMain)
 
   if(BUILD_TESTING)
     add_subdirectory("tests")
   endif()
 
   generateOsqueryDatabasePluginsEphemeral()
-  generateOsqueryDatabasePluginsRocksdb()
-  generateOsqueryDatabasePluginsSqlite()
+  generateOsqueryDatabasePluginsRocksdbplugin()
+  generateOsqueryDatabasePluginsSqliteplugin()
 endfunction()
 
 function(generateOsqueryDatabasePluginsEphemeral)
@@ -47,14 +47,14 @@ function(generateOsqueryDatabasePluginsEphemeral)
   generateIncludeNamespace(osquery_database_plugins_ephemeral "osquery/database/plugins" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-function(generateOsqueryDatabasePluginsRocksdb)
-  add_osquery_library(osquery_database_plugins_rocksdb EXCLUDE_FROM_ALL
+function(generateOsqueryDatabasePluginsRocksdbplugin)
+  add_osquery_library(osquery_database_plugins_rocksdbplugin EXCLUDE_FROM_ALL
     rocksdb.cpp
   )
 
-  enableLinkWholeArchive(osquery_database_plugins_rocksdb)
+  enableLinkWholeArchive(osquery_database_plugins_rocksdbplugin)
 
-  target_link_libraries(osquery_database_plugins_rocksdb PUBLIC
+  target_link_libraries(osquery_database_plugins_rocksdbplugin PUBLIC
     global_cxx_settings
     osquery_core
     osquery_database
@@ -68,19 +68,19 @@ function(generateOsqueryDatabasePluginsRocksdb)
     rocksdb.h
   )
 
-  generateIncludeNamespace(osquery_database_plugins_rocksdb "osquery/database/plugins" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_database_plugins_rocksdbplugin "osquery/database/plugins" "FILE_ONLY" ${public_header_files})
 
   add_test(NAME osquery_database_plugins_tests_rocksdbtests-test COMMAND osquery_database_plugins_tests_rocksdbtests-test)
 endfunction()
 
-function(generateOsqueryDatabasePluginsSqlite)
-  add_osquery_library(osquery_database_plugins_sqlite EXCLUDE_FROM_ALL
+function(generateOsqueryDatabasePluginsSqliteplugin)
+  add_osquery_library(osquery_database_plugins_sqliteplugin EXCLUDE_FROM_ALL
     sqlite.cpp
   )
 
-  enableLinkWholeArchive(osquery_database_plugins_sqlite)
+  enableLinkWholeArchive(osquery_database_plugins_sqliteplugin)
 
-  target_link_libraries(osquery_database_plugins_sqlite PUBLIC
+  target_link_libraries(osquery_database_plugins_sqliteplugin PUBLIC
     global_cxx_settings
     osquery_core
     osquery_database
@@ -94,9 +94,9 @@ function(generateOsqueryDatabasePluginsSqlite)
     sqlite.h
   )
 
-  generateIncludeNamespace(osquery_database_plugins_sqlite "osquery/database/plugins" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_database_plugins_sqliteplugin "osquery/database/plugins" "FILE_ONLY" ${public_header_files})
 
   add_test(NAME osquery_database_plugins_tests_sqliteplugintests-test COMMAND osquery_database_plugins_tests_sqliteplugintests-test)
 endfunction()
 
-osquery_database_plugins_main()
+osqueryDatabasePluginsMain()

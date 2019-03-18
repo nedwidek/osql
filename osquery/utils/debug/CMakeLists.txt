@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osquery_utils_debug_main)
+function(osqueryUtilsDebugMain)
   generateOsqueryUtilsDebug()
 endfunction()
 
@@ -33,4 +33,4 @@ function(generateOsqueryUtilsDebug)
   generateIncludeNamespace(osquery_utils_debug "osquery/utils/debug" "FILE_ONLY" ${public_header_files})
 endfunction()
 
-osquery_utils_debug_main()
+osqueryUtilsDebugMain()
