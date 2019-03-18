@@ -15,11 +15,12 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryEV2Main)
-  generateOsqueryEV2()
 
   if(BUILD_TESTING)
     generateOsqueryEV2testsTest()
   endif()
+
+  generateOsqueryEV2()
 endfunction()
 
 function(generateOsqueryEV2)
