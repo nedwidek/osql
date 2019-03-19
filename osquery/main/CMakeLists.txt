@@ -55,7 +55,7 @@ function(generateOsqueryMain)
     osquery_logger_datalogger
     osquery_process
     osquery_numericmonitoring
-    osquery_numericmonitoring_plugins_numericmonitoringfilesystem
+    osquery_numericmonitoring_plugins_filesystem
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_sql

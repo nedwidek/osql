@@ -19,15 +19,16 @@ function(osqueryNumericmonitoringPluginsTestsMain)
 endfunction()
 
 function(osqueryNumericmonitoringPluginsTestsNumericmonitoringfilesstemtestsTest)
-  add_osquery_executable(osquery_numericmonitoring_plugins_tests_numericmonitoringfilesystemtests-test filesystem.cpp)
+  # Originally osquery_numericmonitoring_plugins_tests_numericmonitoringfilesystemtests-test, shortened due to MSBuild not supporting long paths
+  add_osquery_executable(osquery_numericmonitoring_plugins_tests_filesystem-test filesystem.cpp)
 
-  target_link_libraries(osquery_numericmonitoring_plugins_tests_numericmonitoringfilesystemtests-test PRIVATE
+  target_link_libraries(osquery_numericmonitoring_plugins_tests_filesystem-test PRIVATE
     global_cxx_settings
     osquery_database
     osquery_database_plugins_ephemeral
     osquery_extensions
     osquery_numericmonitoring
-    osquery_numericmonitoring_plugins_numericmonitoringfilesystem
+    osquery_numericmonitoring_plugins_filesystem
     osquery_remote_enroll_tlsenroll
     plugins_config_tlsconfig
     specs_tables

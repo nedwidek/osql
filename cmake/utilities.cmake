@@ -32,7 +32,7 @@ function(generateIncludeNamespace target_name namespace_path mode)
   set(index 1)
 
   while(true)
-    set(root_target_name "${target_name}_namespace_generator_${index}")
+    set(root_target_name "${target_name}_ns_gen_${index}")
     if(NOT TARGET "${root_target_name}")
       break()
     endif()
@@ -69,7 +69,7 @@ function(generateIncludeNamespace target_name namespace_path mode)
       VERBATIM
     )
 
-    string(REPLACE "/" "_" file_generator_name "${target_name}_namespaced_${relative_source_file_path}")
+    string(REPLACE "/" "_" file_generator_name "${target_name}_ns_${relative_source_file_path}")
     add_custom_target("${file_generator_name}" DEPENDS "${output_source_file_path}")
     add_dependencies("${root_target_name}" "${file_generator_name}")
   endforeach()
