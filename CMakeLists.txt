@@ -49,6 +49,7 @@ function(main)
   add_subdirectory("plugins/logger")
   add_subdirectory("tools")
   add_subdirectory("specs")
+  add_subdirectory("sdk")
 
   if(BUILD_TESTING)
     add_subdirectory("tests")

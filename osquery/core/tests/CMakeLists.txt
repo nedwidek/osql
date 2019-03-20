@@ -121,9 +121,9 @@ function(generateOsqueryCoreTestsWatcherpermissionstestsTest)
 endfunction()
 
 function(generateOsqueryCoreTestsQuerytestsTest)
-  add_osquery_executable(osquery_core_tests_querytests query_tests.cpp)
+  add_osquery_executable(osquery_core_tests_querytests-test query_tests.cpp)
 
-  target_link_libraries(osquery_core_tests_querytests PRIVATE
+  target_link_libraries(osquery_core_tests_querytests-test PRIVATE
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_core

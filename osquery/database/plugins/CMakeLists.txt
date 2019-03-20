@@ -71,6 +71,10 @@ function(generateOsqueryDatabasePluginsRocksdbplugin)
   generateIncludeNamespace(osquery_database_plugins_rocksdbplugin "osquery/database/plugins" "FILE_ONLY" ${public_header_files})
 
   add_test(NAME osquery_database_plugins_tests_rocksdbtests-test COMMAND osquery_database_plugins_tests_rocksdbtests-test)
+
+  set_tests_properties(osquery_database_plugins_tests_rocksdbtests-test PROPERTIES
+    DISABLED True
+  )
 endfunction()
 
 function(generateOsqueryDatabasePluginsSqliteplugin)

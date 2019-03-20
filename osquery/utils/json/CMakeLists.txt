@@ -15,6 +15,11 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryUtilsJsonMain)
+
+  if(BUILD_TESTING)
+    generateOsqueryUtilsJsonJsontestsTest()
+  endif()
+
   generateOsqueryUtilsJson()
 endfunction()
 
@@ -41,6 +46,19 @@ function(generateOsqueryUtilsJson)
   )
 
   generateIncludeNamespace(osquery_utils_json "osquery/utils/json" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_utils_json_jsontests-test COMMAND osquery_utils_json_jsontests-test)
+
+endfunction()
+
+function(generateOsqueryUtilsJsonJsontestsTest)
+  add_osquery_executable(osquery_utils_json_jsontests-test tests/json.cpp)
+
+  target_link_libraries(osquery_utils_json_jsontests-test PRIVATE
+    global_cxx_settings
+    osquery_utils_json
+    thirdparty_googletest
+  )
 endfunction()
 
 osqueryUtilsJsonMain()

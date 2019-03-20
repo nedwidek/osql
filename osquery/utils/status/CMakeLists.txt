@@ -15,6 +15,11 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryUtilsStatusMain)
+
+  if(BUILD_TESTING)
+    generateOsqueryUtilsStatusStatustestsTest()
+  endif()
+
   generateOsqueryUtilsStatus()
 endfunction()
 
@@ -34,6 +39,19 @@ function(generateOsqueryUtilsStatus)
   )
 
   generateIncludeNamespace(osquery_utils_status "osquery/utils/status" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_utils_status_statustests-test COMMAND osquery_utils_status_statustests-test)
+
+endfunction()
+
+function(generateOsqueryUtilsStatusStatustestsTest)
+  add_osquery_executable(osquery_utils_status_statustests-test tests/status.cpp)
+
+  target_link_libraries(osquery_utils_status_statustests-test PRIVATE
+    global_cxx_settings
+    osquery_utils_status
+    thirdparty_googletest
+  )
 endfunction()
 
 osqueryUtilsStatusMain()

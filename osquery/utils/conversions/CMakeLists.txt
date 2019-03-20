@@ -15,6 +15,11 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryUtilsConversionsMain)
+  if(BUILD_TESTING)
+    generateOsqueryUtilsConversionsConversionstestsTest()
+    generateOsqueryUtilsConversionsTotestsTest()
+  endif()
+
   generateOsqueryUtilsConversions()
   generateOsqueryUtilsConversionsTo()
 endfunction()
@@ -80,6 +85,9 @@ function(generateOsqueryUtilsConversions)
   if(${platform_public_header_files_size} GREATER 0)
     generateIncludeNamespace(osquery_utils_conversions "osquery/utils/conversions" "FULL_PATH" ${platform_public_header_files})
   endif()
+
+  add_test(NAME osquery_utils_conversions_conversionstests-test COMMAND osquery_utils_conversions_conversionstests-test)
+
 endfunction()
 
 function(generateOsqueryUtilsConversionsTo)
@@ -92,6 +100,36 @@ function(generateOsqueryUtilsConversionsTo)
   target_link_libraries(osquery_utils_conversions_to INTERFACE thirdparty_boost)
 
   generateIncludeNamespace(osquery_utils_conversions_to "osquery/utils/conversions" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_utils_conversions_totests-test COMMAND osquery_utils_conversions_totests-test)
+endfunction()
+
+function(generateOsqueryUtilsConversionsConversionstestsTest)
+
+  set(source_files
+    tests/join.cpp
+    tests/split.cpp
+    tests/tryto.cpp
+  )
+
+  add_osquery_executable(osquery_utils_conversions_conversionstests-test ${source_files})
+
+  target_link_libraries(osquery_utils_conversions_conversionstests-test PRIVATE
+    global_cxx_settings
+    osquery_utils_conversions
+    thirdparty_googletest
+  )
+endfunction()
+
+function(generateOsqueryUtilsConversionsTotestsTest)
+
+  add_osquery_executable(osquery_utils_conversions_totests-test tests/to.cpp)
+
+  target_link_libraries(osquery_utils_conversions_totests-test PRIVATE
+    global_cxx_settings
+    osquery_utils_conversions_to
+    thirdparty_googletest
+  )
 endfunction()
 
 osqueryUtilsConversionsMain()

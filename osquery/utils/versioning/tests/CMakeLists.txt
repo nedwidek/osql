@@ -14,33 +14,18 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osqueryUtilsSystemLinuxTracingTestsMain)
-  if(DEFINED PLATFORM_LINUX)
-    generateOsqueryUtilsSystemLinuxTracingTestsTest()
-  endif()
+function(osqueryUtilsVersioningTestsMain)
+	generateOsqueryUtilsVersioningTestsSemanticversiontestTest()
 endfunction()
 
-function(generateOsqueryUtilsSystemLinuxTracingTestsTest)
+function(generateOsqueryUtilsVersioningTestsSemanticversiontestTest)
+	add_osquery_executable(osquery_utils_versioning_semanticversiontest-test semantic.cpp)
 
-  set(source_files
-    empty.cpp
-  )
-
-  if(DEFINED PLATFORM_LINUX)
-    set(platform_source_files
-      native_event.cpp
-    )
-
-    list(APPEND source_files ${platform_source_files})
-  endif()
-
-  add_osquery_executable(osquery_utils_system_linux_tracing_tests-test ${source_files})
-
-  target_link_libraries(osquery_utils_system_linux_tracing_tests-test PRIVATE
+	target_link_libraries(osquery_utils_versioning_semanticversiontest-test PRIVATE
     global_cxx_settings
-    osquery_utils_system_linux_tracing
+    osquery_utils_versioning_semantic
     thirdparty_googletest
   )
 endfunction()
 
-osqueryUtilsSystemLinuxTracingTestsMain()
+osqueryUtilsVersioningTestsMain()

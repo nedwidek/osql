@@ -27,7 +27,7 @@ function(generateOsqueryUtilsSystemLinuxTracing)
 
   if (DEFINED PLATFORM_LINUX)
     set(source_files
-      native_events.cpp
+      native_event.cpp
     )
 
     add_osquery_library(osquery_utils_system_linux_tracing EXCLUDE_FROM_ALL
@@ -44,7 +44,7 @@ function(generateOsqueryUtilsSystemLinuxTracing)
     )
 
     set(public_header_files
-      native_events.h
+      native_event.h
       types.h
     )
 

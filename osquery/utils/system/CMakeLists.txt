@@ -15,6 +15,17 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryUtilsSystemMain)
+
+  add_subdirectory("linux/ebpf")
+  add_subdirectory("linux/perf_event")
+  add_subdirectory("linux/tracing")
+
+  if(BUILD_TESTING)
+    generateOsqueryUtilsSystemErrnoErrnotestsTest()
+    generateOsqueryUtilsSystemCpuCputestsTest()
+    generateOsqueryUtilsSystemTimeTimetestsTest()
+  endif()
+
   generateOsqueryUtilsSystemEnv()
   generateOsqueryUtilsSystemFilepath()
   generateOsqueryUtilsSystemErrno()
@@ -107,29 +118,36 @@ function(generateOsqueryUtilsSystemErrno)
   endif()
 
   generateIncludeNamespace(osquery_utils_system_errno "osquery/utils/system" "FULL_PATH" ${public_header_files})
+
+  add_test(NAME osquery_utils_system_errno_errnotests-test COMMAND osquery_utils_system_errno_errnotests-test)
+
 endfunction()
 
 function(generateOsqueryUtilsSystemCpu)
-  if(NOT DEFINED PLATFORM_LINUX)
-    return()
+  if(DEFINED PLATFORM_LINUX)
+    add_osquery_library(osquery_utils_system_cpu EXCLUDE_FROM_ALL
+      linux/cpu.cpp
+    )
+
+    target_link_libraries(osquery_utils_system_cpu PUBLIC
+      global_cxx_settings
+      osquery_utils_conversions
+      osquery_utils_expected
+      thirdparty_boost
+    )
+
+    set(public_header_files
+      linux/cpu.h
+    )
+
+    generateIncludeNamespace(osquery_utils_system_cpu "osquery/utils/system" "FULL_PATH" ${public_header_files})
+
+    add_test(NAME osquery_utils_system_cpu_cputests-test COMMAND osquery_utils_system_cpu_cputests-test)
+
+  else()
+    add_osquery_library(osquery_utils_system_cpu INTERFACE)
   endif()
 
-  add_osquery_library(osquery_utils_system_cpu EXCLUDE_FROM_ALL
-    linux/cpu.cpp
-  ) 
-
-  target_link_libraries(osquery_utils_system_cpu PUBLIC
-    global_cxx_settings
-    osquery_utils_conversions
-    osquery_utils_expected
-    thirdparty_boost
-  )
-
-  set(public_header_files
-    linux/cpu.h
-  )
-
-  generateIncludeNamespace(osquery_utils_system_cpu "osquery/utils/system" "FULL_PATH" ${public_header_files})
 endfunction()
 
 function(generateOsqueryUtilsSystemTime)
@@ -165,6 +183,9 @@ function(generateOsqueryUtilsSystemTime)
   )
 
   generateIncludeNamespace(osquery_utils_system_time "osquery/utils/system" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_utils_system_time_timetest-test COMMAND osquery_utils_system_time_timetest-test)
+
 endfunction()
 
 function(generateOsqueryUtilsSystem)
@@ -222,6 +243,54 @@ function(generateOsqueryUtilsSystemUptime)
   )
 
   generateIncludeNamespace(osquery_utils_system_uptime "osquery/utils/system" "FILE_ONLY" ${public_header_files})
+endfunction()
+
+function(generateOsqueryUtilsSystemErrnoErrnotestsTest)
+
+  set(source_files
+    tests/errno.cpp
+  )
+
+  if(DEFINED PLATFORM_POSIX)
+    list(APPEND source_files posix/tests/errno.cpp)
+  endif()
+
+  add_osquery_executable(osquery_utils_system_errno_errnotests-test ${source_files})
+
+  target_link_libraries(osquery_utils_system_errno_errnotests-test PRIVATE
+    global_cxx_settings
+    osquery_utils_system_errno
+    thirdparty_googletest
+  )
+endfunction()
+
+function(generateOsqueryUtilsSystemCpuCputestsTest)
+
+  set(source_files
+    tests/cpu.cpp
+  )
+
+  if(DEFINED PLATFORM_LINUX)
+    list(APPEND source_files linux/tests/cpu.cpp)
+  endif()
+
+  add_osquery_executable(osquery_utils_system_cpu_cputests-test ${source_files})
+
+  target_link_libraries(osquery_utils_system_cpu_cputests-test PRIVATE
+    global_cxx_settings
+    osquery_utils_system_cpu
+    thirdparty_googletest
+  )
+endfunction()
+
+function(generateOsqueryUtilsSystemTimeTimetestsTest)
+  add_osquery_executable(osquery_utils_system_time_timetest-test tests/time.cpp)
+
+  target_link_libraries(osquery_utils_system_time_timetest-test PRIVATE
+    global_cxx_settings
+    osquery_utils_system_time
+    thirdparty_googletest
+  )
 endfunction()
 
 osqueryUtilsSystemMain()

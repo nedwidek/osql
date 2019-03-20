@@ -34,7 +34,7 @@ function(generateOsqueryEV2)
 
   target_link_libraries(osquery_ev2 PUBLIC
     global_cxx_settings
-    osquery_expected
+    osquery_utils_expected
   )
 
   set(public_header_files
@@ -61,13 +61,14 @@ function(generateOsqueryEV2testsTest)
   target_link_libraries(osquery_ev2_ev2tests-test PRIVATE
     global_cxx_settings
     osquery_ev2
+    thirdparty_googletest
   )
 
   set(public_header_files
     tests/utils.h
   )
 
-  generateIncludeNamespace(osquery_ev2_ev2tests-test "osquery/ev2" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_ev2_ev2tests-test "osquery/ev2" "FULL_PATH" ${public_header_files})
 
   add_test(NAME osquery_ev2_ev2tests-test COMMAND osquery_ev2_ev2tests-test)
 endfunction()

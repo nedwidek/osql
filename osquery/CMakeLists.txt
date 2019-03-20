@@ -37,6 +37,7 @@ function(osqueryMain)
   add_subdirectory("devtools")
   add_subdirectory("extensions")
   add_subdirectory("events")
+  add_subdirectory("ev2")
 
   generateOsqueryHeaders()
   generateOsqueryd()

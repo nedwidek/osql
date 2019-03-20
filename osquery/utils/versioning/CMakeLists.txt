@@ -15,11 +15,16 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryUtilsVersioningMain)
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
+  endif()
+
   generateOsqueryUtilsVersioningSemantic()
 endfunction()
 
 function(generateOsqueryUtilsVersioningSemantic)
-  add_osquery_library(osquery_utils_versioning_semantic semantic.cpp EXCLUDE_FROM_ALL)
+  add_osquery_library(osquery_utils_versioning_semantic EXCLUDE_FROM_ALL semantic.cpp)
 
   target_link_libraries(osquery_utils_versioning_semantic PUBLIC
     global_cxx_settings
@@ -32,6 +37,8 @@ function(generateOsqueryUtilsVersioningSemantic)
   )
 
   generateIncludeNamespace(osquery_utils_versioning_semantic "osquery/utils/versioning" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_utils_versioning_semanticversiontest-test COMMAND osquery_utils_versioning_semanticversiontest-test)
 endfunction()
 
 osqueryUtilsVersioningMain()

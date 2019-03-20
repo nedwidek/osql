@@ -26,6 +26,11 @@ function(osqueryUtilsMain)
   add_subdirectory("debug")
   add_subdirectory("expected")
   add_subdirectory("conversions")
+  add_subdirectory("versioning")
+
+  if(BUILD_TESTING)
+    generateOsqueryUtilsUtilstestsTest()
+  endif()
 
   generateOsqueryUtils()
 endfunction()
@@ -88,6 +93,26 @@ function(generateOsqueryUtils)
 
   generateIncludeNamespace(osquery_utils_attribute "osquery/utils" "FILE_ONLY" ${attribute_public_header_files})
 
+  add_test(NAME osquery_utils_utilstests-test COMMAND osquery_utils_utilstests-test)
+
+endfunction()
+
+function(generateOsqueryUtilsUtilstestsTest)
+
+  set(source_files
+    tests/base64.cpp
+    tests/chars.cpp
+    tests/map_take.cpp
+    tests/scope_guard.cpp
+  )
+
+  add_osquery_executable(osquery_utils_utilstests-test ${source_files})
+
+  target_link_libraries(osquery_utils_utilstests-test PRIVATE
+    global_cxx_settings
+    osquery_utils
+    thirdparty_googletest
+  )
 endfunction()
 
 osqueryUtilsMain()

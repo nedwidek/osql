@@ -104,6 +104,7 @@ function(generateOsqueryCore)
   add_test(NAME osquery_core_tests_systemtests-test COMMAND osquery_core_tests_systemtests-test)
   add_test(NAME osquery_core_tests_tablestests-test COMMAND osquery_core_tests_tablestests-test)
   add_test(NAME osquery_core_tests_watcherpermissionstests-test COMMAND osquery_core_tests_watcherpermissionstests-test)
+  add_test(NAME osquery_core_tests_querytests-test COMMAND osquery_core_tests_querytests-test)
 
 endfunction()
 

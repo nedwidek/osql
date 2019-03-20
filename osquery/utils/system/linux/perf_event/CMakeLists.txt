@@ -25,9 +25,7 @@ function(generateOsqueryUtilsSystemLinuxPerfevent)
       perf_event.cpp
     )
 
-    add_osquery_library(osquery_utils_system_linux_perfevent EXCLUDE_FROM_ALL
-      ${source_files}
-    )
+    add_osquery_library(osquery_utils_system_linux_perfevent EXCLUDE_FROM_ALL ${source_files})
 
     target_link_libraries(osquery_utils_system_linux_perfevent PUBLIC
       global_cxx_settings

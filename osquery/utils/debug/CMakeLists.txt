@@ -15,6 +15,11 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryUtilsDebugMain)
+
+  if(BUILD_TESTING)
+    generateOsqueryUtilsDebugDebugtestsTest()
+  endif()
+
   generateOsqueryUtilsDebug()
 endfunction()
 
@@ -31,6 +36,19 @@ function(generateOsqueryUtilsDebug)
   )
 
   generateIncludeNamespace(osquery_utils_debug "osquery/utils/debug" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_utils_debug_debugtests-test COMMAND osquery_utils_debug_debugtests-test)
+
+endfunction()
+
+function(generateOsqueryUtilsDebugDebugtestsTest)
+  add_osquery_executable(osquery_utils_debug_debugtests-test tests/debug_only.cpp)
+
+  target_link_libraries(osquery_utils_debug_debugtests-test PRIVATE
+    global_cxx_settings
+    osquery_utils_debug
+    thirdparty_googletest
+  )
 endfunction()
 
 osqueryUtilsDebugMain()

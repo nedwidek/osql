@@ -15,7 +15,10 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryEventsLinuxProbesTestsMain)
-  generateOsqueryEventsLinuxProbesTestsEbpftracepointtestsTest()
+
+  if(DEFINED PLATFORM_LINUX)
+    generateOsqueryEventsLinuxProbesTestsEbpftracepointtestsTest()
+  endif()
 endfunction()
 
 function(generateOsqueryEventsLinuxProbesTestsEbpftracepointtestsTest)
@@ -31,7 +34,9 @@ function(generateOsqueryEventsLinuxProbesTestsEbpftracepointtestsTest)
   add_osquery_executable(osquery_events_linux_probes_tests_ebpftracepointtests-test ${source_files})
 
   target_link_libraries(osquery_events_linux_probes_tests_ebpftracepointtests-test PRIVATE
+    global_cxx_settings
     osquery_events_linux_probes_probesevents
+    thirdparty_googletest
   )
 endfunction()
 

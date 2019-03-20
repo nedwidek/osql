@@ -15,6 +15,10 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryUtilsExpectedMain)
+  if(BUILD_TESTING)
+    generateOsqueryUtilsExpectedExpectedtestsTest()
+  endif()
+
   generateOsqueryUtilsExpected()
 endfunction()
 
@@ -33,6 +37,19 @@ function(generateOsqueryUtilsExpected)
   )
 
   generateIncludeNamespace(osquery_utils_expected "osquery/utils/expected" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_utils_expected_expectedtests-test COMMAND osquery_utils_expected_expectedtests-test)
+
+endfunction()
+
+function(generateOsqueryUtilsExpectedExpectedtestsTest)
+  add_osquery_executable(osquery_utils_expected_expectedtests-test tests/expected.cpp)
+
+  target_link_libraries(osquery_utils_expected_expectedtests-test PRIVATE
+    global_cxx_settings
+    osquery_utils_expected
+    thirdparty_googletest
+  )
 endfunction()
 
 osqueryUtilsExpectedMain()

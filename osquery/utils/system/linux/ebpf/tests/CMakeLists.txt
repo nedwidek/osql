@@ -14,12 +14,10 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-if(NOT DEFINED PLATFORM_WINDOWS)
-  cmake_policy(SET CMP0083 NEW)
-endif()
-
 function(osqueryUtilsSystemLinuxEbpfTestsMain)
+  if(DEFINED PLATFORM_LINUX)
     generateOsqueryUtilsSystemLinuxEbpfTestsTest()
+  endif()
 endfunction()
 
 function(generateOsqueryUtilsSystemLinuxEbpfTestsTest)

@@ -15,6 +15,11 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryUtilsErrorMain)
+
+  if(BUILD_TESTING)
+    generateOsqueryUtilsErrorErrortestsTest()
+  endif()
+
   generateOsqueryUtilsError()
 endfunction()
 
@@ -32,6 +37,19 @@ function(generateOsqueryUtilsError)
   )
 
   generateIncludeNamespace(osquery_utils_error "osquery/utils/error" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_utils_error_errortests-test COMMAND osquery_utils_error_errortests-test)
+
+endfunction()
+
+function(generateOsqueryUtilsErrorErrortestsTest)
+  add_osquery_executable(osquery_utils_error_errortests-test tests/error.cpp)
+
+  target_link_libraries(osquery_utils_error_errortests-test PRIVATE
+    global_cxx_settings
+    osquery_utils_error
+    thirdparty_googletest
+  )
 endfunction()
 
 osqueryUtilsErrorMain()
