@@ -79,10 +79,9 @@ jobs:
 
     - script: |
         cd $(Build.BinariesDirectory)/build
-        ctest --build-nocmake
+        ctest --build-nocmake -V
       displayName: "Run tests"
       env:
-        CTEST_OUTPUT_ON_FAILURE: 1
         GTEST_COLOR: 1
 # LINUX
 
@@ -164,10 +163,9 @@ jobs:
 
     - script: |
         cd $(Build.BinariesDirectory)/build
-        ctest --build-nocmake
+        ctest --build-nocmake -V
       displayName: "Run tests"
       env:
-        CTEST_OUTPUT_ON_FAILURE: 1
         GTEST_COLOR: 1
 # MACOS
 
@@ -234,9 +232,8 @@ jobs:
 
     - powershell: |
         cd $(Build.BinariesDirectory)/build
-        ctest --build-nocmake -C Release
+        ctest --build-nocmake -C Release -V
       displayName: "Run tests"
       env:
-        CTEST_OUTPUT_ON_FAILURE: 1
         GTEST_COLOR: 1
 # WINDOWS
