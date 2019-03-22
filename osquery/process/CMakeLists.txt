@@ -41,6 +41,7 @@ function(generateOsqueryProcess)
     osquery_headers
     osquery_utils_system_env
     thirdparty_boost
+    thirdparty_glibc_dl
   )
 
   set(public_header_files

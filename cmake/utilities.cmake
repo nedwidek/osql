@@ -114,6 +114,8 @@ function(generateGlobalSettingsTargets)
       /SUBSYSTEM:CONSOLE
       /LTCG
       ntdll.lib
+      ole32.lib
+      oleaut32.lib
       ws2_32.lib
       iphlpapi.lib
       netapi32.lib
@@ -156,14 +158,6 @@ function(generateGlobalSettingsTargets)
   if(DEFINED PLATFORM_LINUX)
     target_link_options(global_settings INTERFACE --no-undefined)
   endif()
-
-  # Settings only for osquery binaries, not third party
-  add_library(osquery_settings INTERFACE)
-  target_compile_definitions(osquery_settings INTERFACE
-    OSQUERY_VERSION=${OSQUERY_VERSION}
-    OSQUERY_BUILD_VERSION=${OSQUERY_BUILD_VERSION}
-    OSQUERY_BUILD_SDK_VERSION=${OSQUERY_BUILD_SDK_VERSION}
-  )
 
   if(DEFINED PLATFORM_LINUX)
     target_compile_definitions(global_settings INTERFACE
@@ -332,16 +326,10 @@ function(generateGlobalSettingsTargets)
   endif()
 
   add_library(global_c_settings INTERFACE)
-  target_link_libraries(global_c_settings INTERFACE c_settings global_settings osquery_settings)
+  target_link_libraries(global_c_settings INTERFACE c_settings global_settings)
 
   add_library(global_cxx_settings INTERFACE)
-  target_link_libraries(global_cxx_settings INTERFACE cxx_settings global_settings osquery_settings)
-
-  add_library(thirdparty_global_c_settings INTERFACE)
-  target_link_libraries(thirdparty_global_c_settings INTERFACE c_settings global_settings)
-
-  add_library(thirdparty_global_cxx_settings INTERFACE)
-  target_link_libraries(thirdparty_global_cxx_settings INTERFACE cxx_settings global_settings)
+  target_link_libraries(global_cxx_settings INTERFACE cxx_settings global_settings)
 
 endfunction()
 
@@ -459,6 +447,10 @@ function(add_osquery_executable)
   endforeach()
 
   add_executable(${osquery_exe_name} ${osquery_exe_args})
+
+  if("${osquery_exe_name}" MATCHES "-test$")
+    target_link_options("${osquery_exe_name}" PRIVATE -Wno-sign-compare)
+  endif()
 endfunction()
 
 function(add_osquery_library)

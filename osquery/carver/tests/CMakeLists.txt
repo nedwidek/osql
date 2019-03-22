@@ -26,14 +26,15 @@ function(generateOsqueryCarverTestsTest)
     osquery_config_tests_testutils
     osquery_carver
     osquery_database
-    osquery_database_plugins_ephemeral
     osquery_events
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_hashing
     osquery_remote_enroll_tlsenroll
     osquery_utils_conversions
     osquery_utils_info
     plugins_config_tlsconfig
+    plugins_database_ephemeral
     specs_tables
     thirdparty_googletest
   )

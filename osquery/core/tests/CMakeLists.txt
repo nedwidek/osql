@@ -34,6 +34,7 @@ function(generateOsqueryCoreTestsFlagstestsTest)
     osquery_distributed
     osquery_events
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_registry
     osquery_remote_enroll_tlsenroll
     tests_helper
@@ -56,6 +57,7 @@ function(generateOsqueryCoreTestsSystemtestsTest)
     osquery_distributed
     osquery_events
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_registry
     osquery_remote_enroll_tlsenroll
     tests_helper
@@ -78,6 +80,7 @@ function(generateOsqueryCoreTestsTablestestsTest)
     osquery_distributed
     osquery_events
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_registry
     osquery_remote_enroll_tlsenroll
     tests_helper
@@ -109,6 +112,7 @@ function(generateOsqueryCoreTestsWatcherpermissionstestsTest)
     osquery_distributed
     osquery_events
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_process
     osquery_registry
     osquery_remote_enroll_tlsenroll
@@ -132,6 +136,7 @@ function(generateOsqueryCoreTestsQuerytestsTest)
     osquery_distributed
     osquery_events
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_sql_tests_sqltestutils

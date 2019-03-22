@@ -26,7 +26,6 @@ function(generateOsqueryConfig)
   add_osquery_library(osquery_config EXCLUDE_FROM_ALL
     config.cpp
     packs.cpp
-    update.cpp
   )
 
   enableLinkWholeArchive(osquery_config)

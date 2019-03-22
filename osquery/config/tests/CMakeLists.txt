@@ -43,16 +43,17 @@ function(generateOsqueryConfigTestsTest)
   target_link_libraries(osquery_config_tests-test PRIVATE
     global_cxx_settings
     osquery_config
-    osquery_database_plugins_ephemeral
     osquery_dispatcher
     osquery_events
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_filesystem_mockfilestructure
     osquery_killswitch
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_utils_system_time
     plugins_config_tlsconfig
+    plugins_database_ephemeral
     specs_tables
     osquery_config_tests_testutils
     osquery_tools_tests_conffiles
@@ -67,16 +68,17 @@ function(generateOsqueryConfigTestsPacksTest)
   target_link_libraries(osquery_config_tests_packs-test PRIVATE
     global_cxx_settings
     osquery_config
-    osquery_database_plugins_ephemeral
     osquery_dispatcher
     osquery_events
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_filesystem_mockfilestructure
     osquery_killswitch
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_utils_system_time
     plugins_config_tlsconfig
+    plugins_database_ephemeral
     specs_tables
     osquery_config_tests_testutils
     osquery_tools_tests_conffiles

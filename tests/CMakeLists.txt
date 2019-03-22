@@ -31,18 +31,18 @@ function(generateTestsHelper)
 
   target_link_libraries(tests_helper PUBLIC
     global_cxx_settings
-    osquery_database_plugins_ephemeral
-    osquery_sql
-    osquery_utils
-    thirdparty_boost
-    thirdparty_googletest_headers
     osquery_core
     osquery_filesystem
-    osquery_remote_serializers_serializerjson
-    osquery_utils_system_time
-    specs_tables
-    osquery_utils_conversions
     osquery_process
+    osquery_remote_serializers_serializerjson
+    osquery_sql
+    osquery_utils
+    osquery_utils_conversions
+    osquery_utils_system_time
+    plugins_database_ephemeral
+    specs_tables
+    thirdparty_boost
+    thirdparty_googletest_headers
   )
 endfunction()
 

@@ -31,9 +31,9 @@ function(generateTestsIntegrationTablesIntegrationtestshelper)
 
   target_link_libraries(tests_integration_tables_integrationtestshelper PUBLIC
     global_cxx_settings
-    osquery_database_plugins_ephemeral
     osquery_sql
     osquery_utils
+    plugins_database_ephemeral
     thirdparty_boost
     thirdparty_googletest_headers
   )
@@ -308,13 +308,14 @@ function(generateTestsIntegrationTablesTestsTest)
   target_link_libraries(tests_integration_tables-test PRIVATE
     global_cxx_settings
     osquery_database
-    osquery_database_plugins_ephemeral
     osquery_events
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_remote_enroll_tlsenroll
     osquery_utils_conversions
     osquery_utils_info
     plugins_config_tlsconfig
+    plugins_database_ephemeral
     specs_tables
     tests_integration_tables_integrationtestshelper
     thirdparty_googletest

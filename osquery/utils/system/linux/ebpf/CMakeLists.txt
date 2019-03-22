@@ -38,7 +38,7 @@ function(generateOsqueryUtilsSystemLinuxEbpf)
       global_cxx_settings
       osquery_utils_conversions
       osquery_utils_system_linux_perfevent
-      osquery_utils_system_cpu
+      osquery_utils_system_cputopology
       osquery_utils_expected
       osquery_utils_versioning_semantic
       osquery_utils_system_errno

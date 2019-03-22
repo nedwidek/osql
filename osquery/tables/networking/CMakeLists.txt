@@ -90,17 +90,12 @@ function(generateOsqueryTablesNetworking)
     osquery_utils_conversions
     osquery_tables_system_systemtable
     thirdparty_boost
+    thirdparty_glibc_resolv
   )
 
   if(DEFINED PLATFORM_LINUX)
     list(APPEND platform_deps
       thirdparty_libiptables
-      thirdparty_libresolv
-    )
-
-  elseif(DEFINED PLATFORM_MACOS)
-    list(APPEND platform_deps
-      thirdparty_libresolv
     )
   endif()
 

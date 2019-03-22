@@ -30,14 +30,15 @@ function(generateOsqueryTablesSmartTestsSmartdrivestestsTest)
     osquery_config
     osquery_config_tests_testutils
     osquery_database
-    osquery_database_plugins_ephemeral
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_logger
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_tables_events_eventstable
     plugins_config_tlsconfig
     plugins_config_parsers
+    plugins_database_ephemeral
     specs_tables
     thirdparty_smartmontools
     thirdparty_googletest

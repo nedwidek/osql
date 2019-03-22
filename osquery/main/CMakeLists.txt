@@ -45,23 +45,26 @@ function(generateOsqueryMain)
     osquery_core_plugins
     osquery_core_sql
     osquery_database
-    osquery_database_plugins_ephemeral
-    osquery_database_plugins_rocksdbplugin
-    osquery_database_plugins_sqliteplugin
     osquery_devtools
     osquery_dispatcher
+    osquery_experimental_eventsstream_eventsstreamregistry
+    osquery_experimental_tracing_syscallstracing
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_killswitch
     osquery_logger_datalogger
     osquery_process
     osquery_numericmonitoring
-    osquery_numericmonitoring_plugins_filesystem
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_sql
     plugins_config_filesystemconfig
     plugins_config_tlsconfig
     plugins_config_parsers
+    plugins_config_updateconfigplugin
+    plugins_database_ephemeral
+    plugins_database_rocksdbplugin
+    plugins_database_sqliteplugin
     plugins_distributed_tls_distributedtls
     plugins_logger_buffered
     plugins_logger_filesystemlogger
@@ -70,6 +73,8 @@ function(generateOsqueryMain)
     plugins_logger_tlslogger
     plugins_killswitch_killswitchfilesystem
     plugins_killswitch_killswitchtls
+    plugins_numericmonitoring_filesystem
+    plugins_remote_enroll_tlsenrollplugin
     specs_tables
     thirdparty_boost
   )

@@ -25,14 +25,14 @@ function(generateOsqueryKillswitchTestsTest)
     global_cxx_settings
     osquery_config_tests_testutils
     osquery_database
-    osquery_database_plugins_ephemeral
     osquery_events
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_remote_enroll_tlsenroll
     osquery_utils_conversions
     osquery_utils_info
     plugins_config_tlsconfig
-    plugins_killswitch_killswitchfilesystem
+    plugins_database_ephemeral
     tests_helper
     osquery_tools_tests_conffiles
     thirdparty_googletest

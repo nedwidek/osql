@@ -24,16 +24,17 @@ function(generateOsqueryDatabaseTestsTest)
 
   target_link_libraries(osquery_database_tests-test PRIVATE
     global_cxx_settings
-    osquery_database_plugins_ephemeral
     osquery_core
     osquery_database
     osquery_dispatcher
     osquery_events
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_utils_json
     plugins_config_tlsconfig
+    plugins_database_ephemeral
     specs_tables
     thirdparty_googletest
   )
@@ -44,18 +45,19 @@ function(generateOsqueryDatabaseTestsResultsTest)
 
   target_link_libraries(osquery_database_tests_results-test PRIVATE
     global_cxx_settings
-    osquery_database_plugins_ephemeral
     osquery_core_sql
     osquery_core
     osquery_database
     osquery_dispatcher
     osquery_events
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_utils_json
     osquery_sql_tests_sqltestutils
     plugins_config_tlsconfig
+    plugins_database_ephemeral
     specs_tables
     thirdparty_googletest
   )

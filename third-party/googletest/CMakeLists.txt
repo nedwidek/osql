@@ -63,10 +63,10 @@ function(googletestMain)
   target_include_directories(thirdparty_googletest PRIVATE "${extract_folder}/googlemock")
 
   target_link_libraries(thirdparty_googletest PUBLIC
-    thirdparty_global_cxx_settings
+    global_cxx_settings
     thirdparty_googletest_headers
     thirdparty_googlemock_headers
-    thirdparty_pthread
+    thirdparty_glibc_pthread
   )
 
   if (DEFINED PLATFORM_WINDOWS)

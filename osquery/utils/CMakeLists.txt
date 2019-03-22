@@ -16,6 +16,7 @@ cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryUtilsMain)
   add_subdirectory("aws")
+  add_subdirectory("caches")
   add_subdirectory("system")
   add_subdirectory("status")
   add_subdirectory("json")

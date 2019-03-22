@@ -34,6 +34,7 @@ function(rocksdbMain)
   importThirdPartyBinaryLibrary("${name}" "${version}" "${hash}" "${anchor_file}")
 
   target_link_libraries("thirdparty_${name}" INTERFACE thirdparty_bzip2)
+  target_compile_definitions("thirdparty_${name}" INTERFACE -DROCKSDB_LITE=1)
 
 endfunction()
 

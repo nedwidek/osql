@@ -37,9 +37,9 @@ function(generatePluginsLoggerTestsFilesystemloggertestsTest)
     global_cxx_settings
     osquery_core
     osquery_core_plugins
-    osquery_database_plugins_ephemeral
     osquery_distributed
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_logger_datalogger
     osquery_registry
     osquery_remote_enroll_tlsenroll
@@ -47,6 +47,7 @@ function(generatePluginsLoggerTestsFilesystemloggertestsTest)
     osquery_utils_info
     osquery_utils_system_time
     plugins_config_tlsconfig
+    plugins_database_ephemeral
     plugins_logger_filesystemlogger
     specs_tables
     thirdparty_googletest
@@ -60,9 +61,9 @@ function(generatePluginsLoggerTestsBufferedloggertestsTest)
     global_cxx_settings
     osquery_core
     osquery_core_plugins
-    osquery_database_plugins_ephemeral
     osquery_distributed
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_logger_datalogger
     osquery_registry
     osquery_remote_enroll_tlsenroll
@@ -70,6 +71,7 @@ function(generatePluginsLoggerTestsBufferedloggertestsTest)
     osquery_utils_info
     osquery_utils_system_time
     plugins_config_tlsconfig
+    plugins_database_ephemeral
     plugins_logger_buffered
     specs_tables
     thirdparty_googletest
@@ -83,9 +85,9 @@ function(generatePluginsLoggerTestsKafkaproducerloggertestsTest)
     global_cxx_settings
     osquery_core
     osquery_core_plugins
-    osquery_database_plugins_ephemeral
     osquery_distributed
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_logger_datalogger
     osquery_registry
     osquery_remote_enroll_tlsenroll
@@ -93,6 +95,7 @@ function(generatePluginsLoggerTestsKafkaproducerloggertestsTest)
     osquery_utils_info
     osquery_utils_system_time
     plugins_config_tlsconfig
+    plugins_database_ephemeral
     plugins_logger_kafkaproducer
     specs_tables
     thirdparty_googletest
@@ -107,9 +110,9 @@ function(generatePluginsLoggerTestsAwskinesisloggertestsTest)
     global_cxx_settings
     osquery_core
     osquery_core_plugins
-    osquery_database_plugins_ephemeral
     osquery_distributed
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_logger_datalogger
     osquery_registry
     osquery_remote_enroll_tlsenroll
@@ -117,6 +120,7 @@ function(generatePluginsLoggerTestsAwskinesisloggertestsTest)
     osquery_utils_info
     osquery_utils_system_time
     plugins_config_tlsconfig
+    plugins_database_ephemeral
     plugins_logger_awskinesis
     plugins_logger_buffered
     specs_tables
@@ -132,17 +136,18 @@ function(generatePluginsLoggerTestsTlsloggertestsTest)
     global_cxx_settings
     osquery_core
     osquery_core_plugins
-    osquery_database_plugins_ephemeral
     osquery_distributed
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_logger_datalogger
     osquery_registry
     osquery_remote_enroll_tlsenroll
-    osquery_remote_tests_remotetestsutils
+    osquery_remote_tests_remotetestutils
     osquery_utils_conversions
     osquery_utils_info
     osquery_utils_system_time
     plugins_config_tlsconfig
+    plugins_database_ephemeral
     plugins_logger_tlslogger
     specs_tables
     thirdparty_googletest
@@ -158,9 +163,9 @@ function(generatePluginsLoggerTestsSyslogloggertestsTest)
     global_cxx_settings
     osquery_core
     osquery_core_plugins
-    osquery_database_plugins_ephemeral
     osquery_distributed
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_logger_datalogger
     osquery_registry
     osquery_remote_enroll_tlsenroll
@@ -168,11 +173,12 @@ function(generatePluginsLoggerTestsSyslogloggertestsTest)
     osquery_utils_info
     osquery_utils_system_time
     plugins_config_tlsconfig
+    plugins_database_ephemeral
     plugins_logger_syslog
     specs_tables
     thirdparty_googletest
     thirdparty_gflags
-    osquery_remote_tests_remotetestsutils
+    osquery_remote_tests_remotetestutils
     osquery_tools_tests_testfiles
   )
 endfunction()

@@ -16,20 +16,18 @@ cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryUtilsSystemMain)
 
-  add_subdirectory("linux/ebpf")
-  add_subdirectory("linux/perf_event")
-  add_subdirectory("linux/tracing")
+  add_subdirectory("linux")
 
   if(BUILD_TESTING)
     generateOsqueryUtilsSystemErrnoErrnotestsTest()
-    generateOsqueryUtilsSystemCpuCputestsTest()
+    generateOsqueryUtilsSystemCpuCputopologytestsTest()
     generateOsqueryUtilsSystemTimeTimetestsTest()
   endif()
 
   generateOsqueryUtilsSystemEnv()
   generateOsqueryUtilsSystemFilepath()
   generateOsqueryUtilsSystemErrno()
-  generateOsqueryUtilsSystemCpu()
+  generateOsqueryUtilsSystemCputopology()
   generateOsqueryUtilsSystemTime()
   generateOsqueryUtilsSystem()
   generateOsqueryUtilsSystemUptime()
@@ -123,13 +121,13 @@ function(generateOsqueryUtilsSystemErrno)
 
 endfunction()
 
-function(generateOsqueryUtilsSystemCpu)
+function(generateOsqueryUtilsSystemCputopology)
   if(DEFINED PLATFORM_LINUX)
-    add_osquery_library(osquery_utils_system_cpu EXCLUDE_FROM_ALL
+    add_osquery_library(osquery_utils_system_cputopology EXCLUDE_FROM_ALL
       linux/cpu.cpp
     )
 
-    target_link_libraries(osquery_utils_system_cpu PUBLIC
+    target_link_libraries(osquery_utils_system_cputopology PUBLIC
       global_cxx_settings
       osquery_utils_conversions
       osquery_utils_expected
@@ -140,12 +138,12 @@ function(generateOsqueryUtilsSystemCpu)
       linux/cpu.h
     )
 
-    generateIncludeNamespace(osquery_utils_system_cpu "osquery/utils/system" "FULL_PATH" ${public_header_files})
+    generateIncludeNamespace(osquery_utils_system_cputopology "osquery/utils/system" "FULL_PATH" ${public_header_files})
 
-    add_test(NAME osquery_utils_system_cpu_cputests-test COMMAND osquery_utils_system_cpu_cputests-test)
+    add_test(NAME osquery_utils_system_cputopologytests-test COMMAND osquery_utils_system_cputopologytests-test)
 
   else()
-    add_osquery_library(osquery_utils_system_cpu INTERFACE)
+    add_osquery_library(osquery_utils_system_cputopology INTERFACE)
   endif()
 
 endfunction()
@@ -264,7 +262,7 @@ function(generateOsqueryUtilsSystemErrnoErrnotestsTest)
   )
 endfunction()
 
-function(generateOsqueryUtilsSystemCpuCputestsTest)
+function(generateOsqueryUtilsSystemCpuCputopologytestsTest)
 
   set(source_files
     tests/cpu.cpp
@@ -274,11 +272,11 @@ function(generateOsqueryUtilsSystemCpuCputestsTest)
     list(APPEND source_files linux/tests/cpu.cpp)
   endif()
 
-  add_osquery_executable(osquery_utils_system_cpu_cputests-test ${source_files})
+  add_osquery_executable(osquery_utils_system_cputopologytests-test ${source_files})
 
-  target_link_libraries(osquery_utils_system_cpu_cputests-test PRIVATE
+  target_link_libraries(osquery_utils_system_cputopologytests-test PRIVATE
     global_cxx_settings
-    osquery_utils_system_cpu
+    osquery_utils_system_cputopology
     thirdparty_googletest
   )
 endfunction()

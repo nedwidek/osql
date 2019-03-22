@@ -14,14 +14,18 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(pthreadMain)
-  add_osquery_library(thirdparty_pthread INTERFACE)
-
-  if(DEFINED PLATFORM_LINUX)
-    find_package(Threads REQUIRED)
-
-    target_link_libraries(thirdparty_pthread INTERFACE ${CMAKE_THREAD_LIBS_INIT})
-  endif()
+function(osqueryUtilsCachesTestsLrutestsMain)
+  generateOsqueryUtilsCachesTestsLrutestsTest()
 endfunction()
 
-pthreadMain()
+function(generateOsqueryUtilsCachesTestsLrutestsTest)
+  add_osquery_executable(osquery_utils_caches_tests_lrutests-test lru.cpp)
+
+  target_link_libraries(osquery_utils_caches_tests_lrutests-test PUBLIC
+    global_cxx_settings
+    osquery_utils_caches_lru
+    thirdparty_googletest
+  )
+endfunction()
+
+osqueryUtilsCachesTestsLrutestsMain()

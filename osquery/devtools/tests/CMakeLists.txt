@@ -24,14 +24,15 @@ function(generateOsqueryDevtoolsTestsPrintertestsTest)
   target_link_libraries(osquery_devtools_tests_printertests-test PRIVATE
     global_cxx_settings
     osquery_database
-    osquery_database_plugins_ephemeral
     osquery_distributed
     osquery_events
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_devtools
     plugins_config_tlsconfig
+    plugins_database_ephemeral
     specs_tables
     thirdparty_googletest
   )

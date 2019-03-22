@@ -28,22 +28,24 @@ function(generateOsqueryTablesYaraTestsTest)
 
   add_osquery_executable(osquery_tables_yara_tests-test ${source_files})
 
-  target_link_libraries(osquery_tables_yara_tests-test PRIVATE
-    global_cxx_settings
-    osquery_tables_yara_yaratable
-    osquery_core
-    osquery_filesystem
-    osquery_remote_httpclient
-    osquery_utils
-    osquery_utils_conversions
-    osquery_tables_system_systemtable
-    osquery_config_tests_testutils
-    osquery_remote_tests_remotetestsutils
-    osquery_database
-    osquery_database_plugins_ephemeral
-    thirdparty_boost
-    thirdparty_googletest
-  )
+  if(DEFINED PLATFORM_POSIX)
+    target_link_libraries(osquery_tables_yara_tests-test PRIVATE
+      global_cxx_settings
+      osquery_config_tests_testutils
+      osquery_core
+      osquery_database
+      osquery_filesystem
+      osquery_remote_httpclient
+      osquery_remote_tests_remotetestutils
+      osquery_tables_yara_yaratable
+      osquery_tables_system_systemtable
+      osquery_utils
+      osquery_utils_conversions
+      plugins_database_ephemeral
+      thirdparty_boost
+      thirdparty_googletest
+    )
+  endif()
 endfunction()
 
 osqueryTablesYaraTestsMain()

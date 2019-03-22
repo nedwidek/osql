@@ -31,6 +31,12 @@ function(generateOsqueryUtilsInfo)
     osquery_utils_macros
   )
 
+  target_compile_definitions(osquery_utils_info PUBLIC
+    OSQUERY_VERSION=${OSQUERY_VERSION}
+    OSQUERY_BUILD_VERSION=${OSQUERY_VERSION}
+    OSQUERY_BUILD_SDK_VERSION=${OSQUERY_VERSION}
+  )
+
   set(public_header_files
     platform_type.h
     tool_type.h
@@ -38,6 +44,7 @@ function(generateOsqueryUtilsInfo)
   )
 
   generateIncludeNamespace(osquery_utils_info "osquery/utils/info" "FILE_ONLY" ${public_header_files})
+
 endfunction()
 
 osqueryUtilsInfoMain()

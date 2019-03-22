@@ -14,17 +14,26 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(libresolvMain)
-  if(DEFINED PLATFORM_LINUX)
-  	set(library_name "libresolv.a")
-  elseif(DEFINED PLATFORM_MACOS)
-  	set(library_name "resolv")
-  else()
-  	return()
+function(osqueryUtilsCachesMain)
+
+  if(BUILD_TESTING)
+    add_subdirectory("tests")
   endif()
 
-  add_osquery_library(thirdparty_libresolv INTERFACE)
-  target_link_libraries(thirdparty_libresolv INTERFACE "${library_name}")
+  generateOsqueryUtilsCachesLru()
 endfunction()
 
-libresolvMain()
+function(generateOsqueryUtilsCachesLru)
+  add_library(osquery_utils_caches_lru INTERFACE)
+
+  set(public_header_files
+    lru.h
+    lru-impl.h
+  )
+
+  generateIncludeNamespace(osquery_utils_caches_lru "osquery/utils/caches" "FILE_ONLY" ${public_header_files})
+
+  add_test(NAME osquery_utils_caches_tests_lrutests-test COMMAND osquery_utils_caches_tests_lrutests-test)
+endfunction()
+
+osqueryUtilsCachesMain()

@@ -71,7 +71,7 @@ function(generateOsqueryCore)
     thirdparty_glog
     thirdparty_openssl
     thirdparty_sqlite
-    thirdparty_pthread
+    thirdparty_glibc_pthread
   )
 
   if(DEFINED PLATFORM_LINUX)

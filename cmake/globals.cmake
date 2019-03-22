@@ -62,7 +62,5 @@ set(TEST_CONFIGS_DIR "${CMAKE_BINARY_DIR}/test_configs")
 
 # osquery versions
 set(OSQUERY_VERSION 3.3.2)
-set(OSQUERY_BUILD_VERSION 3.3.2)
-set(OSQUERY_BUILD_SDK_VERSION 3.3.2)
 
 set(OSQUERY_SOURCE_DIR "${CMAKE_SOURCE_DIR}/osquery-src")

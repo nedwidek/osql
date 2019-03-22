@@ -19,14 +19,14 @@ function(osqueryExtensionsThriftMain)
 endfunction()
 
 function(generateOsqueryExtensionsThriftOsquerycpp2)
-  add_osquery_library(osquery_extensions_thrift_osquery-cpp2 EXCLUDE_FROM_ALL
+  add_osquery_library(osquery_extensions_thrift_osquerycpp2 EXCLUDE_FROM_ALL
     gen/Extension.cpp
     gen/ExtensionManager.cpp
     gen/osquery_constants.cpp
     gen/osquery_types.cpp
   )
 
-  target_link_libraries(osquery_extensions_thrift_osquery-cpp2 PUBLIC
+  target_link_libraries(osquery_extensions_thrift_osquerycpp2 PUBLIC
     global_cxx_settings
     thirdparty_thrift
   )
@@ -38,7 +38,7 @@ function(generateOsqueryExtensionsThriftOsquerycpp2)
     gen/osquery_types.h
   )
 
-  generateIncludeNamespace(osquery_extensions_thrift_osquery-cpp2 "" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_extensions_thrift_osquerycpp2 "" "FILE_ONLY" ${public_header_files})
 endfunction()
 
 osqueryExtensionsThriftMain()

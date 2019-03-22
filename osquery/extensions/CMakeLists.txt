@@ -22,35 +22,61 @@ function(osqueryExtensionsMain)
   endif()
 
   generateOsqueryExtensions()
+  generateOsqueryExtensionsImplthrift()
+  generateOsqueryExtensionsExtensionsinterface()
 endfunction()
 
 function(generateOsqueryExtensions)
-  add_osquery_library(osquery_extensions EXCLUDE_FROM_ALL
-    extensions.cpp
-    impl_thrift.cpp
-    interface.cpp
-  )
+  add_osquery_library(osquery_extensions EXCLUDE_FROM_ALL extensions.cpp)
+
+  enableLinkWholeArchive(osquery_extensions)
 
   target_link_libraries(osquery_extensions PUBLIC
     global_cxx_settings
+    osquery_extensions_extensionsinterface
     osquery_core
-    osquery_extensions_thrift_osquery-cpp2
     osquery_process
     osquery_utils
     osquery_utils_conversions
   )
 
+  add_test(NAME osquery_extensions_extensiontests-test COMMAND osquery_extensions_extensiontests-test)
+endfunction()
+
+function(generateOsqueryExtensionsImplthrift)
+  add_osquery_library(osquery_extensions_implthrift EXCLUDE_FROM_ALL impl_thrift.cpp)
+
+  enableLinkWholeArchive(osquery_extensions_implthrift)
+
   if(DEFINED PLATFORM_FREEBSD)
-    target_link_libraries(osquery_extensions PUBLIC thirdparty_thrift)
+    target_link_options(osquery_extensions_implthrift PUBLIC -lthrift)
   endif()
+
+  target_link_libraries(osquery_extensions_implthrift PUBLIC
+    global_cxx_settings
+    osquery_extensions_extensionsinterface
+    osquery_core
+    osquery_extensions_thrift_osquerycpp2
+    osquery_process
+    osquery_utils
+    osquery_utils_conversions
+  )
+endfunction()
+
+function(generateOsqueryExtensionsExtensionsinterface)
+  add_osquery_library(osquery_extensions_extensionsinterface EXCLUDE_FROM_ALL interface.cpp)
 
   set(public_header_files
     interface.h
   )
 
-  generateIncludeNamespace(osquery_extensions "osquery/extensions" "FILE_ONLY" ${public_header_files})
+  target_link_libraries(osquery_extensions_extensionsinterface PUBLIC
+    global_cxx_settings
+    osquery_headers
+    osquery_filesystem
+  )
 
-  add_test(NAME osquery_extensions_tests-test COMMAND osquery_extensions_tests-test)
+  generateIncludeNamespace(osquery_extensions_extensionsinterface "osquery/extensions" "FILE_ONLY" ${public_header_files})
 endfunction()
 
 osqueryExtensionsMain()

@@ -253,6 +253,11 @@ function(generateOsqueryTablesSystemSystemtable)
     target_link_libraries(osquery_tables_system_systemtable PUBLIC
       thirdparty_openssl
     )
+
+    target_link_options(osquery_tables_system_systemtable PRIVATE
+      -Wno-c99-extensions
+      -Wno-undeclared-selector
+    )
   endif()
 
   set(public_header_files

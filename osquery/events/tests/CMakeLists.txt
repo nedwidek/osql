@@ -36,17 +36,17 @@ function(generateOsqueryEventsTestsTest)
 
   target_link_libraries(osquery_events_tests-test PRIVATE
     global_cxx_settings
-    osquery_tables_system_systemtable
+    osquery_config_tests_testutils
     osquery_core
+    osquery_core_sql
+    osquery_database
     osquery_events
     osquery_filesystem
+    osquery_remote_tests_remotetestutils
+    osquery_tables_system_systemtable
     osquery_utils
     osquery_utils_conversions
-    osquery_config_tests_testutils
-    osquery_remote_tests_remotetestsutils
-    osquery_database
-    osquery_database_plugins_ephemeral
-    osquery_core_sql
+    plugins_database_ephemeral
     specs_tables
     thirdparty_googletest
   )
@@ -57,17 +57,17 @@ function(generateOsqueryEventsTestsEventsdatabasetestsTest)
 
   target_link_libraries(osquery_events_tests_eventsdatabasetests-test PRIVATE
     global_cxx_settings
-    osquery_tables_system_systemtable
+    osquery_config_tests_testutils
     osquery_core
+    osquery_core_sql
+    osquery_database
     osquery_events
     osquery_filesystem
+    osquery_remote_tests_remotetestutils
+    osquery_tables_system_systemtable
     osquery_utils
     osquery_utils_conversions
-    osquery_config_tests_testutils
-    osquery_remote_tests_remotetestsutils
-    osquery_database
-    osquery_database_plugins_ephemeral
-    osquery_core_sql
+    plugins_database_ephemeral
     specs_tables
     thirdparty_googletest
   )
@@ -78,17 +78,17 @@ function(generateOsqueryEventsTestsSyslogtestsTest)
 
   target_link_libraries(osquery_events_tests_syslogtests-test PRIVATE
     global_cxx_settings
-    osquery_tables_system_systemtable
+    osquery_config_tests_testutils
     osquery_core
+    osquery_core_sql
+    osquery_database
     osquery_events
     osquery_filesystem
+    osquery_remote_tests_remotetestutils
+    osquery_tables_system_systemtable
     osquery_utils
     osquery_utils_conversions
-    osquery_config_tests_testutils
-    osquery_remote_tests_remotetestsutils
-    osquery_database
-    osquery_database_plugins_ephemeral
-    osquery_core_sql
+    plugins_database_ephemeral
     specs_tables
     thirdparty_googletest
   )
@@ -99,17 +99,17 @@ function(generateOsqueryEventsTestsAudittestsTest)
 
   target_link_libraries(osquery_events_tests_audittests-test PRIVATE
     global_cxx_settings
-    osquery_tables_system_systemtable
+    osquery_config_tests_testutils
     osquery_core
+    osquery_core_sql
+    osquery_database
     osquery_events
     osquery_filesystem
+    osquery_remote_tests_remotetestutils
+    osquery_tables_system_systemtable
     osquery_utils
     osquery_utils_conversions
-    osquery_config_tests_testutils
-    osquery_remote_tests_remotetestsutils
-    osquery_database
-    osquery_database_plugins_ephemeral
-    osquery_core_sql
+    plugins_database_ephemeral
     specs_tables
     thirdparty_googletest
   )
@@ -120,17 +120,17 @@ function(generateOsqueryEventsTestsProcessfileeventstestsTest)
 
   target_link_libraries(osquery_events_tests_processfileeventstests-test PRIVATE
     global_cxx_settings
-    osquery_tables_system_systemtable
+    osquery_config_tests_testutils
     osquery_core
+    osquery_core_sql
+    osquery_database
     osquery_events
     osquery_filesystem
+    osquery_remote_tests_remotetestutils
+    osquery_tables_system_systemtable
     osquery_utils
     osquery_utils_conversions
-    osquery_config_tests_testutils
-    osquery_remote_tests_remotetestsutils
-    osquery_database
-    osquery_database_plugins_ephemeral
-    osquery_core_sql
+    plugins_database_ephemeral
     specs_tables
     thirdparty_googletest
   )
@@ -141,17 +141,17 @@ function(generateOsqueryEventsTestsInotifytestsTest)
 
   target_link_libraries(osquery_events_tests_inotifytests-test PRIVATE
     global_cxx_settings
-    osquery_tables_system_systemtable
+    osquery_config_tests_testutils
     osquery_core
+    osquery_core_sql
+    osquery_database
     osquery_events
     osquery_filesystem
+    osquery_remote_tests_remotetestutils
+    osquery_tables_system_systemtable
     osquery_utils
     osquery_utils_conversions
-    osquery_config_tests_testutils
-    osquery_remote_tests_remotetestsutils
-    osquery_database
-    osquery_database_plugins_ephemeral
-    osquery_core_sql
+    plugins_database_ephemeral
     specs_tables
     thirdparty_googletest
   )
@@ -162,17 +162,19 @@ function(generateOsqueryEventsTestsFseventstestsTest)
 
   target_link_libraries(osquery_events_tests_fseventstests-test PRIVATE
     global_cxx_settings
-    osquery_tables_system_systemtable
+    osquery_config_tests_testutils
     osquery_core
+    osquery_core_sql
+    osquery_database
     osquery_events
+    osquery_extensions
+    osquery_extensions_implthrift
     osquery_filesystem
+    osquery_remote_tests_remotetestutils
+    osquery_tables_system_systemtable
     osquery_utils
     osquery_utils_conversions
-    osquery_config_tests_testutils
-    osquery_remote_tests_remotetestsutils
-    osquery_database
-    osquery_database_plugins_ephemeral
-    osquery_core_sql
+    plugins_database_ephemeral
     specs_tables
     thirdparty_googletest
   )

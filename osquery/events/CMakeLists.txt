@@ -138,6 +138,7 @@ function(generateOsqueryEventsEventsregistry)
   target_link_libraries(osquery_events_eventsregistry PUBLIC
     global_cxx_settings
     osquery_core
+    osquery_dispatcher
     osquery_sql
     osquery_headers
   )

@@ -15,7 +15,6 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryDatabaseMain)
-  add_subdirectory("plugins")
 
   if(BUILD_TESTING)
     add_subdirectory("tests")

@@ -14,71 +14,72 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osqueryDatabasePluginsTestsMain)
-  generateOsqueryDatabasePluginsTestsSqliteplugintestsTest()
-  generateOsqueryDatabasePluginsTestsRocksdbtestsTest()
-  generateOsqueryDatabasePluginsTestsDatabasetestutils()
+function(osqueryPluginsDatabaseTestsMain)
+  generatePluginsDatabaseTestsSqliteplugintestsTest()
+  generatePluginsDatabaseTestsRocksdbtestsTest()
+  generatePluginsDatabaseTestsDatabasetestutils()
 endfunction()
 
-function(generateOsqueryDatabasePluginsTestsSqliteplugintestsTest)
-  add_osquery_executable(osquery_database_plugins_tests_sqliteplugintests-test sqlite.cpp)
+function(generatePluginsDatabaseTestsSqliteplugintestsTest)
+  add_osquery_executable(plugins_database_tests_sqliteplugintests-test sqlite.cpp)
 
-  target_link_libraries(osquery_database_plugins_tests_sqliteplugintests-test PRIVATE
+  target_link_libraries(plugins_database_tests_sqliteplugintests-test PRIVATE
     global_cxx_settings
     osquery_core
-    osquery_database_plugins_ephemeral
-    osquery_database_plugins_sqliteplugin
     osquery_database
     osquery_dispatcher
     osquery_events
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_utils_json
     plugins_config_tlsconfig
+    plugins_database_ephemeral
+    plugins_database_sqliteplugin
     specs_tables
-    osquery_database_plugins_tests_databasetestutils
+    plugins_database_tests_databasetestutils
     thirdparty_googletest
   )
 endfunction()
 
-function(generateOsqueryDatabasePluginsTestsRocksdbtestsTest)
-  add_osquery_executable(osquery_database_plugins_tests_rocksdbtests-test rocksdb.cpp)
+function(generatePluginsDatabaseTestsRocksdbtestsTest)
+  add_osquery_executable(plugins_database_tests_rocksdbtests-test rocksdb.cpp)
 
-  target_link_libraries(osquery_database_plugins_tests_rocksdbtests-test PRIVATE
+  target_link_libraries(plugins_database_tests_rocksdbtests-test PRIVATE
     global_cxx_settings
-
     osquery_core
-    osquery_database_plugins_ephemeral
-    osquery_database_plugins_rocksdbplugin
     osquery_database
     osquery_dispatcher
     osquery_events
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_registry
     osquery_remote_enroll_tlsenroll
     osquery_utils_json
     plugins_config_tlsconfig
+    plugins_database_ephemeral
+    plugins_database_rocksdbplugin
     specs_tables
-    osquery_database_plugins_tests_databasetestutils
+    plugins_database_tests_databasetestutils
     thirdparty_googletest
   )
 endfunction()
 
-function(generateOsqueryDatabasePluginsTestsDatabasetestutils)
-  add_osquery_library(osquery_database_plugins_tests_databasetestutils EXCLUDE_FROM_ALL utils.cpp)
+function(generatePluginsDatabaseTestsDatabasetestutils)
+  add_osquery_library(plugins_database_tests_databasetestutils EXCLUDE_FROM_ALL utils.cpp)
 
   set(public_header_files
     utils.h
   )
 
-  generateIncludeNamespace(osquery_database_plugins_tests_databasetestutils "osquery/database/plugins/tests" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(plugins_database_tests_databasetestutils "plugins/database/tests" "FILE_ONLY" ${public_header_files})
 
-  target_link_libraries(osquery_database_plugins_tests_databasetestutils PRIVATE
+  target_link_libraries(plugins_database_tests_databasetestutils PRIVATE
     osquery_filesystem
     osquery_utils_json
     thirdparty_googletest_headers
   )
 endfunction()
 
-osqueryDatabasePluginsTestsMain()
+osqueryPluginsDatabaseTestsMain()

@@ -14,26 +14,27 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osqueryNumericmonitoringPluginsTestsMain)
-  osqueryNumericmonitoringPluginsTestsNumericmonitoringfilesstemtestsTest()
+function(pluginsNumericmonitoringTestsMain)
+  pluginsNumericmonitoringTestsFilesystemtestsTest()
 endfunction()
 
-function(osqueryNumericmonitoringPluginsTestsNumericmonitoringfilesstemtestsTest)
-  # Originally osquery_numericmonitoring_plugins_tests_numericmonitoringfilesystemtests-test, shortened due to MSBuild not supporting long paths
-  add_osquery_executable(osquery_numericmonitoring_plugins_tests_filesystem-test filesystem.cpp)
+function(pluginsNumericmonitoringTestsFilesystemtestsTest)
+  # Originally plugins_numericmonitoring_tests_numericmonitoringfilesystemtests-test, shortened due to MSBuild not supporting long paths
+  add_osquery_executable(plugins_numericmonitoring_tests_filesystem-test filesystem.cpp)
 
-  target_link_libraries(osquery_numericmonitoring_plugins_tests_filesystem-test PRIVATE
+  target_link_libraries(plugins_numericmonitoring_tests_filesystem-test PRIVATE
     global_cxx_settings
     osquery_database
-    osquery_database_plugins_ephemeral
     osquery_extensions
+    osquery_extensions_implthrift
     osquery_numericmonitoring
-    osquery_numericmonitoring_plugins_filesystem
     osquery_remote_enroll_tlsenroll
     plugins_config_tlsconfig
+    plugins_database_ephemeral
+    plugins_numericmonitoring_filesystem
     specs_tables
     thirdparty_googletest
   )
 endfunction()
 
-osqueryNumericmonitoringPluginsTestsMain()
+pluginsNumericmonitoringTestsMain()

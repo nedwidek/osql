@@ -19,6 +19,7 @@ function(pluginsConfigMain)
 
   generatePluginsConfigFilesystemconfig()
   generatePluginsConfigTlsconfig()
+  generatePluginsConfigUpdateconfigplugin()
 endfunction()
 
 function(generatePluginsConfigFilesystemconfig)
@@ -55,6 +56,17 @@ function(generatePluginsConfigTlsconfig)
   )
 
   generateIncludeNamespace(plugins_config_tlsconfig "plugins/config" "FILE_ONLY" ${public_header_files})
+endfunction()
+
+function(generatePluginsConfigUpdateconfigplugin)
+  add_osquery_library(plugins_config_updateconfigplugin EXCLUDE_FROM_ALL update.cpp)
+
+  enableLinkWholeArchive(plugins_config_updateconfigplugin)
+
+  target_link_libraries(plugins_config_updateconfigplugin PUBLIC
+    global_cxx_settings
+    osquery_config
+  )
 endfunction()
 
 pluginsConfigMain()

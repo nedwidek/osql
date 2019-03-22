@@ -25,11 +25,13 @@ endfunction()
 
 function(generateOsqueryNumericmonitoringPluginsNumericmonitoringfilesystem)
   # Originally osquery_numericmonitoring_plugins_numericmonitoringfilesystem, shortened due to MSBuild not supporting long paths
-  add_osquery_library(osquery_numericmonitoring_plugins_filesystem EXCLUDE_FROM_ALL
+  add_osquery_library(plugins_numericmonitoring_filesystem EXCLUDE_FROM_ALL
     filesystem.cpp
   )
 
-  target_link_libraries(osquery_numericmonitoring_plugins_filesystem PUBLIC
+  enableLinkWholeArchive(plugins_numericmonitoring_filesystem)
+
+  target_link_libraries(plugins_numericmonitoring_filesystem PUBLIC
     global_cxx_settings
     osquery_filesystem
     osquery_numericmonitoring
@@ -39,9 +41,9 @@ function(generateOsqueryNumericmonitoringPluginsNumericmonitoringfilesystem)
     filesystem.h
   )
 
-  generateIncludeNamespace(osquery_numericmonitoring_plugins_filesystem "osquery/numeric_monitoring/plugins" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(plugins_numericmonitoring_filesystem "plugins/numeric_monitoring" "FILE_ONLY" ${public_header_files})
 
-  add_test(NAME osquery_numericmonitoring_plugins_tests_filesystem-test COMMAND osquery_numericmonitoring_plugins_tests_filesystem-test)
+  add_test(NAME plugins_numericmonitoring_tests_filesystem-test COMMAND plugins_numericmonitoring_tests_filesystem-test)
 endfunction()
 
 osqueryNumericmonitoringPluginsMain()
