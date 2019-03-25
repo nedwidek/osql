@@ -14,29 +14,14 @@
 
 [DevelopmentBuild]: https://dev.azure.com/trailofbits/osql/_build/latest?definitionId=1&branchName=development
 
-[UbuntuDevelopment1804BuildImage]: https://dev.azure.com/trailofbits/osql/_apis/build/status/osql.osql?branchName=development&jobName=LinuxBuild
-[UbuntuDevelopment1804TestsImage]: https://dev.azure.com/trailofbits/osql/_apis/build/status/osql.osql?branchName=development&jobName=LinuxTest
+[Ubuntu1804DevelopmentBuildImage]: https://dev.azure.com/trailofbits/osql/_apis/build/status/osql.osql?branchName=development&jobName=LinuxBuild
+[Ubuntu1804DevelopmentTestsImage]: https://dev.azure.com/trailofbits/osql/_apis/build/status/osql.osql?branchName=development&jobName=LinuxTest
 
 [macOSDevelopmentBuildImage]: https://dev.azure.com/trailofbits/osql/_apis/build/status/osql.osql?branchName=development&jobName=macOSBuild
 [macOSDevelopmentTestsImage]: https://dev.azure.com/trailofbits/osql/_apis/build/status/osql.osql?branchName=development&jobName=macOSTest
 
 [WindowsDevelopmentBuildImage]: https://dev.azure.com/trailofbits/osql/_apis/build/status/osql.osql?branchName=development&jobName=WindowsBuild
 [WindowsDevelopmentTestsImage]: https://dev.azure.com/trailofbits/osql/_apis/build/status/osql.osql?branchName=development&jobName=WindowsTest
-
-
-#### Master (stable)
-|Platform|Build Status|Tests Status|
-|--------|------------|------------|
-|Ubuntu 18.04|[![Build Status][Ubuntu1804MasterBuildImage]][MasterBuild]|[![Tests Status][UbuntuDevelopment1804TestsImage]][MasterBuild]|
-|macOS 10.13|[![Build Status][macOSDevelopmentBuildImage]][MasterBuild]|[![Tests Status][macOSDevelopmentTestsImage]][MasterBuild]|
-|Windows|[![Build Status][WindowsDevelopmentBuildImage]][MasterBuild]|[![Tests Status][WindowsDevelopmentTestsImage]][MasterBuild]|
-
-#### Development (unstable)
-|Platform|Build Status|Tests Status|
-|--------|------------|------------|
-|Ubuntu 18.04|[![Build Status][UbuntuDevelopment1804BuildImage]][DevelopmentBuild]|[![Tests Status][UbuntuDevelopment1804TestsImage]][DevelopmentBuild]|
-|macOS 10.13|[![Build Status][macOSDevelopmentBuildImage]][DevelopmentBuild]|[![Tests Status][macOSDevelopmentTestsImage]][DevelopmentBuild]|
-|Windows|[![Build Status][WindowsDevelopmentBuildImage]][DevelopmentBuild]|[![Tests Status][WindowsDevelopmentTestsImage]][DevelopmentBuild]|
 
 ##  What is osql?
 
@@ -45,6 +30,20 @@ osql is a community-oriented fork of osquery with support for CMake, public CI t
 This repository contains the CMake build system for osquery. The osquery-src folder is a submodule that contains Facebook's osquery experimental branch, unaltered.
 
 Our development branch has the most updated version of Facebook's code. The master branch contains the latest release tag. The osql branch contains the community release.
+
+#### Master (stable)
+|Platform|Build Status|Tests Status|
+|--------|------------|------------|
+|Ubuntu 18.04|[![Build Status][Ubuntu1804MasterBuildImage]][MasterBuild]|[![Tests Status][Ubuntu1804MasterTestsImage]][MasterBuild]|
+|macOS 10.13|[![Build Status][macOSMasterBuildImage]][MasterBuild]|[![Tests Status][macOSMasterTestsImage]][MasterBuild]|
+|Windows|[![Build Status][WindowsMasterBuildImage]][MasterBuild]|[![Tests Status][WindowsMasterTestsImage]][MasterBuild]|
+
+#### Development (unstable)
+|Platform|Build Status|Tests Status|
+|--------|------------|------------|
+|Ubuntu 18.04|[![Build Status][Ubuntu1804DevelopmentBuildImage]][DevelopmentBuild]|[![Tests Status][Ubuntu1804DevelopmentTestsImage]][DevelopmentBuild]|
+|macOS 10.13|[![Build Status][macOSDevelopmentBuildImage]][DevelopmentBuild]|[![Tests Status][macOSDevelopmentTestsImage]][DevelopmentBuild]|
+|Windows|[![Build Status][WindowsDevelopmentBuildImage]][DevelopmentBuild]|[![Tests Status][WindowsDevelopmentTestsImage]][DevelopmentBuild]|
 
 ## Migrating PRs from osquery
 
