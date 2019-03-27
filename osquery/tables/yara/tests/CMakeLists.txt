@@ -15,37 +15,35 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryTablesYaraTestsMain)
-  generateOsqueryTablesYaraTestsTest()
+
+  # We deviate from what there's in the BUCK file because compiling empty sources doesn't work
+  if(DEFINED PLATFORM_POSIX)
+    generateOsqueryTablesYaraTestsTest()
+  endif()
 endfunction()
 
 function(generateOsqueryTablesYaraTestsTest)
 
-  if(DEFINED PLATFORM_POSIX)
-    set(source_files yara_tests.cpp)
-  elseif(DEFINED PLATFORM_WINDOWS)
-    set(source_files yara_tests_win_empty.cpp)
-  endif()
+  set(source_files yara_tests.cpp)
 
   add_osquery_executable(osquery_tables_yara_tests-test ${source_files})
 
-  if(DEFINED PLATFORM_POSIX)
-    target_link_libraries(osquery_tables_yara_tests-test PRIVATE
-      global_cxx_settings
-      osquery_config_tests_testutils
-      osquery_core
-      osquery_database
-      osquery_filesystem
-      osquery_remote_httpclient
-      osquery_remote_tests_remotetestutils
-      osquery_tables_yara_yaratable
-      osquery_tables_system_systemtable
-      osquery_utils
-      osquery_utils_conversions
-      plugins_database_ephemeral
-      thirdparty_boost
-      thirdparty_googletest
-    )
-  endif()
+  target_link_libraries(osquery_tables_yara_tests-test PRIVATE
+    global_cxx_settings
+    osquery_config_tests_testutils
+    osquery_core
+    osquery_database
+    osquery_filesystem
+    osquery_remote_httpclient
+    osquery_remote_tests_remotetestutils
+    osquery_tables_yara_yaratable
+    osquery_tables_system_systemtable
+    osquery_utils
+    osquery_utils_conversions
+    plugins_database_ephemeral
+    thirdparty_boost
+    thirdparty_googletest
+  )
 endfunction()
 
 osqueryTablesYaraTestsMain()
