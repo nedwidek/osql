@@ -24,7 +24,7 @@ function(osqueryNumericmonitoringPluginsMain)
 endfunction()
 
 function(generateOsqueryNumericmonitoringPluginsNumericmonitoringfilesystem)
-  # Originally osquery_numericmonitoring_plugins_numericmonitoringfilesystem, shortened due to MSBuild not supporting long paths
+  # Originally plugins_numericmonitoring_numericmonitoringfilesystem, shortened due to MSBuild not supporting long paths
   add_osquery_library(plugins_numericmonitoring_filesystem EXCLUDE_FROM_ALL
     filesystem.cpp
   )

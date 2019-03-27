@@ -31,7 +31,7 @@ function(generateOsquerySdkPluginsdk)
     osquery_config
     osquery_dispatcher
     osquery_events_eventsregistry
-    osquery_experimental_eventsstream_eventsstreamregistry
+    osquery_experimental_eventsstream_registry
     osquery_extensions
     osquery_killswitch
     osquery_numericmonitoring

@@ -20,11 +20,12 @@ function(osqueryExperimentalEventsstreamMain)
 endfunction()
 
 function(generateOsqueryExperimentalEventsstreamEventsstreamregistry)
-  add_osquery_library(osquery_experimental_eventsstream_eventsstreamregistry EXCLUDE_FROM_ALL events_stream_registry.cpp)
+  # Originally osquery_experimental_eventsstream_eventsstreamregistry, shortened due to MSBuild not supporting long paths
+  add_osquery_library(osquery_experimental_eventsstream_registry EXCLUDE_FROM_ALL events_stream_registry.cpp)
 
-  enableLinkWholeArchive(osquery_experimental_eventsstream_eventsstreamregistry)
+  enableLinkWholeArchive(osquery_experimental_eventsstream_registry)
 
-  target_link_libraries(osquery_experimental_eventsstream_eventsstreamregistry PUBLIC
+  target_link_libraries(osquery_experimental_eventsstream_registry PUBLIC
     global_cxx_settings
     osquery_core
     osquery_utils
@@ -35,7 +36,7 @@ function(generateOsqueryExperimentalEventsstreamEventsstreamregistry)
     events_stream_registry.h
   )
 
-  generateIncludeNamespace(osquery_experimental_eventsstream_eventsstreamregistry "osquery/experimental/events_stream" "FILE_ONLY" ${public_header_files})
+  generateIncludeNamespace(osquery_experimental_eventsstream_registry "osquery/experimental/events_stream" "FILE_ONLY" ${public_header_files})
 endfunction()
 
 function(generateOsqueryExperimentalEventsstream)
@@ -43,7 +44,7 @@ function(generateOsqueryExperimentalEventsstream)
 
   target_link_libraries(osquery_experimental_eventsstream PUBLIC
     global_cxx_settings
-    osquery_experimental_eventsstream_eventsstreamregistry
+    osquery_experimental_eventsstream_registry
     osquery_core
     osquery_utils
     thirdparty_boost
