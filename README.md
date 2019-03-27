@@ -27,7 +27,7 @@
 
 osql is a community-oriented fork of osquery with support for CMake, public CI testing, and regular releases.
 
-This repository contains the CMake build system for osquery. The osquery-src folder is a submodule that contains Facebook's osquery experimental branch, unaltered.
+This repository contains the CMake build system for osql. The osquery-src folder is a submodule that contains Facebook's osquery experimental branch, unaltered.
 
 Our development branch has the most updated version of Facebook's code. The master branch contains the latest release tag. The osql branch contains the community release.
 
@@ -47,9 +47,10 @@ Our development branch has the most updated version of Facebook's code. The mast
 
 ## Migrating PRs from osquery
 
-In addition to packages aligned to Facebook osquery, we also plan to provide releases with additional features. PRs targeted at osquery can be migrated here to take advantage of our CI system and the faster merge window.
+The build and release process, along with the merging strategy we propose, have been documented in detail in the following [document](https://github.com/osql/osql/wiki/Migrating-PRs-from-osquery). Reviews and suggestions from the community are well accepted.
 
-Please bear with us as we work out a detailed plan to accept PRs with changes to osquery. In the meantime, please help review our build and release plans.
+We aim at providing stable and development releases in different flavours (i.e.: vanilla distribution, new features that we consider stable). \
+Please bear with us as we finalize the required infrastructure and CI changes.
 
 ## How to build
 
@@ -83,8 +84,8 @@ sudo cmake --build . --target install
 # Verify that `/usr/local/bin` is in the `PATH` and comes before `/usr/bin`
 # (optional) remove the old CMake system package with `sudo apt remove cmake`
 
-# Download and build osquery
-mkdir osquery-cmake; cd osquery-cmake
+# Download and build osql
+mkdir osql; cd osql
 git clone --recurse-submodules git@github.com:osql/osql.git -b master src
 mkdir build; cd build
 cmake ../src -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
@@ -109,8 +110,8 @@ sudo cmake --build . --target install
 # Verify that `/usr/local/bin` is in the `PATH` and comes before `/usr/bin`
 # (optional) remove the old CMake system package with `sudo apt remove cmake`
 
-# Download and build osquery
-mkdir osquery-cmake; cd osquery-cmake
+# Download and build osql
+mkdir osql; cd osql
 git clone --recurse-submodules git@github.com:osql/osql.git -b master src
 mkdir build; cd build
 cmake ../src -DCMAKE_C_COMPILER=clang-6.0 -DCMAKE_CXX_COMPILER=clang++-6.0 (-DBUILD_TESTING=ON for tests)
@@ -128,11 +129,11 @@ The root folder is assumed to be `C:\Users\<user>`
 - [Python 2](https://www.python.org/downloads/windows/)
 - [Python 3](https://www.python.org/downloads/windows/)
 
-#### Step 2: Download and build osquery
+#### Step 2: Download and build osql
 
 ```
 # Download using a PowerShell console
-mkdir osquery-cmake; cd osquery-cmake
+mkdir osql; cd osql
 git clone --recurse-submodules git@github.com:osql/osql.git -b master src
 
 # Configure
@@ -152,8 +153,8 @@ Please ensure [homebrew](https://brew.sh/) has been installed. The root folder i
 # Install prerequisites
 brew install git cmake llvm@6 python@2 python
 
-# Download and build osquery
-mkdir osquery-cmake; cd osquery-cmake
+# Download and build osql
+mkdir osql; cd osql
 git clone --recurse-submodules git@github.com:osql/osql.git -b master src
 
 # Configure
@@ -166,14 +167,20 @@ cmake --build . -j # // where # is the number of parallel build jobs
 ```
 
 ### Tests
-To build with tests active, add `-DBUILD_TESTING=ON` to the osquery configure phase, then build the project. CTest will be used to run the tests and give a report.
+To build with tests active, add `-DBUILD_TESTING=ON` to the osql configure phase, then build the project. CTest will be used to run the tests and give a report.
 
 #### Run tests on Windows
 To run the tests and get just a summary report:\
 `cmake --build . --config <RelWithDebInfo|Release|Debug> --target run_tests`
 
-To get more information when a test fails:\
-`CTEST_OUTPUT_ON_FAILURE=1 cmake --build . --config <RelWithDebInfo|Release|Debug> --target run_tests`
+To get more information when a test fails using powershell:
+```
+$Env:CTEST_OUTPUT_ON_FAILURE=1
+cmake --build . --config <RelWithDebInfo|Release|Debug> --target run_tests
+```
+
+To run a single test, in verbose mode:\
+`ctest -R <test name> -C <RelWithDebInfo|Release|Debug> -V`
 
 #### Run tests on Linux/macOS
 To run the tests and get just a summary report:\
@@ -182,6 +189,7 @@ To run the tests and get just a summary report:\
 To get more information when a test fails:\
 `CTEST_OUTPUT_ON_FAILURE=1 cmake --build . --target test`
 
-
+To run a single test, in verbose mode:\
+`ctest -R <test name> -V`
 ## License
 TODO
