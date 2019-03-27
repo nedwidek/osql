@@ -42,7 +42,8 @@ function(generateOsqueryUtilsSystemLinuxProc)
     add_library(osquery_utils_system_linux_proc INTERFACE)
   endif()
 
-  add_test(NAME osquery_utils_system_linux_proc_proctests-test COMMAND osquery_utils_system_linux_proc_proctests-test)
+  # This is a special case for this test, since it requires that its process name starts with proc_tests
+  add_test(NAME osquery_utils_system_linux_proc_proctests-test COMMAND proc_tests-test)
 endfunction()
 
 osqueryUtilsSystemLinuxProcMain()

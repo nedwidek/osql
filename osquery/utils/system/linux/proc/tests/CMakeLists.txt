@@ -32,6 +32,11 @@ function(generateOsqueryUtilsSystemLinuxProcTests)
 
   add_osquery_executable(osquery_utils_system_linux_proc_proctests-test ${source_files})
 
+  # This is a special case for this test, since it requires that its process name starts with proc_tests
+  set_target_properties(osquery_utils_system_linux_proc_proctests-test PROPERTIES
+    OUTPUT_NAME proc_tests-test
+  )
+
   target_link_libraries(osquery_utils_system_linux_proc_proctests-test PUBLIC
     global_cxx_settings
     osquery_utils_system_linux_proc
