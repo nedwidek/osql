@@ -15,6 +15,8 @@
 cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryExperimentalTracingMain)
+  add_subdirectory("linux")
+
   generateOsqueryExperimentalTracingSyscallstracing()
 endfunction()
 
@@ -36,7 +38,7 @@ function(generateOsqueryExperimentalTracingSyscallstracing)
     global_cxx_settings
     osquery_core
     osquery_dispatcher
-    osquery_events_linux_probes_probesevents
+    osquery_experimental_tracing_linux_probesevents
     osquery_experimental_eventsstream
     osquery_utils_caches_lru
     osquery_utils_conversions

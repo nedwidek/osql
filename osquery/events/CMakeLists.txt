@@ -16,8 +16,6 @@ cmake_minimum_required(VERSION 3.13.3)
 
 function(osqueryEventsMain)
 
-  add_subdirectory("linux/probes")
-
   if(BUILD_TESTING)
     add_subdirectory("tests")
   endif()

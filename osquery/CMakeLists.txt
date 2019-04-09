@@ -40,6 +40,7 @@ function(osqueryMain)
   add_subdirectory("events")
   add_subdirectory("ev2")
   add_subdirectory("experimental")
+  add_subdirectory("system")
 
   generateOsqueryHeaders()
   generateOsqueryd()

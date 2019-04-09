@@ -14,30 +14,18 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osqueryEventsLinuxProbesTestsMain)
-
-  if(DEFINED PLATFORM_LINUX)
-    generateOsqueryEventsLinuxProbesTestsEbpftracepointtestsTest()
-  endif()
+function(osqueryUtilsSchemerJsonTestsMain)
+  generateOsqueryUtilsSchemerJsonTestsSchemerjsontestsTest()
 endfunction()
 
-function(generateOsqueryEventsLinuxProbesTestsEbpftracepointtestsTest)
+function(generateOsqueryUtilsSchemerJsonTestsSchemerjsontestsTest)
+  add_osquery_executable(osquery_utils_schemer_json_tests_schemerjsontests-test schemer_json.cpp)
 
-  set(source_files
-    empty.cpp
-  )
-
-  if(DEFINED PLATFORM_LINUX)
-    list(APPEND source_files syscall_event.cpp)
-  endif()
-
-  add_osquery_executable(osquery_events_linux_probes_tests_ebpftracepointtests-test ${source_files})
-
-  target_link_libraries(osquery_events_linux_probes_tests_ebpftracepointtests-test PRIVATE
+  target_link_libraries(osquery_utils_schemer_json_tests_schemerjsontests-test PRIVATE
     global_cxx_settings
-    osquery_events_linux_probes_probesevents
+    osquery_utils_schemer_json
     thirdparty_googletest
   )
 endfunction()
 
-osqueryEventsLinuxProbesTestsMain()
+osqueryUtilsSchemerJsonTestsMain()

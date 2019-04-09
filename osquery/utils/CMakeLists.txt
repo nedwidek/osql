@@ -28,6 +28,7 @@ function(osqueryUtilsMain)
   add_subdirectory("expected")
   add_subdirectory("conversions")
   add_subdirectory("versioning")
+  add_subdirectory("schemer")
 
   if(BUILD_TESTING)
     generateOsqueryUtilsUtilstestsTest()

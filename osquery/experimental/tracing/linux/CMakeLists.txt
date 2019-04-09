@@ -14,17 +14,17 @@
 
 cmake_minimum_required(VERSION 3.13.3)
 
-function(osqueryEventsLinuxProbesMain)
+function(osqueryExperimentalTracingLinuxMain)
 
   if(BUILD_TESTING)
     add_subdirectory("tests")
   endif()
 
-  generateOsqueryEventsLinuxProbesProbesevents()
+  generateExperimentalTracingLinuxProbesevents()
 endfunction()
 
-function(generateOsqueryEventsLinuxProbesProbesevents)
-  set(library_name "osquery_events_linux_probes_probesevents")
+function(generateExperimentalTracingLinuxProbesevents)
+  set(library_name "osquery_experimental_tracing_linux_probesevents")
 
   if (DEFINED PLATFORM_LINUX)
     set(source_files
@@ -54,13 +54,13 @@ function(generateOsqueryEventsLinuxProbesProbesevents)
       syscalls_programs.h
     )
 
-    generateIncludeNamespace("${library_name}" "osquery/events/linux/probes" "FILE_ONLY" ${public_header_files})
+    generateIncludeNamespace("${library_name}" "osquery/experimental/tracing/linux" "FILE_ONLY" ${public_header_files})
 
-    add_test(NAME osquery_events_linux_probes_tests_ebpftracepointtests-test COMMAND osquery_events_linux_probes_tests_ebpftracepointtests-test)
+    add_test(NAME osquery_experimental_tracing_linux_tests_ebpftracepointtests-test COMMAND osquery_experimental_tracing_linux_tests_ebpftracepointtests-test)
   else()
     add_osquery_library("${library_name}" INTERFACE)
   endif()
 endfunction()
 
-osqueryEventsLinuxProbesMain()
+osqueryExperimentalTracingLinuxMain()
 
