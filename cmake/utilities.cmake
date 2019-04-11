@@ -243,6 +243,10 @@ function(generateGlobalSettingsTargets)
       -stdlib=libc++
     )
 
+    target_link_options(cxx_settings INTERFACE
+      -stdlib=libc++
+    )
+
     if(DEFINED PLATFORM_MACOS)
       target_compile_options(cxx_settings INTERFACE
         -x objective-c++
