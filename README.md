@@ -191,5 +191,7 @@ To get more information when a test fails:\
 
 To run a single test, in verbose mode:\
 `ctest -R <test name> -V`
+
 ## License
-TODO
+
+The code in this repository is licensed under the [Apache 2.0 license](LICENSE).
