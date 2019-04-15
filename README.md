@@ -86,7 +86,7 @@ sudo cmake --build . --target install
 
 # Download and build osql
 cd $HOME; mkdir osql; cd osql
-git clone --recurse-submodules git@github.com:osql/osql.git -b master src
+git clone --recurse-submodules https://github.com/osql/osql.git -b master src
 mkdir build; cd build
 cmake ../src -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
 cmake --build . -j # // where # is the number of parallel build jobs
@@ -112,7 +112,7 @@ sudo cmake --build . --target install
 
 # Download and build osql
 cd $HOME; mkdir osql; cd osql
-git clone --recurse-submodules git@github.com:osql/osql.git -b master src
+git clone --recurse-submodules https://github.com/osql/osql.git -b master src
 mkdir build; cd build
 cmake ../src -DCMAKE_C_COMPILER=clang-6.0 -DCMAKE_CXX_COMPILER=clang++-6.0 (-DBUILD_TESTING=ON for tests)
 cmake --build . -j # // where # is the number of parallel build jobs
@@ -134,7 +134,7 @@ The root folder is assumed to be `C:\Users\<user>`
 ```
 # Download using a PowerShell console
 mkdir osql; cd osql
-git clone --recurse-submodules git@github.com:osql/osql.git -b master src
+git clone --recurse-submodules https://github.com/osql/osql.git -b master src
 
 # Configure
 mkdir build; cd build
@@ -155,7 +155,7 @@ brew install git cmake llvm@6 python@2 python
 
 # Download and build osql
 mkdir osql; cd osql
-git clone --recurse-submodules git@github.com:osql/osql.git -b master src
+git clone --recurse-submodules https://github.com/osql/osql.git -b master src
 
 # Configure
 mkdir build; cd build
