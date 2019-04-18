@@ -248,6 +248,26 @@ function(generateGlobalSettingsTargets)
     )
 
     if(DEFINED PLATFORM_MACOS)
+      find_library(llvm_library_path "libc++.dylib" HINTS "${LLVM_INSTALL_PATH}/lib"
+        NO_DEFAULT_PATH
+        NO_CMAKE_PATH
+        NO_CMAKE_ENVIRONMENT_PATH
+        NO_SYSTEM_ENVIRONMENT_PATH
+        NO_CMAKE_SYSTEM_PATH
+      )
+
+      if("${llvm_library_path}" STREQUAL "llvm_library_path-NOTFOUND")
+        message(FATAL_ERROR "Cannot find the libc++ library, please set the LLVM_INSTALL_PATH CMake variable with the LLVM install path")
+      endif()
+
+      get_filename_component(llvm_install_folder "${llvm_library_path}" DIRECTORY)
+      get_filename_component(llvm_install_folder "${llvm_install_folder}" DIRECTORY)
+
+      overwrite_cache_variable(LLVM_INSTALL_PATH "${llvm_install_folder}")
+
+      message(STATUS "Found libc++: ${llvm_library_path}")
+      unset(llvm_library_path CACHE)
+
       target_compile_options(cxx_settings INTERFACE
         -x objective-c++
         -fobjc-arc
@@ -267,6 +287,7 @@ function(generateGlobalSettingsTargets)
         "SHELL:-framework Security"
         "SHELL:-framework ServiceManagement"
         "SHELL:-framework SystemConfiguration"
+        "SHELL:-L${LLVM_INSTALL_PATH}/lib -Wl,-rpath,${LLVM_INSTALL_PATH}/lib"
       )
 
       target_link_libraries(cxx_settings INTERFACE
@@ -274,6 +295,10 @@ function(generateGlobalSettingsTargets)
         cups
         bsm
         xar
+      )
+
+      target_include_directories(cxx_settings INTERFACE
+        "${LLVM_INSTALL_PATH}"
       )
     endif()
 
