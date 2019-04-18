@@ -35,14 +35,14 @@ Our development branch has the most updated version of Facebook's code. The mast
 |Platform|Build Status|Tests Status|
 |--------|------------|------------|
 |Ubuntu 18.04|[![Build Status][Ubuntu1804MasterBuildImage]][MasterBuild]|[![Tests Status][Ubuntu1804MasterTestsImage]][MasterBuild]|
-|macOS 10.13|[![Build Status][macOSMasterBuildImage]][MasterBuild]|[![Tests Status][macOSMasterTestsImage]][MasterBuild]|
+|macOS 10.14|[![Build Status][macOSMasterBuildImage]][MasterBuild]|[![Tests Status][macOSMasterTestsImage]][MasterBuild]|
 |Windows|[![Build Status][WindowsMasterBuildImage]][MasterBuild]|[![Tests Status][WindowsMasterTestsImage]][MasterBuild]|
 
 #### Development (unstable)
 |Platform|Build Status|Tests Status|
 |--------|------------|------------|
 |Ubuntu 18.04|[![Build Status][Ubuntu1804DevelopmentBuildImage]][DevelopmentBuild]|[![Tests Status][Ubuntu1804DevelopmentTestsImage]][DevelopmentBuild]|
-|macOS 10.13|[![Build Status][macOSDevelopmentBuildImage]][DevelopmentBuild]|[![Tests Status][macOSDevelopmentTestsImage]][DevelopmentBuild]|
+|macOS 10.14|[![Build Status][macOSDevelopmentBuildImage]][DevelopmentBuild]|[![Tests Status][macOSDevelopmentTestsImage]][DevelopmentBuild]|
 |Windows|[![Build Status][WindowsDevelopmentBuildImage]][DevelopmentBuild]|[![Tests Status][WindowsDevelopmentTestsImage]][DevelopmentBuild]|
 
 ## Migrating PRs from osquery
