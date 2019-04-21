@@ -31,6 +31,10 @@ This repository contains the CMake build system for osql. The osquery-src folder
 
 Our development branch has the most updated version of Facebook's code. The master branch contains the latest release tag. The osql branch contains the community release.
 
+## Slack channel?
+
+You can find us in the **#osql** channel of the [osquery Slack](https://slack.osquery.io)
+
 #### Master (stable)
 |Platform|Build Status|Tests Status|
 |--------|------------|------------|
