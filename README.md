@@ -76,15 +76,9 @@ The root folder is assumed to be `/home/<user>`
 # Install the prerequisites
 sudo apt install git llvm clang cmake libc++-dev libc++abi-dev liblzma-dev python python3
 
-# Build and install a newer CMake (>= 3.13.3)
-mkdir cmake-3.13.4; cd cmake-3.13.4
-wget https://github.com/Kitware/CMake/releases/download/v3.13.4/cmake-3.13.4.tar.gz
-tar xvf cmake-3.13.4.tar.gz
-mv cmake-3.13.4 src
-mkdir build; cd build
-cmake ../src -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
-cmake --build . -- -j # // where # is the number of parallel build jobs
-sudo cmake --build . --target install
+# Download and install a newer CMake (>= 3.13.3)
+wget https://github.com/Kitware/CMake/releases/download/v3.13.4/cmake-3.13.4-Linux-x86_64.tar.gz
+sudo tar xvf cmake-3.13.4-Linux-x86_64.tar.gz -C /usr/local --strip 1
 # Verify that `/usr/local/bin` is in the `PATH` and comes before `/usr/bin`
 # (optional) remove the old CMake system package with `sudo apt remove cmake`
 
@@ -102,15 +96,9 @@ cmake --build . -j # // where # is the number of parallel build jobs
 # Install the prerequisites
 sudo apt install git llvm-6.0 clang-6.0 cmake libc++-dev libc++abi-dev liblzma-dev python python3
 
-# Build and install a newer CMake (>= 3.13.3)
-mkdir cmake-3.13.4; cd cmake-3.13.4
-wget https://github.com/Kitware/CMake/releases/download/v3.13.4/cmake-3.13.4.tar.gz
-tar xvf cmake-3.13.4.tar.gz
-mv cmake-3.13.4 src
-mkdir build; cd build
-cmake ../src -DCMAKE_C_COMPILER=clang-6.0 -DCMAKE_CXX_COMPILER=clang++-6.0
-cmake --build . -- -j # // where # is the number of parallel build jobs
-sudo cmake --build . --target install
+# Download and install a newer CMake (>= 3.13.3)
+wget https://github.com/Kitware/CMake/releases/download/v3.13.4/cmake-3.13.4-Linux-x86_64.tar.gz
+sudo tar xvf cmake-3.13.4-Linux-x86_64.tar.gz -C /usr/local --strip 1
 # Verify that `/usr/local/bin` is in the `PATH` and comes before `/usr/bin`
 # (optional) remove the old CMake system package with `sudo apt remove cmake`
 
