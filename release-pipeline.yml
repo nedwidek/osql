@@ -74,6 +74,7 @@ jobs:
         GTEST_COLOR: 1
 
   - job: LinuxPackaging
+    condition: always()
 
     pool:
       vmImage: 'Ubuntu-16.04'
