@@ -19,7 +19,7 @@ jobs:
       displayName: "Configure osquery"
       inputs:
         workingDirectory: $(Build.BinariesDirectory)/build
-        cmakeArgs: -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DBUILD_TESTING=ON $(Build.SourcesDirectory)
+        cmakeArgs: -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DBUILD_TESTING=ON -DPACKAGING_SYSTEM=DEB $(Build.SourcesDirectory)
 
     - task: CMake@1
       displayName: "Build osquery"
