@@ -84,7 +84,6 @@ jobs:
     dependsOn: LinuxTest
 
     steps:
-    - checkout: none
 
     - task: DownloadBuildArtifacts@0
       displayName: "Download build folder"
