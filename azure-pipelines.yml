@@ -39,9 +39,9 @@ jobs:
         targetFolder: $(Build.ArtifactStagingDirectory)
 
     - script: |
-        cd $(Build.ArtifactStagingDirectory)
         tar -cf build.tar build
       displayName: "Tar the build folder"
+      workingDirectory: $(Build.ArtifactStagingDirectory)
 
     - task: PublishBuildArtifacts@1
       displayName: "Publish build folder for the next job"
@@ -68,19 +68,14 @@ jobs:
         downloadPath: $(Build.BinariesDirectory)
 
     - script: |
-        mv $(Build.BinariesDirectory)/linux-osquery-build/build.tar $(Build.BinariesDirectory)/build.tar
-        rmdir $(Build.BinariesDirectory)/linux-osquery-build
-      displayName: "Move build folder to the original path"
-
-    - script: |
-        cd $(Build.BinariesDirectory)
-        tar -xvf $(Build.BinariesDirectory)/build.tar
+        tar -xvf linux-osquery-build/build.tar
       displayName: "Untar build folder"
+      workingDirectory: $(Build.BinariesDirectory)
 
     - script: |
-        cd $(Build.BinariesDirectory)/build
         ctest --build-nocmake -V
       displayName: "Run tests"
+      workingDirectory: $(Build.BinariesDirectory)/build
       env:
         GTEST_COLOR: 1
 # LINUX
@@ -125,9 +120,9 @@ jobs:
           targetFolder: $(Build.ArtifactStagingDirectory)
 
       - script: |
-          cd $(Build.ArtifactStagingDirectory)
           tar -cf build.tar build
         displayName: "Tar the build folder"
+        workingDirectory: $(Build.ArtifactStagingDirectory)
 
       - task: PublishBuildArtifacts@1
         displayName: "Publish build folder for the next job"
@@ -152,19 +147,14 @@ jobs:
         downloadPath: $(Build.BinariesDirectory)
 
     - script: |
-        mv $(Build.BinariesDirectory)/macos-osquery-build/build.tar $(Build.BinariesDirectory)/build.tar
-        rmdir $(Build.BinariesDirectory)/macos-osquery-build
-      displayName: "Move build folder to the original path"
-
-    - script: |
-        cd $(Build.BinariesDirectory)
-        tar -xvf $(Build.BinariesDirectory)/build.tar
+        tar -xvf macos-osquery-build/build.tar
       displayName: "Untar build folder"
+      workingDirectory: $(Build.BinariesDirectory)
 
     - script: |
-        cd $(Build.BinariesDirectory)/build
         ctest --build-nocmake -V
       displayName: "Run tests"
+      workingDirectory: $(Build.BinariesDirectory)/build
       env:
         GTEST_COLOR: 1
 # MACOS
@@ -231,9 +221,9 @@ jobs:
       displayName: "Move build folder to the original path"
 
     - powershell: |
-        cd $(Build.BinariesDirectory)/build
         ctest --build-nocmake -C Release -V
       displayName: "Run tests"
+      workingDirectory: $(Build.BinariesDirectory)/build
       env:
         GTEST_COLOR: 1
 # WINDOWS
