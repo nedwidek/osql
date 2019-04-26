@@ -49,6 +49,7 @@ jobs:
         pathtoPublish: $(Build.ArtifactStagingDirectory)/source.tar
         artifactName: linux-osquery-source
 
+
   - job: LinuxTest
 
     pool:
@@ -78,6 +79,7 @@ jobs:
       workingDirectory: $(Build.BinariesDirectory)/build
       env:
         GTEST_COLOR: 1
+
 
   - job: LinuxPackaging
     condition: always()
@@ -117,8 +119,9 @@ jobs:
     - script: |
         cmake --build . --target package -j 3
         version=`dpkg-deb -f osquery*.deb Version`; echo -n '##vso[task.setvariable variable=version]'; echo $version
+        echo -n '##vso[task.setvariable variable=package_name]'; echo osquery*.deb
         mkdir $(Build.ArtifactStagingDirectory)/package
-        mv osquery*.deb $(Build.ArtifactStagingDirectory)/package
+        mv $(package_name) $(Build.ArtifactStagingDirectory)/package
       displayName: "Create package"
       workingDirectory: $(Build.BinariesDirectory)/build
 
@@ -128,8 +131,8 @@ jobs:
         command: publish
         publishDirectory: '$(Build.ArtifactStagingDirectory)/package'
         vstsFeedPublish: 'osql_releases'
-        vstsFeedPackagePublish: 'osquery'
-        packagePublishDescription: 'osquery'
+        vstsFeedPackagePublish: '$(package_name)'
+        packagePublishDescription: 'osql official Linux release version $(version)'
         versionOption: custom
         versionPublish: $(version)
 
