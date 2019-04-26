@@ -103,10 +103,9 @@ jobs:
 
     - script: |
         cpack -G "DEB"
-        package=`find . -name "*.deb"`
-        version=`dpkg-deb -f ../build/$package Version`; echo '##vso[task.setvariable variable=version]$version'
+        version=`dpkg-deb -f osquery*.deb Version`; echo '##vso[task.setvariable variable=version]$version'
         mkdir $(Build.ArtifactStagingDirectory)/package
-        mv $package $(Build.ArtifactStagingDirectory)/package
+        mv osquery*.deb $(Build.ArtifactStagingDirectory)/package
       displayName: "Create package"
       workingDirectory: $(Build.BinariesDirectory)/build
 
