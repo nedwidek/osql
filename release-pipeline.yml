@@ -1,6 +1,9 @@
 trigger:
 - release_test
 
+pr:
+  
+
 jobs:
 
 # LINUX
@@ -69,7 +72,7 @@ jobs:
         downloadPath: $(Build.BinariesDirectory)
 
     - script: |
-        tar -xvf linux-osquery-build/build.tar -C $(Build.BinariesDirectory)
+        tar -xvf linux-osquery-build/build.tar
       displayName: "Untar build folder"
       workingDirectory: $(Build.BinariesDirectory)
 
@@ -107,12 +110,12 @@ jobs:
         downloadPath: $(Build.BinariesDirectory)
 
     - script: |
-        tar -xvf linux-osquery-build/build.tar -C $(Build.BinariesDirectory)
+        tar -xvf linux-osquery-build/build.tar
       displayName: "Untar build folder"
       workingDirectory: $(Build.BinariesDirectory)
 
     - script: |
-        tar -xvf linux-osquery-source/source.tar -C $(Build.SourcesDirectory)
+        tar -xvf linux-osquery-source/source.tar
       displayName: "Untar source folder"
       workingDirectory: $(Build.BinariesDirectory)
 
@@ -121,7 +124,7 @@ jobs:
         version=`dpkg-deb -f osquery*.deb Version`; echo -n '##vso[task.setvariable variable=version]'; echo $version
         echo -n '##vso[task.setvariable variable=package_name]'; echo osquery*.deb
         mkdir $(Build.ArtifactStagingDirectory)/package
-        mv $(package_name) $(Build.ArtifactStagingDirectory)/package
+        mv osquery*.deb $(Build.ArtifactStagingDirectory)/package
       displayName: "Create package"
       workingDirectory: $(Build.BinariesDirectory)/build
 
