@@ -114,7 +114,7 @@ jobs:
       workingDirectory: $(Build.BinariesDirectory)
 
     - script: |
-        tar -xvf linux-osquery-source/source.tar
+        tar -xvf linux-osquery-source/source.tar -C $(Build.SourcesDirectory)
       displayName: "Untar source folder"
       workingDirectory: $(Build.BinariesDirectory)
 
