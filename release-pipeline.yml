@@ -28,15 +28,26 @@ jobs:
         cmakeArgs: --build . -j 3
 
     - script: |
-        tar -H posix -cf build.tar build
+        tar -H posix -cf $(Build.ArtifactStagingDirectory)/build.tar build
       displayName: "Tar the build folder"
       workingDirectory: $(Build.BinariesDirectory)
+
+    - script: |
+        tar -H posix -cf $(Build.ArtifactStagingDirectory)/source.tar .
+        displayName: "Tar the source folder"
+      workingDirectory: $(Build.SourcesDirectory)
 
     - task: PublishBuildArtifacts@1
       displayName: "Publish build folder for the next job"
       inputs:
-        pathtoPublish: $(Build.BinariesDirectory)/build.tar
+        pathtoPublish: $(Build.ArtifactStagingDirectory)/build.tar
         artifactName: linux-osquery-build
+
+    - task: PublishBuildArtifacts@1
+      displayName: "Publish source folder for the packaging job"
+      inputs:
+        pathtoPublish: $(Build.ArtifactStagingDirectory)/source.tar
+        artifactName: linux-osquery-source
 
   - job: LinuxTest
 
@@ -57,12 +68,7 @@ jobs:
         downloadPath: $(Build.BinariesDirectory)
 
     - script: |
-        mv $(Build.BinariesDirectory)/linux-osquery-build/build.tar $(Build.BinariesDirectory)/build.tar
-        rmdir $(Build.BinariesDirectory)/linux-osquery-build
-      displayName: "Move build folder to the original path"
-
-    - script: |
-        tar -xvf $(Build.BinariesDirectory)/build.tar
+        tar -xvf linux-osquery-build/build.tar -C $(Build.BinariesDirectory)
       displayName: "Untar build folder"
       workingDirectory: $(Build.BinariesDirectory)
 
@@ -84,6 +90,7 @@ jobs:
     dependsOn: LinuxTest
 
     steps:
+    - checkout: none
 
     - task: DownloadBuildArtifacts@0
       displayName: "Download build folder"
@@ -91,19 +98,25 @@ jobs:
         artifactName: linux-osquery-build
         downloadPath: $(Build.BinariesDirectory)
 
-    - script: |
-        mv $(Build.BinariesDirectory)/linux-osquery-build/build.tar $(Build.BinariesDirectory)/build.tar
-        rmdir $(Build.BinariesDirectory)/linux-osquery-build
-      displayName: "Move build folder to the original path"
+    - task: DownloadBuildArtifacts@0
+      displayName: "Download source folder"
+      inputs:
+        artifactName: linux-osquery-source
+        downloadPath: $(Build.BinariesDirectory)
 
     - script: |
-        tar -xvf $(Build.BinariesDirectory)/build.tar
+        tar -xvf linux-osquery-build/build.tar -C $(Build.BinariesDirectory)
       displayName: "Untar build folder"
       workingDirectory: $(Build.BinariesDirectory)
 
     - script: |
+        tar -xvf linux-osquery-source/source.tar -C $(Build.SourcesDirectory)
+      displayName: "Untar source folder"
+      workingDirectory: $(Build.BinariesDirectory)
+
+    - script: |
         cmake --build . --target package -j 3
-        version=`dpkg-deb -f osquery*.deb Version`; echo '##vso[task.setvariable variable=version]'; echo $version
+        version=`dpkg-deb -f osquery*.deb Version`; echo -n '##vso[task.setvariable variable=version]'; echo $version
         mkdir $(Build.ArtifactStagingDirectory)/package
         mv osquery*.deb $(Build.ArtifactStagingDirectory)/package
       displayName: "Create package"
