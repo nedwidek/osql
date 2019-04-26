@@ -121,7 +121,7 @@ jobs:
     - script: |
         cmake --build . --target package -j 3
         version=`dpkg-deb -f osquery*.deb Version`; echo -n '##vso[task.setvariable variable=version]'; echo $version
-        echo -n '##vso[task.setvariable variable=package_name]'; echo osquery*.deb
+        echo -n '##vso[task.setvariable variable=package_name]'; tmp=`echo osquery*.deb`; echo ${tmp,,}
         mkdir $(Build.ArtifactStagingDirectory)/package
         mv osquery*.deb $(Build.ArtifactStagingDirectory)/package
       displayName: "Create package"
