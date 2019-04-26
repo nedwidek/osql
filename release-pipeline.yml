@@ -34,7 +34,7 @@ jobs:
 
     - script: |
         tar -H posix -cf $(Build.ArtifactStagingDirectory)/source.tar .
-        displayName: "Tar the source folder"
+      displayName: "Tar the source folder"
       workingDirectory: $(Build.SourcesDirectory)
 
     - task: PublishBuildArtifacts@1
