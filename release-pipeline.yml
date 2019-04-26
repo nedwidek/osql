@@ -1,8 +1,7 @@
 trigger:
 - release_test
 
-pr:
-  
+pr: none
 
 jobs:
 
