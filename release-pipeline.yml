@@ -28,7 +28,7 @@ jobs:
         cmakeArgs: --build . -j 3
 
     - script: |
-        tar -cf build.tar build
+        tar -H posix -cf build.tar build
       displayName: "Tar the build folder"
       workingDirectory: $(Build.BinariesDirectory)
 
@@ -103,7 +103,7 @@ jobs:
 
     - script: |
         cmake --build . --target package -j 3
-        version=`dpkg-deb -f osquery*.deb Version`; echo '##vso[task.setvariable variable=version]$version'
+        version=`dpkg-deb -f osquery*.deb Version`; echo '##vso[task.setvariable variable=version]'; echo $version
         mkdir $(Build.ArtifactStagingDirectory)/package
         mv osquery*.deb $(Build.ArtifactStagingDirectory)/package
       displayName: "Create package"
