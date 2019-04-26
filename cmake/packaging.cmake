@@ -206,6 +206,9 @@ function(generateInstallTargets)
 
     install(FILES "${OSQUERY_SOURCE_DIR}/tools/deployment/osquery.example.conf" DESTINATION /private/var/osquery COMPONENT osquery)
   endif()
+
+  file(COPY "${CMAKE_SOURCE_DIR}/LICENSE" DESTINATION "${CMAKE_BINARY_DIR}/package")
+  file(RENAME "${CMAKE_BINARY_DIR}/package/LICENSE" "${CMAKE_BINARY_DIR}/package/LICENSE.txt")
 endfunction()
 
 function(generatePackageTarget)
@@ -222,6 +225,7 @@ set(CPACK_PACKAGE_CONTACT "osql@trailofbits.com")
 set(CPACK_PACKAGE_HOMEPAGE_URL "https://osql.io")
 set(CPACK_PROJECT_CONFIG_FILE "${CMAKE_BINARY_DIR}/package/CPackConfig.cmake")
 set(CPACK_PACKAGE_RELOCATABLE ON)
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_BINARY_DIR}/package/LICENSE.txt")
 
 configure_file(cmake/CPackConfig.cmake.in package/CPackConfig.cmake @ONLY)
 
