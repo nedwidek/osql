@@ -120,7 +120,7 @@ jobs:
 
     - script: |
         cmake --build . --target package -j 3
-        version=`dpkg-deb -f osquery*.deb Version`; echo -n '##vso[task.setvariable variable=version]'; echo $version
+        version=`echo osquery-*.deb | awk -F '-' '{ print $2 }'`; echo -n '##vso[task.setvariable variable=version]'; echo $version
         echo -n '##vso[task.setvariable variable=package_name]'; tmp=`echo osquery*.deb`; echo ${tmp,,}
         mkdir $(Build.ArtifactStagingDirectory)/package
         mv osquery*.deb $(Build.ArtifactStagingDirectory)/package
@@ -141,89 +141,140 @@ jobs:
 
 # LINUX
 
-# # MACOS
+# MACOS
 
-#   - job: macOSBuild
+  - job: macOSBuild
 
-#     pool:
-#       vmImage: macos-10.14
+    pool:
+      vmImage: macos-10.14
 
-#     steps:
-#       - script: |
-#           brew upgrade
-#           brew install llvm@6
-#         displayName: "Install Homebrew and prerequisites"
-#         timeoutInMinutes: 20
+    steps:
+      - script: |
+          brew upgrade
+          brew install llvm@6 ccache
+        displayName: "Install Homebrew and prerequisites"
+        timeoutInMinutes: 20
 
-#       - script: mkdir $(Build.BinariesDirectory)/build
-#         displayName: "Create build folder"
+      - script: mkdir $(Build.BinariesDirectory)/build
+        displayName: "Create build folder"
 
-#       - task: CMake@1
-#         displayName: "Configure osquery"
-#         inputs:
-#           workingDirectory: $(Build.BinariesDirectory)/build
-#           cmakeArgs: -DCMAKE_BUILD_TYPE=Release cmake ../src -DCMAKE_C_COMPILER=/usr/local/opt/llvm@6/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm@6/bin/clang++ -DBUILD_TESTING=ON $(Build.SourcesDirectory)
+      - task: CMake@1
+        displayName: "Configure osquery"
+        inputs:
+          workingDirectory: $(Build.BinariesDirectory)/build
+          cmakeArgs: -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=/usr/local/opt/llvm@6/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm@6/bin/clang++ -DBUILD_TESTING=ON $(Build.SourcesDirectory)
 
-#       - task: CMake@1
-#         displayName: "Build osquery"
-#         inputs:
-#           workingDirectory: $(Build.BinariesDirectory)/build
-#           cmakeArgs: --build . -j 3
+      - task: CMake@1
+        displayName: "Build osquery"
+        inputs:
+          workingDirectory: $(Build.BinariesDirectory)/build
+          cmakeArgs: --build . -j 3
 
-#       - task: CopyFiles@2
-#         displayName: "Copy build folder to staging directory"
-#         inputs:
-#           sourceFolder: $(Build.BinariesDirectory)
-#           contents: |
-#             build/**/CTestTestfile.cmake
-#             build/**/*-test
-#             build/test_configs/**
-#           targetFolder: $(Build.ArtifactStagingDirectory)
+      - script: |
+          tar -cf $(Build.ArtifactStagingDirectory)/build.tar build
+        displayName: "Tar the build folder"
+        workingDirectory: $(Build.BinariesDirectory)
 
-#       - script: |
-#           cd $(Build.ArtifactStagingDirectory)
-#           tar -cf build.tar build
-#         displayName: "Tar the build folder"
+      - script: |
+          tar -cf $(Build.ArtifactStagingDirectory)/source.tar .
+        displayName: "Tar the source folder"
+        workingDirectory: $(Build.SourcesDirectory)
 
-#       - task: PublishBuildArtifacts@1
-#         displayName: "Publish build folder for the next job"
-#         inputs:
-#           pathtoPublish: $(Build.ArtifactStagingDirectory)/build.tar
-#           artifactName: macos-osquery-build
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish build folder for the next job"
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/build.tar
+          artifactName: macos-osquery-build
 
-#   - job: macOSTest
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish source folder for the packaging job"
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/source.tar
+          artifactName: macos-osquery-source
 
-#     pool:
-#       vmImage: macos-10.14
 
-#     dependsOn: macOSBuild
+  - job: macOSTest
 
-#     steps:
-#     - checkout: none
+    pool:
+      vmImage: macos-10.14
 
-#     - task: DownloadBuildArtifacts@0
-#       displayName: "Download build folder"
-#       inputs:
-#         artifactName: macos-osquery-build
-#         downloadPath: $(Build.BinariesDirectory)
+    dependsOn: macOSBuild
 
-#     - script: |
-#         mv $(Build.BinariesDirectory)/macos-osquery-build/build.tar $(Build.BinariesDirectory)/build.tar
-#         rmdir $(Build.BinariesDirectory)/macos-osquery-build
-#       displayName: "Move build folder to the original path"
+    steps:
+    - checkout: none
 
-#     - script: |
-#         cd $(Build.BinariesDirectory)
-#         tar -xvf $(Build.BinariesDirectory)/build.tar
-#       displayName: "Untar build folder"
+    - task: DownloadBuildArtifacts@0
+      displayName: "Download build folder"
+      inputs:
+        artifactName: macos-osquery-build
+        downloadPath: $(Build.BinariesDirectory)
 
-#     - script: |
-#         cd $(Build.BinariesDirectory)/build
-#         ctest --build-nocmake -V
-#       displayName: "Run tests"
-#       env:
-#         GTEST_COLOR: 1
-# # MACOS
+    - script: |
+        tar -xvf macos-osquery-build/build.tar
+      displayName: "Untar build folder"
+      workingDirectory: $(Build.BinariesDirectory)
+
+    - script: |
+        ctest --build-nocmake -V
+      displayName: "Run tests"
+      workingDirectory: $(Build.BinariesDirectory)/build
+      env:
+        GTEST_COLOR: 1
+
+
+  - job: macOSPackaging
+    condition: always()
+
+    pool:
+      vmImage: macos-10.14
+
+    dependsOn: macOSTest
+
+    steps:
+    - checkout: none
+
+    - task: DownloadBuildArtifacts@0
+      displayName: "Download build folder"
+      inputs:
+        artifactName: macos-osquery-build
+        downloadPath: $(Build.BinariesDirectory)
+
+    - task: DownloadBuildArtifacts@0
+      displayName: "Download source folder"
+      inputs:
+        artifactName: macos-osquery-source
+        downloadPath: $(Build.BinariesDirectory)
+
+    - script: |
+        tar -xvf macos-osquery-build/build.tar
+      displayName: "Untar build folder"
+      workingDirectory: $(Build.BinariesDirectory)
+
+    - script: |
+        tar -xvf macos-osquery-source/source.tar -C $(Build.SourcesDirectory)
+      displayName: "Untar source folder"
+      workingDirectory: $(Build.BinariesDirectory)
+
+    - script: |
+        cmake --build . --target package -j 3
+        version=`echo osquery-*.pkg | awk -F '-' '{ print $2 }'`; echo -n '##vso[task.setvariable variable=version]'; echo $version
+        echo -n '##vso[task.setvariable variable=package_name]'; tmp=`echo osquery*.pkg`; echo ${tmp,,}
+        mkdir $(Build.ArtifactStagingDirectory)/package
+        mv osquery*.pkg $(Build.ArtifactStagingDirectory)/package
+      displayName: "Create package"
+      workingDirectory: $(Build.BinariesDirectory)/build
+
+    - task: UniversalPackages@0
+      displayName: Publish PKG package to Artifact Feed
+      inputs:
+        command: publish
+        publishDirectory: '$(Build.ArtifactStagingDirectory)/package'
+        vstsFeedPublish: 'osql_releases'
+        vstsFeedPackagePublish: '$(package_name)'
+        packagePublishDescription: 'osql official macOS release version $(version)'
+        versionOption: custom
+        versionPublish: $(version)
+# MACOS
 
 # # WINDOWS
 
