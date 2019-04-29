@@ -258,7 +258,7 @@ jobs:
     - script: |
         cmake --build . --target package -j 3
         version=`echo osquery-*.pkg | awk -F '-' '{ print $2 }'`; echo -n '##vso[task.setvariable variable=version]'; echo $version
-        echo -n '##vso[task.setvariable variable=package_name]'; tmp=`echo osquery*.pkg`; echo ${tmp,,}
+        echo -n '##vso[task.setvariable variable=package_name]'; echo osquery*.pkg | awk '{ print tolower($0) }'
         mkdir $(Build.ArtifactStagingDirectory)/package
         mv osquery*.pkg $(Build.ArtifactStagingDirectory)/package
       displayName: "Create package"
