@@ -288,17 +288,24 @@ jobs:
         mkdir $(Build.BinariesDirectory)\build
       displayName: "Create build folder"
 
-    - task: CMake@1
-      displayName: "Configure osquery"
-      inputs:
-        workingDirectory: $(Build.BinariesDirectory)\build
-        cmakeArgs: -G "Visual Studio 15 2017 Win64" -T host=x64 -DBUILD_TESTING=ON $(Build.SourcesDirectory)
+    # - task: CMake@1
+    #   displayName: "Configure osquery"
+    #   inputs:
+    #     workingDirectory: $(Build.BinariesDirectory)\build
+    #     cmakeArgs: -G "Visual Studio 15 2017 Win64" -T host=x64 -DBUILD_TESTING=ON $(Build.SourcesDirectory)
 
-    - task: CMake@1
-      displayName: "Build osquery"
-      inputs:
-        workingDirectory: $(Build.BinariesDirectory)\build
-        cmakeArgs: --build . -j 3 --config Release
+    # - task: CMake@1
+    #   displayName: "Build osquery"
+    #   inputs:
+    #     workingDirectory: $(Build.BinariesDirectory)\build
+    #     cmakeArgs: --build . -j 3 --config Release
+
+    # Delete me
+    - powershell: |
+        echo "" > test
+        mkdir testdir
+        echo "" > testdir\test
+      workingDirectory: $(Build.BinariesDirectory)\build
 
     - task: CopyFiles@2
       displayName: "Copy build folder to staging directory"
@@ -309,9 +316,9 @@ jobs:
         targetFolder: $(Build.ArtifactStagingDirectory)
 
     - task: CopyFiles@2
-      displayName: "Copy build folder to staging directory"
+      displayName: "Copy source folder to staging directory"
       inputs:
-        sourceFolder: $(Build.SourceDirectory)
+        sourceFolder: $(Build.SourcesDirectory)
         contents: |
           **\*
         targetFolder: $(Build.ArtifactStagingDirectory)/source
@@ -344,15 +351,42 @@ jobs:
         artifactName: windows-osquery-build
         downloadPath: $(Build.BinariesDirectory)
 
-    - powershell: |
-        mv $(Build.BinariesDirectory)/windows-osquery-build/build $(Build.BinariesDirectory)/build
-        rmdir $(Build.BinariesDirectory)/windows-osquery-build
-      displayName: "Move build folder to the original path"
+    # Delete me
+    - task: DownloadBuildArtifacts@0
+      displayName: "Download source folder"
+      inputs:
+        artifactName: windows-osquery-source
+        downloadPath: $(Build.BinariesDirectory)
 
     - powershell: |
-        cd $(Build.BinariesDirectory)/build
-        ctest --build-nocmake -C Release -V
+        mv $(Build.BinariesDirectory)/windows-osquery-build $(Build.BinariesDirectory)/build
+      displayName: "Move build folder to the original path"
+
+    # Delete me
+    - powershell: |
+        Get-ChildItem -Path "$(Build.BinariesDirectory)/windows-osquery-source" -Recurse |  Move-Item -Destination "$(Build.SourcesDirectory)"
+        rmdir $(Build.BinariesDirectory)/windows-osquery-source
+      displayName: "Move build folder to the original path"
+
+    # - powershell: |
+    #     ctest --build-nocmake -C Release -V
+    #   displayName: "Run tests"
+    #   workingDirectory: $(Build.BinariesDirectory)/build
+    #   env:
+    #     GTEST_COLOR: 1
+
+    # Delete me
+    - powershell: |
+        ls
+        ls testdir
       displayName: "Run tests"
+      workingDirectory: $(Build.BinariesDirectory)/build
       env:
         GTEST_COLOR: 1
+
+    # Delete me
+    - powershell: |
+        ls
+      displayName: "Run tests"
+      workingDirectory: $(Build.BinariesDirectory)/build
 # WINDOWS
