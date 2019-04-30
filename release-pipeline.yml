@@ -388,5 +388,5 @@ jobs:
     - powershell: |
         ls
       displayName: "Run tests"
-      workingDirectory: $(Build.BinariesDirectory)/build
+      workingDirectory: $(Build.SourcesDirectory)
 # WINDOWS
