@@ -284,49 +284,43 @@ jobs:
       vmImage: vs2017-win2016
 
     steps:
-    - powershell: |
-        mkdir $(Build.BinariesDirectory)\build
-      displayName: "Create build folder"
+      - powershell: |
+          mkdir $(Build.BinariesDirectory)\build
+        displayName: "Create build folder"
 
-    - task: CMake@1
-      displayName: "Configure osquery"
-      inputs:
-        workingDirectory: $(Build.BinariesDirectory)\build
-        cmakeArgs: -G "Visual Studio 15 2017 Win64" -T host=x64 -DBUILD_TESTING=ON $(Build.SourcesDirectory)
+      - task: CMake@1
+        displayName: "Configure osquery"
+        inputs:
+          workingDirectory: $(Build.BinariesDirectory)\build
+          cmakeArgs: -G "Visual Studio 15 2017 Win64" -T host=x64 -DBUILD_TESTING=ON $(Build.SourcesDirectory)
 
-    - task: CMake@1
-      displayName: "Build osquery"
-      inputs:
-        workingDirectory: $(Build.BinariesDirectory)\build
-        cmakeArgs: --build . -j 3 --config Release
+      - task: CMake@1
+        displayName: "Build osquery"
+        inputs:
+          workingDirectory: $(Build.BinariesDirectory)\build
+          cmakeArgs: --build . -j 3 --config Release
 
-    - task: CopyFiles@2
-      displayName: "Copy build folder to staging directory"
-      inputs:
-        sourceFolder: $(Build.BinariesDirectory)
-        contents: |
-          build\**
-        targetFolder: $(Build.ArtifactStagingDirectory)
+      - powershell: |
+          tar -cf $(Build.ArtifactStagingDirectory)/build.tar build
+        displayName: "Tar the build folder"
+        workingDirectory: $(Build.BinariesDirectory)
 
-    - task: CopyFiles@2
-      displayName: "Copy source folder to staging directory"
-      inputs:
-        sourceFolder: $(Build.SourcesDirectory)
-        contents: |
-          **\*
-        targetFolder: $(Build.ArtifactStagingDirectory)/source
+      - powershell: |
+          tar -cf $(Build.ArtifactStagingDirectory)/source.tar .
+        displayName: "Tar the source folder"
+        workingDirectory: $(Build.SourcesDirectory)
 
-    - task: PublishBuildArtifacts@1
-      displayName: "Publish build folder for the next job"
-      inputs:
-        pathtoPublish: $(Build.ArtifactStagingDirectory)/build
-        artifactName: windows-osquery-build
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish build folder for the next job"
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/build.tar
+          artifactName: windows-osquery-build
 
-    - task: PublishBuildArtifacts@1
-      displayName: "Publish source folder for the packaging job"
-      inputs:
-        pathtoPublish: $(Build.ArtifactStagingDirectory)/source
-        artifactName: windows-osquery-source
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish source folder for the packaging job"
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/source.tar
+          artifactName: windows-osquery-source
 
 
   - job: WindowsTest
@@ -337,24 +331,25 @@ jobs:
     dependsOn: WindowsBuild
 
     steps:
-    - checkout: none
+      - checkout: none
 
-    - task: DownloadBuildArtifacts@0
-      displayName: "Download build folder"
-      inputs:
-        artifactName: windows-osquery-build
-        downloadPath: $(Build.BinariesDirectory)
+      - task: DownloadBuildArtifacts@0
+        displayName: "Download build folder"
+        inputs:
+          artifactName: windows-osquery-build
+          downloadPath: $(Build.BinariesDirectory)
 
-    - powershell: |
-        mv $(Build.BinariesDirectory)/windows-osquery-build $(Build.BinariesDirectory)/build
-      displayName: "Move build folder to the original path"
+      - powershell: |
+          tar -xvf windows-osquery-build/build.tar
+        displayName: "Untar build folder"
+        workingDirectory: $(Build.BinariesDirectory)
 
-    - powershell: |
-        ctest --build-nocmake -C Release -V
-      displayName: "Run tests"
-      workingDirectory: $(Build.BinariesDirectory)/build
-      env:
-        GTEST_COLOR: 1
+      - powershell: |
+          ctest --build-nocmake -C Release -V
+        displayName: "Run tests"
+        workingDirectory: $(Build.BinariesDirectory)/build
+        env:
+          GTEST_COLOR: 1
 
 
   - job: WindowsPackaging
@@ -380,15 +375,16 @@ jobs:
           downloadPath: $(Build.BinariesDirectory)
 
       - powershell: |
-          mv $(Build.BinariesDirectory)/windows-osquery-build $(Build.BinariesDirectory)/build
-        displayName: "Move build folder to the original path"
+          tar -xvf windows-osquery-build/build.tar
+        displayName: "Untar build folder"
+        workingDirectory: $(Build.BinariesDirectory)
 
       - powershell: |
-          Get-ChildItem -Path "$(Build.BinariesDirectory)/windows-osquery-source" -Recurse |  Move-Item -Destination "$(Build.SourcesDirectory)"
-          rmdir $(Build.BinariesDirectory)/windows-osquery-source
-        displayName: "Copy source files to their original path"
+          tar -xvf windows-osquery-source/source.tar -C $(Build.SourcesDirectory)
+        displayName: "Untar source folder"
+        workingDirectory: $(Build.BinariesDirectory)
 
-      - script: |
+      - powershell: |
           cmake --build . --target package -j 3
           $Env:version = (gi osquery*.msi).name.split("{-}")[1]; echo "##vso[task.setvariable variable=version]$Env:version"
           $Env:package_name = (gi osquery*.msi).name; echo "##vso[task.setvariable variable=package_name]$Env:package_name"
