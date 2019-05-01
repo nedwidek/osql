@@ -301,7 +301,7 @@ jobs:
           cmakeArgs: --build . -j 3 --config Release
 
       - powershell: |
-          tar --exclude ns_*/* --force-local -cf $(Build.ArtifactStagingDirectory)/build.tar build
+          tar --exclude ns_*/* --exclude tools/codegen/* --force-local -cf $(Build.ArtifactStagingDirectory)/build.tar build
         displayName: "Tar the build folder"
         workingDirectory: $(Build.BinariesDirectory)
 
