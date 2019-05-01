@@ -381,7 +381,7 @@ jobs:
         workingDirectory: $(Build.BinariesDirectory)
 
       - powershell: |
-          tar --force-local -xvf windows-osquery-source/source.tar -C $(Build.SourcesDirectory)
+          tar -xvf windows-osquery-source/source.tar --force-local -C $(Build.SourcesDirectory)
         displayName: "Untar source folder"
         workingDirectory: $(Build.BinariesDirectory)
 
