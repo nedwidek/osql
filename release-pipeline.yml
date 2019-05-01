@@ -353,6 +353,7 @@ jobs:
 
 
   - job: WindowsPackaging
+    condition: always()
 
     pool:
       vmImage: vs2017-win2016
