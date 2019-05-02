@@ -276,132 +276,145 @@ jobs:
 #         versionPublish: $(version)
 # # MACOS
 
-# WINDOWS
+    - job: WindowsTemp
+      pool:
+        vmImage: vs2017-win2016
 
-  - job: WindowsBuild
+      steps:
+        - checkout: none
 
-    pool:
-      vmImage: vs2017-win2016
+        - powershell: |
+            (Get-Command ln).Path
+          displayName: "Test find"
+          workingDirectory: $(Build.BinariesDirectory)
 
-    steps:
-      - powershell: |
-          mkdir $(Build.BinariesDirectory)\build
-        displayName: "Create build folder"
+# # WINDOWS
 
-      - task: CMake@1
-        displayName: "Configure osquery"
-        inputs:
-          workingDirectory: $(Build.BinariesDirectory)\build
-          cmakeArgs: -G "Visual Studio 15 2017 Win64" -T host=x64 -DBUILD_TESTING=ON $(Build.SourcesDirectory)
+#   - job: WindowsBuild
 
-      - task: CMake@1
-        displayName: "Build osquery"
-        inputs:
-          workingDirectory: $(Build.BinariesDirectory)\build
-          cmakeArgs: --build . -j 3 --config Release
+#     pool:
+#       vmImage: vs2017-win2016
 
-      - powershell: |
-          tar --exclude ns_*/* --exclude tools/codegen/* --force-local -cf $(Build.ArtifactStagingDirectory)/build.tar build
-        displayName: "Tar the build folder"
-        workingDirectory: $(Build.BinariesDirectory)
+#     steps:
+#       - powershell: |
+#           mkdir $(Build.BinariesDirectory)\build
+#         displayName: "Create build folder"
 
-      - powershell: |
-          tar --force-local -cf $(Build.ArtifactStagingDirectory)/source.tar .
-        displayName: "Tar the source folder"
-        workingDirectory: $(Build.SourcesDirectory)
+#       - task: CMake@1
+#         displayName: "Configure osquery"
+#         inputs:
+#           workingDirectory: $(Build.BinariesDirectory)\build
+#           cmakeArgs: -G "Visual Studio 15 2017 Win64" -T host=x64 -DBUILD_TESTING=ON $(Build.SourcesDirectory)
 
-      - task: PublishBuildArtifacts@1
-        displayName: "Publish build folder for the next job"
-        inputs:
-          pathtoPublish: $(Build.ArtifactStagingDirectory)/build.tar
-          artifactName: windows-osquery-build
+#       - task: CMake@1
+#         displayName: "Build osquery"
+#         inputs:
+#           workingDirectory: $(Build.BinariesDirectory)\build
+#           cmakeArgs: --build . -j 3 --config Release
 
-      - task: PublishBuildArtifacts@1
-        displayName: "Publish source folder for the packaging job"
-        inputs:
-          pathtoPublish: $(Build.ArtifactStagingDirectory)/source.tar
-          artifactName: windows-osquery-source
+#       - powershell: |
+#           tar --exclude ns_*/* --exclude tools/codegen/* --force-local -cf $(Build.ArtifactStagingDirectory)/build.tar build
+#         displayName: "Tar the build folder"
+#         workingDirectory: $(Build.BinariesDirectory)
 
+#       - powershell: |
+#           tar --force-local -cf $(Build.ArtifactStagingDirectory)/source.tar .
+#         displayName: "Tar the source folder"
+#         workingDirectory: $(Build.SourcesDirectory)
 
-  - job: WindowsTest
+#       - task: PublishBuildArtifacts@1
+#         displayName: "Publish build folder for the next job"
+#         inputs:
+#           pathtoPublish: $(Build.ArtifactStagingDirectory)/build.tar
+#           artifactName: windows-osquery-build
 
-    pool:
-      vmImage: vs2017-win2016
-
-    dependsOn: WindowsBuild
-
-    steps:
-      - checkout: none
-
-      - task: DownloadBuildArtifacts@0
-        displayName: "Download build folder"
-        inputs:
-          artifactName: windows-osquery-build
-          downloadPath: $(Build.BinariesDirectory)
-
-      - powershell: |
-          tar -xvf windows-osquery-build/build.tar
-        displayName: "Untar build folder"
-        workingDirectory: $(Build.BinariesDirectory)
-
-      - powershell: |
-          ctest --build-nocmake -C Release -V
-        displayName: "Run tests"
-        workingDirectory: $(Build.BinariesDirectory)/build
-        env:
-          GTEST_COLOR: 1
+#       - task: PublishBuildArtifacts@1
+#         displayName: "Publish source folder for the packaging job"
+#         inputs:
+#           pathtoPublish: $(Build.ArtifactStagingDirectory)/source.tar
+#           artifactName: windows-osquery-source
 
 
-  - job: WindowsPackaging
-    condition: always()
+#   - job: WindowsTest
 
-    pool:
-      vmImage: vs2017-win2016
+#     pool:
+#       vmImage: vs2017-win2016
 
-    dependsOn: WindowsTest
+#     dependsOn: WindowsBuild
 
-    steps:
-      - checkout: none
+#     steps:
+#       - checkout: none
 
-      - task: DownloadBuildArtifacts@0
-        displayName: "Download build folder"
-        inputs:
-          artifactName: windows-osquery-build
-          downloadPath: $(Build.BinariesDirectory)
+#       - task: DownloadBuildArtifacts@0
+#         displayName: "Download build folder"
+#         inputs:
+#           artifactName: windows-osquery-build
+#           downloadPath: $(Build.BinariesDirectory)
 
-      - task: DownloadBuildArtifacts@0
-        displayName: "Download source folder"
-        inputs:
-          artifactName: windows-osquery-source
-          downloadPath: $(Build.BinariesDirectory)
+#       - powershell: |
+#           tar -xvf windows-osquery-build/build.tar
+#         displayName: "Untar build folder"
+#         workingDirectory: $(Build.BinariesDirectory)
 
-      - powershell: |
-          tar -xvf windows-osquery-build/build.tar
-        displayName: "Untar build folder"
-        workingDirectory: $(Build.BinariesDirectory)
+#       - powershell: |
+#           ctest --build-nocmake -C Release -V
+#         displayName: "Run tests"
+#         workingDirectory: $(Build.BinariesDirectory)/build
+#         env:
+#           GTEST_COLOR: 1
 
-      - powershell: |
-          tar --force-local -xvf $(Build.BinariesDirectory)/windows-osquery-source/source.tar
-        displayName: "Untar source folder"
-        workingDirectory: $(Build.SourcesDirectory)
 
-      - powershell: |
-          cmake --build . --target package -j 3
-          $Env:version = (gi osquery*.msi).name.split("{-}")[1]; echo "##vso[task.setvariable variable=version]$Env:version"
-          $Env:package_name = (gi osquery*.msi).name; echo "##vso[task.setvariable variable=package_name]$Env:package_name"
-          mkdir $(Build.ArtifactStagingDirectory)/package
-          mv (gi osquery*.msi).name $(Build.ArtifactStagingDirectory)/package
-        displayName: "Create package"
-        workingDirectory: $(Build.BinariesDirectory)/build
+#   - job: WindowsPackaging
+#     condition: always()
 
-      - task: UniversalPackages@0
-        displayName: Publish PKG package to Artifact Feed
-        inputs:
-          command: publish
-          publishDirectory: '$(Build.ArtifactStagingDirectory)/package'
-          vstsFeedPublish: 'osql_releases'
-          vstsFeedPackagePublish: '$(package_name)'
-          packagePublishDescription: 'osql official Windows release version $(version)'
-          versionOption: custom
-          versionPublish: $(version)
-# WINDOWS
+#     pool:
+#       vmImage: vs2017-win2016
+
+#     dependsOn: WindowsTest
+
+#     steps:
+#       - checkout: none
+
+#       - task: DownloadBuildArtifacts@0
+#         displayName: "Download build folder"
+#         inputs:
+#           artifactName: windows-osquery-build
+#           downloadPath: $(Build.BinariesDirectory)
+
+#       - task: DownloadBuildArtifacts@0
+#         displayName: "Download source folder"
+#         inputs:
+#           artifactName: windows-osquery-source
+#           downloadPath: $(Build.BinariesDirectory)
+
+#       - powershell: |
+#           tar -xvf windows-osquery-build/build.tar
+#           rm windows-osquery-build/build.tar
+#         displayName: "Untar build folder"
+#         workingDirectory: $(Build.BinariesDirectory)
+
+#       - powershell: |
+#           tar --force-local -xvf $(Build.BinariesDirectory)/windows-osquery-source/source.tar
+#         displayName: "Untar source folder"
+#         workingDirectory: $(Build.SourcesDirectory)
+
+#       - powershell: |
+#           cmake --build . --target package -j 3
+#           $Env:version = (gi osquery*.msi).name.split("{-}")[1]; echo "##vso[task.setvariable variable=version]$Env:version"
+#           $Env:package_name = (gi osquery*.msi).name; echo "##vso[task.setvariable variable=package_name]$Env:package_name"
+#           mkdir $(Build.ArtifactStagingDirectory)/package
+#           mv (gi osquery*.msi).name $(Build.ArtifactStagingDirectory)/package
+#         displayName: "Create package"
+#         workingDirectory: $(Build.BinariesDirectory)/build
+
+#       - task: UniversalPackages@0
+#         displayName: Publish PKG package to Artifact Feed
+#         inputs:
+#           command: publish
+#           publishDirectory: '$(Build.ArtifactStagingDirectory)/package'
+#           vstsFeedPublish: 'osql_releases'
+#           vstsFeedPackagePublish: '$(package_name)'
+#           packagePublishDescription: 'osql official Windows release version $(version)'
+#           versionOption: custom
+#           versionPublish: $(version)
+# # WINDOWS
