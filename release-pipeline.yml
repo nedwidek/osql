@@ -381,9 +381,9 @@ jobs:
         workingDirectory: $(Build.BinariesDirectory)
 
       - powershell: |
-          tar -xvf windows-osquery-source/source.tar --force-local -C $(Build.SourcesDirectory)
+          tar --force-local -xvf $(Build.BinariesDirectory)/windows-osquery-source/source.tar
         displayName: "Untar source folder"
-        workingDirectory: $(Build.BinariesDirectory)
+        workingDirectory: $(Build.SourcesDirectory)
 
       - powershell: |
           cmake --build . --target package -j 3
