@@ -301,25 +301,25 @@ jobs:
           cmakeArgs: --build . -j 3 --config Release
 
       - powershell: |
-          C:\Windows\system32\tar.exe -cf $(Build.ArtifactStagingDirectory)/build.tar build
-        displayName: "Tar the build folder"
+          compress-archive -path "$(Build.BinariesDirectory)\build" -destinationpath "$(Build.ArtifactStagingDirectory)\build.zip" -compressionlevel NoCompression
+        displayName: "Zip the build folder"
         workingDirectory: $(Build.BinariesDirectory)
 
       - powershell: |
-          C:\Windows\system32\tar.exe -cf $(Build.ArtifactStagingDirectory)/source.tar .
-        displayName: "Tar the source folder"
+          compress-archive -path "." -destinationpath "$(Build.ArtifactStagingDirectory)\source.zip" -compressionlevel NoCompression
+        displayName: "Zip the source folder"
         workingDirectory: $(Build.SourcesDirectory)
 
       - task: PublishBuildArtifacts@1
         displayName: "Publish build folder for the next job"
         inputs:
-          pathtoPublish: $(Build.ArtifactStagingDirectory)/build.tar
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/build.zip
           artifactName: windows-osquery-build
 
       - task: PublishBuildArtifacts@1
         displayName: "Publish source folder for the packaging job"
         inputs:
-          pathtoPublish: $(Build.ArtifactStagingDirectory)/source.tar
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/source.zip
           artifactName: windows-osquery-source
 
 
@@ -340,8 +340,8 @@ jobs:
           downloadPath: $(Build.BinariesDirectory)
 
       - powershell: |
-          C:\Windows\system32\tar.exe -xvf windows-osquery-build/build.tar
-        displayName: "Untar build folder"
+          expand-archive -path "windows-osquery-build/build.zip" -destinationpath "."
+        displayName: "Unzip build folder"
         workingDirectory: $(Build.BinariesDirectory)
 
       - powershell: |
@@ -376,15 +376,16 @@ jobs:
           downloadPath: $(Build.BinariesDirectory)
 
       - powershell: |
-          C:\Windows\system32\tar.exe -xvf windows-osquery-build/build.tar
-          rm windows-osquery-build/build.tar
-        displayName: "Untar build folder"
-        workingDirectory: $(Build.BinariesDirectory)
+          expand-archive -path "$(Build.BinariesDirectory)/windows-osquery-source/source.zip" -destinationpath "."
+          ls
+        displayName: "Unzip source folder"
+        workingDirectory: $(Build.SourcesDirectory)
 
       - powershell: |
-          C:\Windows\system32\tar.exe -xvf $(Build.BinariesDirectory)/windows-osquery-source/source.tar
-        displayName: "Untar source folder"
-        workingDirectory: $(Build.SourcesDirectory)
+          expand-archive -path "windows-osquery-build/build.zip" -destinationpath "."
+          rm windows-osquery-build/build.zip
+        displayName: "Unzip build folder"
+        workingDirectory: $(Build.BinariesDirectory)
 
       - powershell: |
           cmake --build . --target package -j 3
