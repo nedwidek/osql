@@ -396,7 +396,7 @@ jobs:
         workingDirectory: $(Build.BinariesDirectory)/build
 
       - task: UniversalPackages@0
-        displayName: Publish PKG package to Artifact Feed
+        displayName: Publish MSI package to Artifact Feed
         inputs:
           command: publish
           publishDirectory: '$(Build.ArtifactStagingDirectory)/package'
