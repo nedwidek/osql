@@ -284,37 +284,37 @@ jobs:
       vmImage: vs2017-win2016
 
     steps:
-  #     - powershell: |
-  #         mkdir $(Build.BinariesDirectory)\build
-  #       displayName: "Create build folder"
+      - powershell: |
+          mkdir $(Build.BinariesDirectory)\build
+        displayName: "Create build folder"
 
-  #     - task: CMake@1
-  #       displayName: "Configure osquery"
-  #       inputs:
-  #         workingDirectory: $(Build.BinariesDirectory)\build
-  #         cmakeArgs: -G "Visual Studio 15 2017 Win64" -T host=x64 -DBUILD_TESTING=ON $(Build.SourcesDirectory)
+      - task: CMake@1
+        displayName: "Configure osquery"
+        inputs:
+          workingDirectory: $(Build.BinariesDirectory)\build
+          cmakeArgs: -G "Visual Studio 15 2017 Win64" -T host=x64 -DBUILD_TESTING=ON $(Build.SourcesDirectory)
 
-  #     - task: CMake@1
-  #       displayName: "Build osquery"
-  #       inputs:
-  #         workingDirectory: $(Build.BinariesDirectory)\build
-  #         cmakeArgs: --build . -j 3 --config Release
+      - task: CMake@1
+        displayName: "Build osquery"
+        inputs:
+          workingDirectory: $(Build.BinariesDirectory)\build
+          cmakeArgs: --build . -j 3 --config Release
 
-      # - powershell: |
-      #     compress-archive -path "$(Build.BinariesDirectory)\build" -destinationpath "$(Build.ArtifactStagingDirectory)\build.zip" -compressionlevel NoCompression
-      #   displayName: "Zip the build folder"
-      #   workingDirectory: $(Build.BinariesDirectory)
+      - powershell: |
+          compress-archive -path "$(Build.BinariesDirectory)\build" -destinationpath "$(Build.ArtifactStagingDirectory)\build.zip" -compressionlevel NoCompression
+        displayName: "Zip the build folder"
+        workingDirectory: $(Build.BinariesDirectory)
 
       - powershell: |
           compress-archive -path ".\*" -destinationpath "$(Build.ArtifactStagingDirectory)\source.zip" -compressionlevel NoCompression
         displayName: "Zip the source folder"
         workingDirectory: $(Build.SourcesDirectory)
 
-      # - task: PublishBuildArtifacts@1
-      #   displayName: "Publish build folder for the next job"
-      #   inputs:
-      #     pathtoPublish: $(Build.ArtifactStagingDirectory)/build.zip
-      #     artifactName: windows-osquery-build
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish build folder for the next job"
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/build.zip
+          artifactName: windows-osquery-build
 
       - task: PublishBuildArtifacts@1
         displayName: "Publish source folder for the packaging job"
@@ -323,33 +323,33 @@ jobs:
           artifactName: windows-osquery-source
 
 
-  # - job: WindowsTest
+  - job: WindowsTest
 
-  #   pool:
-  #     vmImage: vs2017-win2016
+    pool:
+      vmImage: vs2017-win2016
 
-  #   dependsOn: WindowsBuild
+    dependsOn: WindowsBuild
 
-  #   steps:
-  #     - checkout: none
+    steps:
+      - checkout: none
 
-  #     - task: DownloadBuildArtifacts@0
-  #       displayName: "Download build folder"
-  #       inputs:
-  #         artifactName: windows-osquery-build
-  #         downloadPath: $(Build.BinariesDirectory)
+      - task: DownloadBuildArtifacts@0
+        displayName: "Download build folder"
+        inputs:
+          artifactName: windows-osquery-build
+          downloadPath: $(Build.BinariesDirectory)
 
-  #     - powershell: |
-  #         expand-archive -path "windows-osquery-build/build.zip" -destinationpath "."
-  #       displayName: "Unzip build folder"
-  #       workingDirectory: $(Build.BinariesDirectory)
+      - powershell: |
+          expand-archive -path "windows-osquery-build/build.zip" -destinationpath "."
+        displayName: "Unzip build folder"
+        workingDirectory: $(Build.BinariesDirectory)
 
-  #     - powershell: |
-  #         ctest --build-nocmake -C Release -V
-  #       displayName: "Run tests"
-  #       workingDirectory: $(Build.BinariesDirectory)/build
-  #       env:
-  #         GTEST_COLOR: 1
+      - powershell: |
+          ctest --build-nocmake -C Release -V
+        displayName: "Run tests"
+        workingDirectory: $(Build.BinariesDirectory)/build
+        env:
+          GTEST_COLOR: 1
 
 
   - job: WindowsPackaging
@@ -358,17 +358,16 @@ jobs:
     pool:
       vmImage: vs2017-win2016
 
-    # dependsOn: WindowsTest
-    dependsOn: WindowsBuild
+    dependsOn: WindowsTest
 
     steps:
       - checkout: none
 
-      # - task: DownloadBuildArtifacts@0
-      #   displayName: "Download build folder"
-      #   inputs:
-      #     artifactName: windows-osquery-build
-      #     downloadPath: $(Build.BinariesDirectory)
+      - task: DownloadBuildArtifacts@0
+        displayName: "Download build folder"
+        inputs:
+          artifactName: windows-osquery-build
+          downloadPath: $(Build.BinariesDirectory)
 
       - task: DownloadBuildArtifacts@0
         displayName: "Download source folder"
@@ -376,39 +375,34 @@ jobs:
           artifactName: windows-osquery-source
           downloadPath: $(Build.BinariesDirectory)
 
-      - task: PowerShell@2
+      - powershell: |
+          expand-archive -path "$(Build.BinariesDirectory)/windows-osquery-source/source.zip" -destinationpath "."
+        displayName: "Unzip source folder"
+        workingDirectory: $(Build.SourcesDirectory)
+
+      - powershell: |
+          expand-archive -path "windows-osquery-build/build.zip" -destinationpath "."
+          rm windows-osquery-build/build.zip
+        displayName: "Unzip build folder"
+        workingDirectory: $(Build.BinariesDirectory)
+
+      - powershell: |
+          cmake --build . --target package -j 3
+          $Env:version = (gi osquery*.msi).name.split("{-}")[1]; echo "##vso[task.setvariable variable=version]$Env:version"
+          $Env:package_name = (gi osquery*.msi).name; echo "##vso[task.setvariable variable=package_name]$Env:package_name"
+          mkdir $(Build.ArtifactStagingDirectory)/package
+          mv (gi osquery*.msi).name $(Build.ArtifactStagingDirectory)/package
+        displayName: "Create package"
+        workingDirectory: $(Build.BinariesDirectory)/build
+
+      - task: UniversalPackages@0
+        displayName: Publish PKG package to Artifact Feed
         inputs:
-          targetType: inline
-          script: |
-            expand-archive -path "$(Build.BinariesDirectory)/windows-osquery-source/source.zip" -destinationpath "." -passthru
-            ls
-          pwsh: true
-          displayName: "Unzip source folder"
-          workingDirectory: $(Build.SourcesDirectory)
-
-      # - powershell: |
-      #     expand-archive -path "windows-osquery-build/build.zip" -destinationpath "."
-      #     rm windows-osquery-build/build.zip
-      #   displayName: "Unzip build folder"
-      #   workingDirectory: $(Build.BinariesDirectory)
-
-      # - powershell: |
-      #     cmake --build . --target package -j 3
-      #     $Env:version = (gi osquery*.msi).name.split("{-}")[1]; echo "##vso[task.setvariable variable=version]$Env:version"
-      #     $Env:package_name = (gi osquery*.msi).name; echo "##vso[task.setvariable variable=package_name]$Env:package_name"
-      #     mkdir $(Build.ArtifactStagingDirectory)/package
-      #     mv (gi osquery*.msi).name $(Build.ArtifactStagingDirectory)/package
-      #   displayName: "Create package"
-      #   workingDirectory: $(Build.BinariesDirectory)/build
-
-      # - task: UniversalPackages@0
-      #   displayName: Publish PKG package to Artifact Feed
-      #   inputs:
-      #     command: publish
-      #     publishDirectory: '$(Build.ArtifactStagingDirectory)/package'
-      #     vstsFeedPublish: 'osql_releases'
-      #     vstsFeedPackagePublish: '$(package_name)'
-      #     packagePublishDescription: 'osql official Windows release version $(version)'
-      #     versionOption: custom
-      #     versionPublish: $(version)
+          command: publish
+          publishDirectory: '$(Build.ArtifactStagingDirectory)/package'
+          vstsFeedPublish: 'osql_releases'
+          vstsFeedPackagePublish: '$(package_name)'
+          packagePublishDescription: 'osql official Windows release version $(version)'
+          versionOption: custom
+          versionPublish: $(version)
 # WINDOWS
