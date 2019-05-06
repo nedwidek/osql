@@ -315,12 +315,6 @@ jobs:
           pathtoPublish: $(Build.ArtifactStagingDirectory)/build.zip
           artifactName: windows-osquery-build
 
-      - task: PublishBuildArtifacts@1
-        displayName: "Publish source folder for the packaging job"
-        inputs:
-          pathtoPublish: $(Build.ArtifactStagingDirectory)/source.zip
-          artifactName: windows-osquery-source
-
 
   - job: WindowsTest
 
@@ -331,6 +325,10 @@ jobs:
 
     steps:
       - checkout: none
+
+      - script: |
+          choco install ninja
+        displayName: Install the Ninja build system
 
       - task: DownloadBuildArtifacts@0
         displayName: "Download build folder"
@@ -361,6 +359,10 @@ jobs:
 
     steps:
       - checkout: none
+
+      - script: |
+          choco install ninja
+        displayName: Install the Ninja build system
 
       - task: DownloadBuildArtifacts@0
         displayName: "Download build folder"
