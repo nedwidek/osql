@@ -126,17 +126,27 @@ endfunction()
 function(generateInstallTargets)
 
   if (DEFINED PLATFORM_LINUX)
+
+    # .
+    if ("${PACKAGING_SYSTEM}"  STREQUAL "DEB")
+      file(COPY "${OSQUERY_SOURCE_DIR}/tools/deployment/linux_postinstall.sh" DESTINATION "${CMAKE_BINARY_DIR}/package/deb")
+      install(FILES "${CMAKE_BINARY_DIR}/package/deb/linux_postinstall.sh" DESTINATION . RENAME postinst)
+    endif()
+
     # bin
     install(TARGETS osqueryd DESTINATION bin)
     install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink osqueryd osqueryi)")
     install(FILES "${CMAKE_BINARY_DIR}/osqueryi" DESTINATION bin)
-    install(PROGRAMS "${OSQUERY_SOURCE_DIR}/tools/deployment/osqueryctl" DESTINATION bin)
+    file(COPY "${OSQUERY_SOURCE_DIR}/tools/deployment/osqueryctl" DESTINATION "${CMAKE_BINARY_DIR}/package/linux")
+    install(PROGRAMS "${CMAKE_BINARY_DIR}/package/linux/osqueryctl" DESTINATION bin)
 
     # lib
-    install(FILES "${OSQUERY_SOURCE_DIR}/tools/deployment/osqueryd.service" DESTINATION lib/systemd/system)
+    file(COPY "${OSQUERY_SOURCE_DIR}/tools/deployment/osqueryd.service" DESTINATION "${CMAKE_BINARY_DIR}/package/linux")
+    install(FILES "${CMAKE_BINARY_DIR}/package/linux/osqueryd.service" DESTINATION lib/systemd/system)
 
     # share
-    install(FILES "${OSQUERY_SOURCE_DIR}/tools/deployment/osquery.example.conf" DESTINATION share/osquery)
+    file(COPY "${OSQUERY_SOURCE_DIR}/tools/deployment/osquery.example.conf" DESTINATION "${CMAKE_BINARY_DIR}/package/linux")
+    install(FILES "${CMAKE_BINARY_DIR}/package/linux/osquery.example.conf" DESTINATION share/osquery)
 
     get_target_property(augeas_binary_dir thirdparty_augeas INTERFACE_BINARY_DIR)
     install(DIRECTORY "${augeas_binary_dir}/share/augeas/lenses/dist/"
@@ -144,27 +154,40 @@ function(generateInstallTargets)
             FILES_MATCHING PATTERN "*.aug"
             PATTERN "tests" EXCLUDE)
 
-    install(DIRECTORY "${OSQUERY_SOURCE_DIR}/packs" DESTINATION share/osquery)
+    file(COPY "${OSQUERY_SOURCE_DIR}/packs" DESTINATION "${CMAKE_BINARY_DIR}/package/linux")
+    install(DIRECTORY "${CMAKE_BINARY_DIR}/package/linux/packs" DESTINATION share/osquery)
 
     # etc
+    file(COPY "${OSQUERY_SOURCE_DIR}/tools/deployment/osqueryd.sysconfig" DESTINATION "${CMAKE_BINARY_DIR}/package/linux")
     if ("${PACKAGING_SYSTEM}"  STREQUAL "DEB")
-      install(FILES "${OSQUERY_SOURCE_DIR}/tools/deployment/osqueryd.sysconfig" DESTINATION /etc/default RENAME osqueryd)
+      install(FILES "${CMAKE_BINARY_DIR}/package/linux/osqueryd.sysconfig" DESTINATION /etc/default RENAME osqueryd)
     else()
-      install(FILES "${OSQUERY_SOURCE_DIR}/tools/deployment/osqueryd.sysconfig" DESTINATION /etc/sysconfig RENAME osqueryd)
+      install(FILES "${CMAKE_BINARY_DIR}/package/linux/osqueryd.sysconfig" DESTINATION /etc/sysconfig RENAME osqueryd)
     endif()
 
-    install(PROGRAMS "${OSQUERY_SOURCE_DIR}/tools/deployment/osqueryd.initd" DESTINATION /etc/init.d RENAME osqueryd)
+    file(COPY "${OSQUERY_SOURCE_DIR}/tools/deployment/osqueryd.initd" DESTINATION "${CMAKE_BINARY_DIR}/package/linux")
+    install(PROGRAMS "${CMAKE_BINARY_DIR}/package/linux/osqueryd.initd" DESTINATION /etc/init.d RENAME "osqueryd")
     install(DIRECTORY DESTINATION /etc/osquery)
     # var
     install(DIRECTORY DESTINATION /var/log/osquery)
     install(DIRECTORY DESTINATION /var/osquery)
+
   elseif(DEFINED PLATFORM_WINDOWS)
     # .
     install(PROGRAMS "$<TARGET_FILE:osqueryd>" DESTINATION . RENAME osqueryi.exe)
-    install(FILES "${OSQUERY_SOURCE_DIR}/tools/deployment/osquery.example.conf" DESTINATION . RENAME osquery.conf)
-    install(FILES "${OSQUERY_SOURCE_DIR}/tools/wel/osquery.man" DESTINATION .)
-    install(FILES "${OSQUERY_SOURCE_DIR}/tools/manage-osqueryd.ps1" DESTINATION .)
-    install(FILES "${OSQUERY_SOURCE_DIR}/tools/provision/chocolatey/osquery_utils.ps1" DESTINATION .)
+
+    file(COPY "${OSQUERY_SOURCE_DIR}/tools/deployment/osquery.example.conf" DESTINATION "${CMAKE_BINARY_DIR}/package/wix")
+    install(FILES "${CMAKE_BINARY_DIR}/package/wix/osquery.example.conf" DESTINATION . RENAME osquery.conf)
+
+    file(COPY "${OSQUERY_SOURCE_DIR}/tools/wel/osquery.man" DESTINATION "${CMAKE_BINARY_DIR}/package/wix")
+    install(FILES "${CMAKE_BINARY_DIR}/package/wix/osquery.man" DESTINATION .)
+
+    file(COPY "${OSQUERY_SOURCE_DIR}/tools/manage-osqueryd.ps1" DESTINATION "${CMAKE_BINARY_DIR}/package/wix")
+    install(FILES "${CMAKE_BINARY_DIR}/package/wix/manage-osqueryd.ps1" DESTINATION .)
+
+    file(COPY "${OSQUERY_SOURCE_DIR}/tools/provision/chocolatey/osquery_utils.ps1" DESTINATION "${CMAKE_BINARY_DIR}/package/wix")
+    install(FILES "${CMAKE_BINARY_DIR}/package/wix/osquery_utils.ps1" DESTINATION .)
+
     file(WRITE "${CMAKE_BINARY_DIR}/package/wix/osquery.flags")
     install(FILES "${CMAKE_BINARY_DIR}/package/wix/osquery.flags" DESTINATION .)
 
@@ -175,14 +198,16 @@ function(generateInstallTargets)
     install(DIRECTORY DESTINATION log)
 
     # packs
-    install(DIRECTORY "${OSQUERY_SOURCE_DIR}/packs" DESTINATION .)
+    file(COPY "${OSQUERY_SOURCE_DIR}/packs" DESTINATION "${CMAKE_BINARY_DIR}/package/wix")
+    install(DIRECTORY "${CMAKE_BINARY_DIR}/package/wix/packs" DESTINATION .)
 
   elseif(DEFINED PLATFORM_MACOS)
     # bin
     install(TARGETS osqueryd DESTINATION bin COMPONENT osquery)
     install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink osqueryd osqueryi)" COMPONENT osquery)
     install(FILES "${CMAKE_BINARY_DIR}/osqueryi" DESTINATION bin COMPONENT osquery)
-    install(PROGRAMS "${OSQUERY_SOURCE_DIR}/tools/deployment/osqueryctl" DESTINATION bin COMPONENT osquery)
+    file(COPY "${OSQUERY_SOURCE_DIR}/tools/deployment/osqueryctl" DESTINATION "${CMAKE_BINARY_DIR}/package/pkg")
+    install(PROGRAMS "${CMAKE_BINARY_DIR}/package/pkg/osqueryctl" DESTINATION bin COMPONENT osquery)
 
     # /private/var
     install(DIRECTORY COMPONENT osquery DESTINATION /private/var/log/osquery)
@@ -194,9 +219,12 @@ function(generateInstallTargets)
             FILES_MATCHING PATTERN "*.aug"
             PATTERN "tests" EXCLUDE)
 
-    install(DIRECTORY "${OSQUERY_SOURCE_DIR}/packs" COMPONENT osquery DESTINATION /private/var/osquery)
+    file(COPY "${OSQUERY_SOURCE_DIR}/packs" DESTINATION "${CMAKE_BINARY_DIR}/package/pkg")
+    install(DIRECTORY "${CMAKE_BINARY_DIR}/package/pkg/packs" COMPONENT osquery DESTINATION /private/var/osquery)
 
-    install(FILES "${OSQUERY_SOURCE_DIR}/tools/deployment/com.facebook.osqueryd.conf" DESTINATION /private/var/osquery RENAME com.TrailofBits.osqueryd.conf COMPONENT osquery)
+    file(COPY "${OSQUERY_SOURCE_DIR}/tools/deployment/com.facebook.osqueryd.conf" DESTINATION "${CMAKE_BINARY_DIR}/package/pkg")
+    file(RENAME "${CMAKE_BINARY_DIR}/package/pkg/com.facebook.osqueryd.conf" "${CMAKE_BINARY_DIR}/package/pkg/com.TrailofBits.osqueryd.conf")
+    install(FILES "${CMAKE_BINARY_DIR}/package/pkg/com.TrailofBits.osqueryd.conf" DESTINATION /private/var/osquery COMPONENT osquery)
 
     file(READ "${OSQUERY_SOURCE_DIR}/tools/deployment/com.facebook.osqueryd.plist" osquery_service_plist)
     string(REPLACE "com.facebook.osqueryd" "com.TrailofBits.osqueryd" osquery_service_plist "${osquery_service_plist}")
@@ -204,7 +232,8 @@ function(generateInstallTargets)
 
     install(FILES "${CMAKE_BINARY_DIR}/package/productbuild/com.TrailofBits.osqueryd.plist" DESTINATION /private/var/osquery COMPONENT osquery)
 
-    install(FILES "${OSQUERY_SOURCE_DIR}/tools/deployment/osquery.example.conf" DESTINATION /private/var/osquery COMPONENT osquery)
+    file(COPY "${OSQUERY_SOURCE_DIR}/tools/deployment/osquery.example.conf" DESTINATION "${CMAKE_BINARY_DIR}/package/pkg")
+    install(FILES "${CMAKE_BINARY_DIR}/package/pkg/osquery.example.conf" DESTINATION /private/var/osquery COMPONENT osquery)
   endif()
 
   file(COPY "${CMAKE_SOURCE_DIR}/LICENSE" DESTINATION "${CMAKE_BINARY_DIR}/package")
@@ -236,6 +265,7 @@ if(DEFINED PLATFORM_LINUX)
     set(CPACK_DEBIAN_PACKAGE_PRIORITY "extra")
     set(CPACK_DEBIAN_PACKAGE_SECTION "default")
     set(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>=2.12), zlib1g")
+
   elseif(CPACK_GENERATOR STREQUAL "RPM")
     set(CPACK_RPM_PACKAGE_DESCRIPTION "osquery is an operating system instrumentation toolchain.")
     set(CPACK_RPM_PACKAGE_GROUP "default")
@@ -251,9 +281,11 @@ if(DEFINED PLATFORM_LINUX)
   endif()
 elseif(DEFINED PLATFORM_MACOS)
 elseif(DEFINED PLATFORM_WINDOWS)
-  set(CPACK_WIX_PRODUCT_ICON "${OSQUERY_SOURCE_DIR}/tools/osquery.ico")
+  file(COPY "${OSQUERY_SOURCE_DIR}/tools/osquery.ico" DESTINATION "${CMAKE_BINARY_DIR}/package/wix")
+  file(COPY "${CMAKE_SOURCE_DIR}/cmake/wix_patches/osquery_service_install.xml" DESTINATION "${CMAKE_BINARY_DIR}/package/wix")
+  set(CPACK_WIX_PRODUCT_ICON "${CMAKE_BINARY_DIR}/package/wix/osquery.ico")
   set(CPACK_WIX_UPGRADE_GUID "ea6c7327-461e-4033-847c-acdf2b85dede")
-  set(CPACK_WIX_PATCH_FILE "${CMAKE_SOURCE_DIR}/cmake/wix_patches/osquery_service_install.xml")
+  set(CPACK_WIX_PATCH_FILE "${CMAKE_BINARY_DIR}/package/wix/osquery_service_install.xml" )
   set(CPACK_WIX_SKIP_PROGRAM_FOLDER True)
   set(CPACK_PACKAGE_INSTALL_DIRECTORY "C:/ProgramData/osquery")
 elseif(DEFINED PLATFORM_FREEBSD)
