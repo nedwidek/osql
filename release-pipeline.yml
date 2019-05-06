@@ -309,11 +309,6 @@ jobs:
         displayName: "Zip the build folder"
         workingDirectory: $(Build.BinariesDirectory)
 
-      - powershell: |
-          compress-archive -path ".\*" -destinationpath "$(Build.ArtifactStagingDirectory)\source.zip" -compressionlevel NoCompression
-        displayName: "Zip the source folder"
-        workingDirectory: $(Build.SourcesDirectory)
-
       - task: PublishBuildArtifacts@1
         displayName: "Publish build folder for the next job"
         inputs:
@@ -372,17 +367,6 @@ jobs:
         inputs:
           artifactName: windows-osquery-build
           downloadPath: $(Build.BinariesDirectory)
-
-      - task: DownloadBuildArtifacts@0
-        displayName: "Download source folder"
-        inputs:
-          artifactName: windows-osquery-source
-          downloadPath: $(Build.BinariesDirectory)
-
-      - powershell: |
-          expand-archive -path "$(Build.BinariesDirectory)/windows-osquery-source/source.zip" -destinationpath "."
-        displayName: "Unzip source folder"
-        workingDirectory: $(Build.SourcesDirectory)
 
       - powershell: |
           expand-archive -path "windows-osquery-build/build.zip" -destinationpath "."
